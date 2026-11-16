@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Handbuch Marberger Signage</title>
+<style>
+@page { size: A4; margin: 17mm 17mm 18mm 17mm;
+  @bottom-left { content: "Handbuch Marberger Signage · Version 1.0 · intern"; font: 7.5pt "TeX Gyre Heros", Arial, sans-serif; color: #5d6660; }
+  @bottom-right { content: "Seite " counter(page) " von " counter(pages); font: 7.5pt "TeX Gyre Heros", Arial, sans-serif; color: #5d6660; }
+}
+@page :first { margin: 0; @bottom-left { content: none } @bottom-right { content: none } }
+@page aushang { margin: 0; @bottom-left { content: none } @bottom-right { content: none } }
+:root { --g: #006729; --gl: #e3f0e7; --r: #922224; --t: #1f2421; --m: #5d6660; --l: #d6d9d7; --w: #b86e00; --wl: #fff3df; --b: #1f5fa8; --bl: #e8f0fa; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font: 9.2pt/1.45 "TeX Gyre Heros", Arial, sans-serif; color: var(--t); hyphens: auto; }
+h1, h2, h3, h4, .poppins { font-family: Poppins, Arial, sans-serif; }
+h1 { break-before: page; font-size: 21pt; line-height: 1.15; color: var(--g); margin: 0 0 4mm; padding-bottom: 2.5mm; border-bottom: 1.2mm solid var(--g); }
+h1 .nr { color: var(--r); margin-right: 3mm; }
+h2 { font-size: 13.5pt; color: var(--g); margin: 7mm 0 2.5mm; padding-bottom: 1mm; border-bottom: .5mm solid var(--g); break-after: avoid; }
+h3 { font-size: 10.8pt; color: var(--t); margin: 5mm 0 1.5mm; break-after: avoid; }
+h4 { font-size: 9.6pt; margin: 3.5mm 0 1mm; break-after: avoid; }
+p { margin: 0 0 2.2mm; }
+ul, ol { margin: 0 0 2.5mm; padding-left: 5.5mm; }
+li { margin: 0 0 .9mm; }
+a { color: var(--g); text-decoration: none; }
+code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 8.2pt; background: #f1f3f2; padding: .2mm 1mm; border-radius: 1mm; }
+strong { font-weight: bold; }
+.path { font-weight: bold; color: var(--g); white-space: nowrap; }
+.ui { display: inline-block; font-weight: bold; padding: 0 1.4mm; border: .3mm solid #b8bdba; border-radius: 1mm; background: #f6f7f6; line-height: 1.35; white-space: nowrap; }
+.nr, .ltr { display: inline-flex; align-items: center; justify-content: center; min-width: 4.6mm; height: 4.6mm; padding: 0 .9mm; border-radius: 2.3mm; background: var(--r); color: #fff; font: bold 7.6pt/1 Arial, sans-serif; vertical-align: .2mm; }
+h1 .nr { display: inline; background: none; color: var(--r); font: inherit; padding: 0; min-width: 0; height: auto; vertical-align: 0; }
+.ltr { background: var(--t); }
+table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3.5mm; font-size: 8.6pt; break-inside: auto; }
+th { background: var(--g); color: #fff; text-align: left; padding: 1.4mm 2mm; font-weight: bold; vertical-align: bottom; }
+td { padding: 1.3mm 2mm; border-bottom: .25mm solid var(--l); vertical-align: top; }
+tr { break-inside: avoid; }
+tbody tr:nth-child(even) td { background: #f5f7f6; }
+table.legend td:first-child { width: 8mm; text-align: center; }
+table.legend td:nth-child(2) { width: 34%; font-weight: bold; }
+table.compact td, table.compact th { padding: .9mm 1.6mm; }
+.box { border-left: 1.4mm solid var(--g); background: var(--gl); padding: 2.4mm 3.2mm; margin: 2.5mm 0 3.5mm; break-inside: avoid; }
+.box > :last-child { margin-bottom: 0; }
+.box b.t { display: block; font-family: Poppins, Arial, sans-serif; margin-bottom: .8mm; }
+.box.info { border-color: var(--b); background: var(--bl); }
+.box.warn { border-color: var(--w); background: var(--wl); }
+.box.red { border-color: var(--r); background: #f8e9e9; }
+figure { margin: 2.5mm 0 4mm; break-inside: avoid; text-align: center; }
+figure img { max-width: 100%; border: .3mm solid #c9cecb; border-radius: 1mm; }
+figure.noborder img { border: none; }
+figcaption { counter-increment: fig; font-size: 7.9pt; color: var(--m); margin-top: 1.3mm; text-align: center; }
+figcaption::before { content: "Abb. " counter(fig) " – "; font-weight: bold; color: var(--t); }
+body { counter-reset: fig; }
+.pair { display: grid; gap: 5mm; align-items: start; margin: 2.5mm 0 4mm; break-inside: avoid; }
+.pair figure { margin: 0; }
+.pair.b-d { grid-template-columns: 1fr 52mm; }
+.pair.b-q { grid-template-columns: 1fr 1fr; }
+.pair.dd { grid-template-columns: 1fr 1fr; }
+.pair.ddd { grid-template-columns: 1fr 1fr 1fr; }
+.pair.dddd { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.pair.m3 { grid-template-columns: 1fr 1fr 1fr; }
+.pair.ml { grid-template-columns: 52mm 1fr; }
+.disp img { width: 100%; }
+.tall img { max-height: 215mm; width: auto; max-width: 100%; }
+.w60 img { max-width: 60%; } .w70 img { max-width: 70%; } .w80 img { max-width: 80%; } .w50 img { max-width: 50%; } .w40 img { max-width: 40%; }
+.steps { counter-reset: st; list-style: none; padding-left: 0; }
+.steps > li { counter-increment: st; position: relative; padding-left: 8.5mm; margin-bottom: 1.8mm; break-inside: avoid; }
+.steps > li::before { content: counter(st); position: absolute; left: 0; top: -.2mm; width: 5.6mm; height: 5.6mm; border-radius: 50%; background: var(--g); color: #fff; font: bold 8.5pt/5.6mm Poppins, Arial; text-align: center; }
+.keep { break-inside: avoid; }
+.pb { break-before: page; }
+.muted { color: var(--m); }
+.small { font-size: 8pt; }
+.two { columns: 2; column-gap: 7mm; }
+.two > * { break-inside: avoid; }
+/* Rangfolge-Grafik */
+.rank { display: grid; grid-template-columns: 10mm 1fr 60mm; gap: 0; border: .3mm solid var(--l); margin: 2mm 0 4mm; break-inside: avoid; }
+.rank > div { padding: 1.8mm 2.4mm; border-bottom: .3mm solid var(--l); }
+.rank .n { background: var(--g); color: #fff; font: bold 12pt Poppins; text-align: center; }
+.rank .h { font-weight: bold; }
+.rank .bar { grid-column: 1 / 4; background: var(--wl); border-left: 1.4mm solid var(--w); }
+/* Ablauf */
+.flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5mm; margin: 2mm 0 4mm; }
+.flow div { border: .4mm solid var(--g); border-radius: 2mm; padding: 2mm; font-size: 8.2pt; min-height: 21mm; position: relative; break-inside: avoid; }
+.flow div b { display: block; font-family: Poppins; color: var(--g); font-size: 9pt; margin-bottom: .6mm; }
+.flow div i { position: absolute; top: -2.6mm; left: 2mm; background: var(--g); color: #fff; font: bold 8pt/5mm Poppins; width: 5mm; height: 5mm; border-radius: 50%; text-align: center; font-style: normal; }
+.flow div.opt { border-style: dashed; }
+/* Baum */
+.tree { font-size: 8.6pt; border: .3mm solid var(--l); padding: 2.5mm 4mm; background: #fafbfa; margin: 2mm 0 4mm; break-inside: avoid; }
+.tree ul { list-style: none; padding-left: 5mm; margin: .5mm 0; border-left: .3mm dashed #a9b0ac; }
+.tree > ul { border-left: none; padding-left: 0; }
+.tree li { margin: .5mm 0; }
+.tree .k { font-weight: bold; } .tree .d { color: var(--m); }
+/* Deckblatt */
+.cover { width: 210mm; height: 297mm; position: relative; padding: 0; break-after: page; }
+.cover .logo { position: absolute; left: 17mm; top: 17mm; height: 24mm; }
+.cover .stamp { position: absolute; right: 17mm; top: 20mm; border: .9mm solid var(--g); color: var(--g); font: bold 13pt Poppins; padding: 2mm 5mm; border-radius: 2mm; transform: rotate(-4deg); letter-spacing: .5mm; }
+.cover .band { position: absolute; left: 0; right: 0; top: 92mm; background: var(--g); color: #fff; padding: 14mm 17mm 13mm; }
+.cover .band h1 { string-set: none; break-before: avoid; color: #fff; border: none; font-size: 30pt; margin: 0 0 3mm; padding: 0; }
+.cover .band p { font: 12.5pt/1.4 Poppins; margin: 0; opacity: .95; }
+.cover .band .sub2 { margin-top: 5mm; font: 9.5pt/1.4 "TeX Gyre Heros", Arial; opacity: .9; }
+.cover .shots { position: absolute; left: 17mm; right: 17mm; top: 160mm; display: flex; gap: 5mm; justify-content: center; align-items: flex-end; }
+.cover .shots img { border: .3mm solid #c9cecb; border-radius: 1.2mm; }
+.cover .meta { position: absolute; left: 17mm; right: 17mm; bottom: 17mm; }
+.cover .meta table { font-size: 9pt; margin: 0; }
+.cover .meta td:first-child { width: 42mm; font-weight: bold; color: var(--g); }
+/* Inhaltsverzeichnis */
+.toc h1 { string-set: none; }
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li { display: flex; align-items: baseline; margin: 0 0 1mm; }
+.toc li a { color: var(--t); }
+.toc li .dots { flex: 1; border-bottom: .3mm dotted #9aa39d; margin: 0 1.5mm; transform: translateY(-1mm); }
+.toc li .pg { min-width: 7mm; text-align: right; }
+.toc li.l1 { font: bold 10pt Poppins; margin-top: 2.6mm; color: var(--g); }
+.toc li.l1 a { color: var(--g); }
+.toc li.l2 { padding-left: 7mm; }
+.toc .cols { columns: 1; }
+/* Aushang */
+.aushang { page: aushang; break-before: page; width: 210mm; height: 297mm; position: relative; overflow: hidden; }
+</style>
+</head>
+<body>

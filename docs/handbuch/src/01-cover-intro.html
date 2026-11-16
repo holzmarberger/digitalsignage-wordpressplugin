@@ -1,0 +1,154 @@
+<section class="cover">
+  <img class="logo" src="img/marberger-logo.png" alt="Holz Marberger">
+  <div class="stamp">FREIGEGEBEN</div>
+  <div class="band">
+    <h1>Handbuch Marberger Signage</h1>
+    <p>Empfangs- und Info-Displays im Intranet</p>
+    <p class="sub2">Anleitung für Empfang, Display-Redaktion und Administration – mit Systematik des Anlegens, allen Masken und Beispielen</p>
+  </div>
+  <div class="shots">
+    <img src="img/d-rec-greeting.png" style="height:72mm" alt="">
+    <img src="img/d-info-grafana.png" style="height:54mm" alt="">
+    <img src="img/m-list.png" style="height:72mm" alt="">
+  </div>
+  <div class="meta">
+    <table>
+      <tr><td>Unternehmen</td><td>Holz Marberger GmbH</td></tr>
+      <tr><td>Dokument</td><td>Anwenderhandbuch WordPress-Plugin „Marberger Signage“</td></tr>
+      <tr><td>Version / Stand</td><td>1.0 / 16.11.2026 – gilt für Plugin-Version 1.0.1</td></tr>
+      <tr><td>Status</td><td>Freigegeben</td></tr>
+      <tr><td>Verfasser</td><td>Gregor Marberger</td></tr>
+      <tr><td>Vertraulichkeit</td><td>intern</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="toc">
+  <h1>Inhalt</h1>
+  {{TOC}}
+</section>
+
+<h1 id="vorbemerkung">Vorbemerkung</h1>
+<p>Dieses Handbuch beschreibt das WordPress-Plugin <strong>Marberger Signage</strong> im Intranet. Damit werden alle Bildschirme an allen Standorten an einer Stelle gepflegt: das Empfangsdisplay mit Begrüßung und Wegweiser ebenso wie die Info-Displays in Hallen und Aufenthaltsräumen, auf denen Grafana-Auswertungen, eigene Seiten und News laufen.</p>
+
+<h2>Welche Kapitel brauche ich?</h2>
+<table>
+  <thead><tr><th style="width:28%">Sie sind …</th><th>Sie brauchen vor allem</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Empfang</strong> (Grüße vom Handy, gemeinsames Gruß-Passwort)</td><td>Kapitel <a href="#k3">3 Gruß vom Handy</a>. Außerdem die einseitige Kurzanleitung am Ende dieses Handbuchs zum Aushängen.</td></tr>
+    <tr><td><strong>Display-Redaktion</strong> (persönliches WordPress-Konto mit dem Häkchen „Display-Redaktion“)</td><td>Kapitel <a href="#k1">1 Überblick</a>, <a href="#k3">3</a>, <a href="#k4">4 Redaktion im Backend</a> und <a href="#k5">5 Texte, Größen und Bildformate</a>.</td></tr>
+    <tr><td><strong>Administration</strong> (WordPress-Administrator)</td><td>Das ganze Handbuch, vor allem Kapitel <a href="#k2">2 Systematik</a>, <a href="#k6">6 Administration</a> und <a href="#k7">7 Technik und Betrieb</a>.</td></tr>
+  </tbody>
+</table>
+
+<h2>So lesen Sie die Abbildungen</h2>
+<ul>
+  <li><span class="nr">1</span> <strong>Rote Nummern</strong> markieren Felder in einer Maske. Dieselbe Nummer auf dem Bild des Displays zeigt, <strong>wo genau dieser Text am Bildschirm erscheint</strong>.</li>
+  <li><span class="nr">A</span> <strong>Buchstaben</strong> markieren Teile, die das System <strong>automatisch</strong> erzeugt, z. B. Logo des Standorts, Datum, Uhrzeit, Wetter oder „Wir sind wieder für Sie da …“. Diese Teile pflegen Sie nicht direkt.</li>
+  <li>Klickpfade im Backend stehen grün und fett, z. B. <span class="path">Displays → Grüße → Gruß anlegen</span>. Beschriftungen von Knöpfen sind umrahmt, z. B. <span class="ui">Veröffentlichen</span>.</li>
+  <li>Display-Bilder zeigen die Bildschirme verkleinert. Das Empfangsdisplay hat in Wirklichkeit 1080 × 1920 Bildpunkte, Info-Displays 1920 × 1080.</li>
+</ul>
+
+<div class="box info"><b class="t">Beispieldaten</b>
+<p>Alle Abbildungen stammen aus einer Testinstallation. Die Öffnungszeiten von Ötztal Bahnhof (Montag bis Freitag 07:00–16:30) entsprechen der Wirklichkeit. Alle Gäste, Firmen, Personen, Termine sowie die Zeiten des Standorts Silz sind <strong>erfunden</strong> und dienen nur zur Erklärung, z. B. für die Mittagspause.</p></div>
+
+<div class="box"><b class="t">Hilfe direkt im Backend</b>
+<p>Jede Seite des Plugins im WordPress-Backend erklärt in einem grün umrandeten Kasten kurz, was der Inhaltstyp bewirkt. Über den Listen steht er ausführlich, über den Bearbeiten-Masken als einzeilige Zusammenfassung mit dem Link <span class="ui">mehr</span>. Die Texte dort entsprechen diesem Handbuch.</p></div>
+
+<h1 id="k1"><span class="nr">1</span>Überblick</h1>
+
+<h2 id="k1-1">1.1 Was das System macht</h2>
+<p>Alle Inhalte werden im <strong>Intranet-WordPress</strong> gepflegt. Jeder Bildschirm ruft eine eigene Adresse auf, die Sie beim jeweiligen Display finden (<span class="path">Displays → Displays</span>). Auf den Geräten läuft die App <em>Slide Show</em>, die nur diese eine Adresse anzeigt. Was gerade zu sehen ist, entscheidet das Plugin auf dem Server: Öffnungszeiten, Begrüßungen, Hinweise, Vollbild-Seiten und Abfolgen werden dort ausgewertet. Das Display fragt standardmäßig alle 60 Sekunden nach, ob sich etwas geändert hat.</p>
+
+<table class="compact">
+  <thead><tr><th style="width:26%">Teil</th><th>Wofür</th><th style="width:30%">Wer</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Backend</strong> (WordPress, Menü <span class="path">Displays</span>)</td><td>Alles anlegen und pflegen: Standorte, Displays, Grüße, Hinweise, Wegweiser-Kacheln, Vollbild-Seiten, News, Display-Seiten</td><td>Administration, Display-Redaktion</td></tr>
+    <tr><td><strong>Handy-Pflegemaske</strong></td><td>Grüße schnell vom Handy anlegen; mit WordPress-Konto auch Hinweise und News</td><td>Empfang (Gruß-Passwort), Display-Redaktion</td></tr>
+    <tr><td><strong>Empfangsdisplay</strong></td><td>Begrüßung, Wegweiser mit Wegbeschreibung, Hinweise, Geschlossen-Seite – bedienbar per Berührung</td><td>Besucher, Kunden, Fahrer, Team</td></tr>
+    <tr><td><strong>Info-Display</strong></td><td>Wechselnde Inhalte (Grafana, Display-Seiten, News) mit Laufband – ohne Bedienung</td><td>Team in Halle und Aufenthaltsraum</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k1-2">1.2 Die zwei Display-Arten</h2>
+<div class="pair ml">
+  <figure class="disp"><img src="img/d-rec-start.png" alt=""><figcaption>Empfangsdisplay (Hochformat)</figcaption></figure>
+  <div>
+    <h3 style="margin-top:0">Empfangsdisplay</h3>
+    <p>Steht am Eingang und wird berührt. Oben im Kopf stehen das Logo des Standorts, „Willkommen bei Holz Marberger“, das Datum, das Wetter und die Uhrzeit. Darunter fragt der Wegweiser „Was brauchen Sie?“. Wer eine Kachel antippt, bekommt eine Unterauswahl oder die Wegbeschreibung mit Weg-Animation, Wegschritten, Ansprechpartner und QR-Code.</p>
+    <p>Zusätzlich gibt es die Begrüßung für angemeldete Gäste, Hinweis-Balken, Vollbild-Seiten (z. B. Team-Info am Morgen) sowie die Geschlossen- und die Schließzeit-Seite. Der Besucher wählt Deutsch oder Englisch. Nach einer einstellbaren Zeit ohne Berührung springt das Display auf die Startseite und auf Deutsch zurück.</p>
+  </div>
+</div>
+<div class="pair" style="grid-template-columns: 1fr 78mm">
+  <div>
+    <h3 style="margin-top:0">Info-Display</h3>
+    <p>Läuft ohne Bedienung. Ein fester Rahmen mit Kopfzeile und News-Laufband bleibt stehen; in der Mitte wechseln die Einträge der <strong>Abfolge</strong>: Web-Seiten (vor allem Grafana), Display-Seiten und die News-Folie.</p>
+    <p>Geschlossen-Seite und Schließzeit-Seite gibt es hier standardmäßig nicht – die Abfolge läuft rund um die Uhr. Hinweise erscheinen als Balken über der Abfolge, Vorankündigungen von Schließzeiten im Laufband und auf der News-Folie.</p>
+  </div>
+  <figure class="disp"><img src="img/d-info-grafana.png" alt=""><figcaption>Info-Display (Querformat) mit Grafana-Auswertung</figcaption></figure>
+</div>
+
+<h2 id="k1-3">1.3 Begriffe – am Display, im Backend und in der Handy-Maske</h2>
+<p>Die folgende Tabelle ordnet jedem Begriff den genauen Menüpunkt zu. In diesem Handbuch werden ausschließlich diese Begriffe verwendet.</p>
+<table class="compact">
+  <thead><tr><th style="width:17%">Begriff</th><th>Was es ist</th><th style="width:27%">Im Backend</th><th style="width:15%">Handy-Maske</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Gruß</strong></td><td>Persönliche Begrüßung eines Gastes mit Name, Logo und Zeitraum (grüne Karte am Empfangsdisplay)</td><td><span class="path">Displays → Grüße</span>, Knopf <span class="ui">Gruß anlegen</span></td><td>Reiter „Grüße“, <span class="ui">+ Neuer Gruß</span></td></tr>
+    <tr><td><strong>Hinweis</strong></td><td>Orangefarbener Balken über dem Inhalt, zeitgesteuert</td><td><span class="path">Displays → Hinweise</span>, <span class="ui">Hinweis anlegen</span></td><td>Reiter „Hinweise“ (nur Redaktion)</td></tr>
+    <tr><td><strong>Wegweiser-Kachel</strong></td><td>Eine Schaltfläche des Wegweisers mit Wegbeschreibung oder Unterauswahl</td><td><span class="path">Displays → Wegweiser-Kacheln</span>, <span class="ui">Wegweiser-Kachel anlegen</span></td><td>–</td></tr>
+    <tr><td><strong>Vollbild-Seite</strong></td><td>Seite, die zu einer Zeit den ganzen Bildschirm übernimmt (z. B. Team-Info 06:55–07:10)</td><td><span class="path">Displays → Vollbild-Seiten</span></td><td>–</td></tr>
+    <tr><td><strong>News</strong></td><td>Meldung für Info-Displays, als Folie und/oder im Laufband</td><td><span class="path">Displays → News</span></td><td>Reiter „News“ (nur Redaktion)</td></tr>
+    <tr><td><strong>Display-Seite</strong></td><td>Eigene Inhaltsseite nur für Info-Displays (z. B. „Unfallfreie Tage“)</td><td><span class="path">Displays → Display-Seiten</span></td><td>–</td></tr>
+    <tr><td><strong>Abfolge</strong></td><td>Liste der Inhalte eines Info-Displays mit Dauer und Zeitfenster</td><td>bei der Display-Kategorie („Standard-Abfolge“) oder beim Display („eigene Abfolge“)</td><td>–</td></tr>
+    <tr><td><strong>Display</strong></td><td>Ein Bildschirm mit Kennung und eigener Adresse</td><td><span class="path">Displays → Displays</span></td><td>–</td></tr>
+    <tr><td><strong>Display-Kategorie</strong></td><td>Einstellungen für gleichartige Displays (z. B. „Empfang“, „Info intern“)</td><td><span class="path">Displays → Display-Kategorien</span></td><td>–</td></tr>
+    <tr><td><strong>Standort</strong></td><td>Ötztal Bahnhof, Silz usw. mit Logo, Wetter, Öffnungszeiten und Feiertagen</td><td><span class="path">Displays → Standorte</span></td><td>–</td></tr>
+    <tr><td><strong>Schließzeit</strong></td><td>Mehrtägige Schließung, z. B. Betriebsurlaub</td><td><span class="path">Displays → Schließzeiten</span></td><td>–</td></tr>
+    <tr><td><strong>Balken</strong></td><td>Sammelbegriff für alle Streifen über dem Inhalt: Hinweise sowie die automatischen Balken (Pause, Vorwarnung, Vorankündigung)</td><td>Einstellung „Balken“ in den Display-Kategorien</td><td>–</td></tr>
+    <tr><td><strong>Geschlossen-Seite</strong></td><td>Ganzseitige Anzeige außerhalb der Öffnungszeiten mit Öffnungszeiten-Tafel</td><td>entsteht automatisch aus den Öffnungszeiten des Standorts</td><td>–</td></tr>
+    <tr><td><strong>Schließzeit-Seite</strong></td><td>Ganzseitige Anzeige während einer Schließzeit</td><td>entsteht automatisch aus der Schließzeit</td><td>–</td></tr>
+    <tr><td><strong>Handy-Pflegemaske</strong></td><td>Handytaugliche Seite für Grüße (und für die Redaktion auch Hinweise und News)</td><td>Adresse unter <span class="path">Displays → Übersicht</span></td><td>–</td></tr>
+    <tr><td><strong>Gruß-Passwort</strong></td><td>Gemeinsames Passwort für die Handy-Pflegemaske (nur Grüße)</td><td><span class="path">Displays → Einstellungen</span></td><td>Anmeldung</td></tr>
+    <tr><td><strong>Display-Redaktion</strong></td><td>Zusatzrecht für persönliche WordPress-Konten</td><td>Häkchen im Benutzerprofil (<span class="path">Benutzer</span>)</td><td>Anmeldung mit WP-Konto</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k1-4">1.4 Was wann angezeigt wird – die Rangfolge</h2>
+<p>Ein Display zeigt zu jedem Zeitpunkt genau <strong>eine Hauptanzeige</strong>. Treffen mehrere Inhalte zusammen, gewinnt die höhere Stufe. Balken liegen zusätzlich darüber – aber nie auf ganzseitigen Anzeigen.</p>
+<div class="rank">
+  <div class="n">1</div><div><span class="h">Vollbild-Seite</span> – z. B. „Guten Morgen, liebes Team!“ Montag bis Freitag 06:55–07:10</div><div class="muted">Empfang und Info; am Empfang optional mit Besucher-Knopf</div>
+  <div class="n">2</div><div><span class="h">Gruß</span> – gilt auch nach Geschäftsschluss (Abendtermin)</div><div class="muted">nur Empfang; der Wegweiser bleibt darunter bedienbar</div>
+  <div class="n">3</div><div><span class="h">Schließzeit-Seite</span> – z. B. Betriebsurlaub</div><div class="muted">je nach Display-Kategorie (Empfang: ganzseitig; Info: läuft normal)</div>
+  <div class="n">4</div><div><span class="h">Geschlossen-Seite</span> – Feierabend, Wochenende, Feiertag</div><div class="muted">je nach Display-Kategorie (Empfang: ganzseitig; Info: läuft normal)</div>
+  <div class="n">5</div><div><span class="h">Standard</span> – Wegweiser bzw. Abfolge</div><div class="muted">immer, wenn nichts anderes gilt</div>
+  <div class="bar"><strong>Darüber: Balken</strong> – höchstens 3 gleichzeitig, in dieser Reihenfolge: (1) automatische Balken (Pause, Vorwarnung vor Schluss), (2) Hinweise nach Priorität, (3) Vorankündigungen von Schließzeiten und Ausnahmen. Was keinen Platz hat, entfällt. Auf den Stufen 1, 3 und 4 gibt es keine Balken.</div>
+</div>
+<div class="pair dddd" style="width:86%;margin-left:auto;margin-right:auto">
+  <figure class="disp"><img src="img/d-rec-team.png" alt=""><figcaption>Stufe 1: Vollbild-Seite</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-greeting-evening.png" alt=""><figcaption>Stufe 2: Gruß um 19:00</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-closure.png" alt=""><figcaption>Stufe 3: Schließzeit-Seite</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-closed.png" alt=""><figcaption>Stufe 4: Geschlossen-Seite</figcaption></figure>
+</div>
+<p><strong>Besucher-Knopf:</strong> Hat eine Vollbild-Seite den Knopf „Besucher? Hier tippen“, sieht ein Besucher nach dem Antippen die <em>nächste</em> Stufe. Um 06:58 ist das die Geschlossen-Seite mit „Heute ab 07:00 Uhr sind wir wieder für Sie da“ und dem Knopf „Wegweiser öffnen“. Nach dem Rücksprung erscheint wieder die Vollbild-Seite.</p>
+
+<h2 id="k1-5">1.5 Rollen und Rechte</h2>
+<div class="pair" style="grid-template-columns: 1fr 34mm 34mm">
+  <table class="compact" style="margin:0">
+    <thead><tr><th style="width:24%">Rolle</th><th>Darf</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Administrator</strong></td><td>Alles: Standorte, Öffnungszeiten, Schließzeiten, Display-Kategorien, Displays, Abfolgen, Einstellungen (Gruß-Passwort, Schnellvorlagen), Benutzer – und alles, was die Redaktion darf.</td></tr>
+      <tr><td><strong>Display-Redaktion</strong></td><td>Grüße, Hinweise, Wegweiser-Kacheln, Vollbild-Seiten, News und Display-Seiten anlegen, ändern und löschen; das Gruß-Passwort einsehen; Displays mit „Anzeige öffnen“ und der Vorschau ansehen. Die Redaktion sieht Displays, Kategorien, Standorte, Schließzeiten und Einstellungen nicht.</td></tr>
+      <tr><td><strong>Empfang</strong> (Gruß-Passwort)</td><td>Nur Grüße in der Handy-Pflegemaske – ohne WordPress-Konto.</td></tr>
+    </tbody>
+  </table>
+  <figure style="margin:0"><img src="img/b-menu-admin.png" alt=""><figcaption>Menü Administrator</figcaption></figure>
+  <figure style="margin:0"><img src="img/b-menu-redaktion.png" alt=""><figcaption>Menü Redaktion</figcaption></figure>
+</div>
+
+<h2 id="k1-6">1.6 Wann eine Änderung am Display erscheint</h2>
+<ul>
+  <li>Nach dem Speichern spätestens nach dem <strong>Abfrageintervall</strong> (Standard 60 Sekunden, einstellbar in der Display-Kategorie).</li>
+  <li>Bedient gerade jemand das Empfangsdisplay, wird die Änderung erst übernommen, wenn das Display wieder auf der Startseite und auf Deutsch steht. So springt niemandem die Anzeige „unter der Hand“ weg.</li>
+  <li>Bei Info-Displays laufen die Grafana-Folien weiter; neue Hinweise und Laufband-Texte erscheinen sofort, eine geänderte Abfolge beginnt von vorne.</li>
+  <li>Ist das Intranet kurz nicht erreichbar, bleibt die letzte Anzeige stehen. Ein kleiner roter Punkt in der Ecke zeigt das an. Jede Nacht um 03:00 lädt sich die Seite einmal vollständig neu.</li>
+</ul>

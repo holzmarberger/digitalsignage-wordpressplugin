@@ -1,0 +1,182 @@
+<h1 id="k7"><span class="nr">7</span>Technik und Betrieb</h1>
+
+<h2 id="k7-1">7.1 Installation und Update</h2>
+<ol class="steps">
+  <li>Im Intranet als Administrator anmelden: <span class="path">Plugins → Neues Plugin hinzufügen → Plugin hochladen</span>.</li>
+  <li>Die Datei <code>marberger-signage-&lt;version&gt;.zip</code> wählen, <span class="ui">Jetzt installieren</span>. Bei einem Update fragt WordPress, ob das vorhandene Plugin durch die hochgeladene Version ersetzt werden soll – das bestätigen.</li>
+  <li>Bei der Erstinstallation <span class="ui">Plugin aktivieren</span>. Dabei werden die Kategorien „Empfang“ und „Info intern“ angelegt und der tägliche Aufräumdienst eingeplant.</li>
+  <li>Alle Inhalte bleiben bei einem Update erhalten. Die Versionsnummer steht unter <span class="path">Plugins</span> und in der Diagnoseansicht.</li>
+</ol>
+
+<h2 id="k7-2">7.2 Display mit dem Gerät verbinden</h2>
+<p>Jedes Display hat eine eigene Adresse, z. B. <code>http://intranet-marberger.oetztal.holz-marberger.at/?mm_signage=empfang-oetztal</code>. Sie steht beim Display im Kasten „Adresse &amp; Status“ und wird im Gerät in der App Slide Show als einzige Web-Seite eingetragen. Die Einrichtung der Geräte selbst (Autostart, Bildschirm-Sperre, Abschaltzeiten) ist nicht Teil dieses Handbuchs. Nach dem Eintragen meldet sich das Gerät bei jeder Abfrage – in der Übersicht erscheint „online“.</p>
+
+<h2 id="k7-3">7.3 Voraussetzungen am Server</h2>
+<table class="compact">
+  <thead><tr><th style="width:26%">Thema</th><th>Anforderung</th></tr></thead>
+  <tbody>
+    <tr><td>WordPress / PHP</td><td>WordPress ab 6.5, PHP ab 8.1. Das Intranet darf über http laufen; die Permalinks dürfen beliebig eingestellt sein.</td></tr>
+    <tr><td>Zeitgesteuerte Aufgaben</td><td>Der WordPress-Cron muss laufen, damit abgelaufene Grüße gelöscht werden. Standardmäßig wird er durch Seitenaufrufe ausgelöst – die Displays rufen ohnehin regelmäßig auf. Ist <code>DISABLE_WP_CRON</code> gesetzt, einen System-Cron einrichten.</td></tr>
+    <tr><td>Wetter</td><td>Der Server fragt das Wetter bei Open-Meteo ab (ausgehend https). Ist das nicht erlaubt, fehlt nur das Wettersymbol.</td></tr>
+    <tr><td>iPhone-Fotos (HEIC)</td><td>Für die Umwandlung braucht der Server Imagick mit HEIC-Unterstützung. Prüfen mit <code>convert -list format | grep -i heic</code>. Ohne HEIC bekommt der Empfang eine klare Meldung, das Bild als JPG zu senden.</td></tr>
+    <tr><td>Uploads</td><td>Bilder bis 25 MB über die Handy-Pflegemaske; die PHP-Einstellung <code>upload_max_filesize</code> muss mindestens so groß sein.</td></tr>
+    <tr><td>Grafana</td><td><code>allow_embedding = true</code>, Boards ohne Anmeldung erreichbar.</td></tr>
+    <tr><td>Zwischenspeicher</td><td>Caching-Plugins oder Proxys dürfen die Player-Seite <code>?mm_signage=…</code> und die Schnittstelle <code>mms/v1/state/…</code> nicht zwischenspeichern.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k7-4">7.4 Prüfen: Vorschau, Zeitreise und Diagnose</h2>
+<table class="compact">
+  <thead><tr><th style="width:26%">Werkzeug</th><th>Wofür</th><th style="width:22%">Wer</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Anzeige öffnen</strong></td><td>zeigt das Display jetzt im Browser (Übersicht, Displays-Liste, Display-Maske).</td><td>Administration, Redaktion</td></tr>
+    <tr><td><strong>Vorschau</strong> (Grüße, Hinweise, Vollbild-Seiten)</td><td>öffnet die gewählten Displays zum Beginn des Eintrags.</td><td>Administration, Redaktion</td></tr>
+    <tr><td><strong>Zeitreise</strong></td><td>An die Display-Adresse <code>&amp;at=2026-12-24T10:00</code> anhängen: Das Display zeigt, was zu diesem Zeitpunkt zu sehen wäre – bedienbar, aber ohne das echte Display zu beeinflussen. Funktioniert nur angemeldet.</td><td>Administration, Redaktion</td></tr>
+    <tr><td><strong>Zustand testen</strong></td><td>beim Display: listet Anzeige, Öffnungsstatus, Texte und Balken für einen Zeitpunkt auf.</td><td>Administration</td></tr>
+    <tr><td><strong>Diagnose</strong></td><td>An die Display-Adresse <code>&amp;diag=1</code> anhängen: technische Übersicht des Zustands mit Version.</td><td>Administration</td></tr>
+  </tbody>
+</table>
+<figure class="w80"><img src="img/b-diag.png" alt=""><figcaption>Diagnoseansicht <code>&amp;diag=1</code></figcaption></figure>
+
+<h2 id="k7-5">7.5 Fehlersuche</h2>
+<table class="compact">
+  <thead><tr><th style="width:28%">Beobachtung</th><th style="width:36%">Mögliche Ursache</th><th>Abhilfe</th></tr></thead>
+  <tbody>
+    <tr><td>Ein Gruß, Hinweis oder eine Vollbild-Seite erscheint nicht</td><td>Status „unvollständig“; Zeitraum noch nicht begonnen; Display nicht angehakt; Hinweis „bis Geschäftsschluss“ an einem geschlossenen Tag; eine Vollbild-Seite verdrängt den Gruß</td><td>Status in der Liste prüfen, roten Kasten in der Maske lesen, Vorschau öffnen</td></tr>
+    <tr><td>Änderung kommt nicht am Display an</td><td>Abfrageintervall noch nicht abgelaufen; jemand bedient das Empfangsdisplay gerade</td><td>eine Minute warten; das Display übernimmt die Änderung auf der Startseite</td></tr>
+    <tr><td>Roter Punkt rechts unten am Display</td><td>Intranet nicht erreichbar (Netzwerk, Server)</td><td>Netzwerk prüfen; die letzte Anzeige bleibt so lange stehen</td></tr>
+    <tr><td>Übersicht zeigt „vor … min“ statt „online“</td><td>Gerät aus, App beendet oder keine Verbindung</td><td>Gerät und Slide Show prüfen</td></tr>
+    <tr><td>„Unbekanntes Display“ am Gerät</td><td>Kennung in der Adresse stimmt nicht (geändert oder Tippfehler)</td><td>Adresse aus „Adresse &amp; Status“ neu eintragen</td></tr>
+    <tr><td>Grafana-Fläche bleibt leer</td><td><code>allow_embedding</code> fehlt; Board verlangt Anmeldung; Adresse falsch</td><td>Adresse im Browser testen, Grafana-Konfiguration prüfen</td></tr>
+    <tr><td>Grafana-Schrift zu klein</td><td>Design-Auflösung zu groß für das Board</td><td>Design-Auflösung verringern oder Board mit größerer Schrift</td></tr>
+    <tr><td>Wettersymbol fehlt</td><td>Koordinaten fehlen oder Server darf Open-Meteo nicht erreichen</td><td>Koordinaten beim Standort ergänzen; Firewall prüfen</td></tr>
+    <tr><td>News erscheinen nicht</td><td>keine News-Folie in der Abfolge; „News und Laufband anzeigen“ in der Kategorie aus; Standort nicht angehakt; Zeitraum abgelaufen</td><td>Abfolge und Kategorie prüfen</td></tr>
+    <tr><td>Display-Seite erscheint nicht</td><td>in keiner Abfolge; Zeitfenster des Eintrags passt nicht</td><td>Spalte „Verwendet in Abfolge“ in der Liste prüfen</td></tr>
+    <tr><td>Kachel fehlt am Display</td><td>mehr als 8 Kacheln auf der Ebene; Entwurf statt veröffentlicht; falsche übergeordnete Kachel; „Wegweiser beginnt bei“ zeigt auf andere Start-Kachel</td><td>Einordnung prüfen, Untermenü bilden</td></tr>
+    <tr><td>Handy-Maske: „Zu viele Versuche“</td><td>zehn falsche Passwörter</td><td>zehn Minuten warten</td></tr>
+    <tr><td>Handy-Maske nicht erreichbar</td><td>Handy nicht im Firmen-WLAN</td><td>mit dem Firmen-WLAN verbinden</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k7-6">7.6 Datensicherung, Löschen und Datenschutz</h2>
+<ul>
+  <li><strong>Datensicherung:</strong> Alle Inhalte liegen in der WordPress-Datenbank, Bilder in der Mediathek. Die normale Sicherung des Intranets genügt.</li>
+  <li><strong>Plugin löschen:</strong> Beim Löschen über <span class="path">Plugins</span> werden nur die Einstellungen (Gruß-Passwort, Vorlagen) entfernt; Displays, Grüße, Standorte usw. bleiben erhalten, damit eine Neuinstallation nichts verliert.</li>
+  <li><strong>Automatisches Löschen:</strong> Grüße werden 30 Tage nach ihrem Ende samt dem über die Handy-Maske hochgeladenen Logo gelöscht.</li>
+  <li><strong>Fotos von Personen</strong> (Ansprechpartner, Team-Seiten) nur mit Einwilligung der abgebildeten Person verwenden.</li>
+  <li><strong>Gast-Logos und Namen</strong> sind am Empfang für alle sichtbar – nur Gäste begrüßen, die damit rechnen (angemeldete Besuche, Gruppen).</li>
+  <li><strong>Handy-Pflegemaske:</strong> nur im internen Netz erreichbar. Das gemeinsame Gruß-Passwort bei Personalwechsel am Empfang ändern.</li>
+</ul>
+
+<h1 id="anhang"><span class="nr">A</span>Anhang</h1>
+<h2 id="a1">A.1 Checkliste Inbetriebnahme</h2>
+<table class="compact">
+  <thead><tr><th style="width:6%">✓</th><th>Punkt</th><th style="width:16%">Kapitel</th></tr></thead>
+  <tbody>
+    <tr><td>☐</td><td>Plugin installiert und aktiviert, Version geprüft</td><td><a href="#k7-1">7.1</a></td></tr>
+    <tr><td>☐</td><td>Standorte mit Öffnungszeiten, Feiertagskalender, Logo und Koordinaten angelegt; Feiertagsvorschau geprüft</td><td><a href="#k6-1">6.1</a></td></tr>
+    <tr><td>☐</td><td>Ausnahmen (Sondertage) und Schließzeiten eingetragen</td><td><a href="#k6-1">6.1</a>, <a href="#k6-2">6.2</a></td></tr>
+    <tr><td>☐</td><td>Display-Kategorien geprüft (Pause, Feierabend, Vorwarnung, Rücksprung)</td><td><a href="#k6-3">6.3</a></td></tr>
+    <tr><td>☐</td><td>Displays mit Kennung nach Schema, Kategorie, Standort und Format angelegt</td><td><a href="#k6-4">6.4</a></td></tr>
+    <tr><td>☐</td><td>Wegweiser-Kacheln samt Untermenüs, Wegschritten (DE/EN), Ansprechpartnern angelegt; alle Kacheln einmal am Display angetippt</td><td><a href="#k4-4">4.4</a></td></tr>
+    <tr><td>☐</td><td>Info-Abfolgen eingerichtet, Grafana-Boards lesbar</td><td><a href="#k6-5">6.5</a></td></tr>
+    <tr><td>☐</td><td>Gruß-Passwort gesetzt, Schnellvorlagen angepasst</td><td><a href="#k6-6">6.6</a></td></tr>
+    <tr><td>☐</td><td>Display-Redaktion an die zuständigen Personen vergeben</td><td><a href="#k6-7">6.7</a></td></tr>
+    <tr><td>☐</td><td>Vollbild-Seite „Team-Info“ und Standard-Hinweise (z. B. Freitag) angelegt</td><td><a href="#k4-5">4.5</a>, <a href="#k4-3">4.3</a></td></tr>
+    <tr><td>☐</td><td>„Zustand testen“ für Werktag, Mittag, Abend, Wochenende, Feiertag und Betriebsurlaub durchgespielt</td><td><a href="#k7-4">7.4</a></td></tr>
+    <tr><td>☐</td><td>Adressen in Slide Show eingetragen, alle Displays in der Übersicht „online“</td><td><a href="#k7-2">7.2</a>, <a href="#k6-8">6.8</a></td></tr>
+    <tr><td>☐</td><td>Kurzanleitung „Gruß vom Handy“ beim Empfang ausgehängt, Maske auf dem Handy als Lesezeichen</td><td>Kurzanleitung</td></tr>
+  </tbody>
+</table>
+
+<h2 id="a2">A.2 Feldreferenz</h2>
+<p class="small muted">Pflichtfelder fett. Fehlt ein Pflichtfeld, wird der Eintrag gespeichert, aber nicht angezeigt (Status „unvollständig“).</p>
+<div class="two small">
+  <div><h4>Gruß</h4><table class="compact"><tbody>
+    <tr><td><strong>Name / Gruppe</strong> (Titel)</td><td>70 Zeichen, keine [Platzhalter]</td></tr>
+    <tr><td>Begrüßungszeile DE/EN</td><td>60 Zeichen</td></tr>
+    <tr><td>Zusatzzeile DE/EN</td><td>140 Zeichen</td></tr>
+    <tr><td>Gast-Logo</td><td>Bild</td></tr>
+    <tr><td><strong>Von, Bis</strong></td><td>Datum + Uhrzeit, Ende nach Beginn</td></tr>
+    <tr><td>Mehrere Tage</td><td>nur täglich im Zeitfenster</td></tr>
+    <tr><td><strong>Anzeigen auf</strong></td><td>Empfangsdisplays</td></tr>
+  </tbody></table></div>
+  <div><h4>Hinweis</h4><table class="compact"><tbody>
+    <tr><td><strong>Text DE</strong> (Titel), Text EN</td><td>je 160 Zeichen</td></tr>
+    <tr><td>Symbol</td><td>5 Symbole</td></tr>
+    <tr><td><strong>Wochentage</strong>, Von, Bis / bis Geschäftsschluss</td><td>Uhrzeiten</td></tr>
+    <tr><td>Gültig von / bis</td><td>optional</td></tr>
+    <tr><td><strong>Anzeigen auf</strong></td><td>alle Displays</td></tr>
+    <tr><td>Priorität, Aktiv</td><td>0–99, ja/nein</td></tr>
+  </tbody></table></div>
+  <div><h4>Wegweiser-Kachel</h4><table class="compact"><tbody>
+    <tr><td><strong>Titel DE</strong>, Titel EN</td><td>je 60 Zeichen</td></tr>
+    <tr><td>Untertitel DE/EN</td><td>je 90 Zeichen</td></tr>
+    <tr><td>Symbol</td><td>12 Symbole</td></tr>
+    <tr><td>Weg-Bewegtbild</td><td>WebP/GIF/MP4</td></tr>
+    <tr><td>Wegschritte DE/EN</td><td>je 8 Zeilen</td></tr>
+    <tr><td>Ansprechpartner, DW</td><td>90 / 30 Zeichen</td></tr>
+    <tr><td>Foto, QR-Code-Ziel</td><td>Bild, URL</td></tr>
+    <tr><td>Übergeordnete Kachel, Reihenfolge</td><td>Kasten „Einordnung“</td></tr>
+  </tbody></table></div>
+  <div><h4>Vollbild-Seite</h4><table class="compact"><tbody>
+    <tr><td>Titel, Inhalt</td><td>Editor</td></tr>
+    <tr><td><strong>Zeitregel</strong></td><td>wiederkehrend: <strong>Wochentage</strong> + Uhrzeit; einmalig: <strong>von – bis</strong></td></tr>
+    <tr><td>Nur an Öffnungstagen</td><td>Standard ja</td></tr>
+    <tr><td><strong>Anzeigen auf</strong></td><td>alle Displays</td></tr>
+    <tr><td>Besucher-Knopf, Priorität</td><td>ja/nein, 0–99</td></tr>
+  </tbody></table></div>
+  <div><h4>News</h4><table class="compact"><tbody>
+    <tr><td><strong>Titel</strong></td><td>140 Zeichen</td></tr>
+    <tr><td>Text</td><td>600 Zeichen</td></tr>
+    <tr><td>Bild</td><td>Bild</td></tr>
+    <tr><td><strong>Gültig von / bis</strong></td><td>Datum</td></tr>
+    <tr><td><strong>Standorte</strong></td><td>mind. einer</td></tr>
+    <tr><td><strong>Folie und/oder Laufband</strong></td><td>mind. eines</td></tr>
+  </tbody></table></div>
+  <div><h4>Display-Seite</h4><table class="compact"><tbody>
+    <tr><td>Titel, Inhalt</td><td>Editor</td></tr>
+    <tr><td>Format</td><td>Quer/Hoch (Orientierung)</td></tr>
+    <tr><td colspan="2">sichtbar erst über eine Abfolge</td></tr>
+  </tbody></table></div>
+  <div><h4>Standort</h4><table class="compact"><tbody>
+    <tr><td>Name (Titel), Logo, Koordinaten</td><td></td></tr>
+    <tr><td>Feiertagskalender</td><td>Österreich / Bayern</td></tr>
+    <tr><td>Öffnungszeiten je Wochentag</td><td>Blöcke, leer = geschlossen</td></tr>
+    <tr><td>Feiertage trotzdem geöffnet</td><td>je Feiertag</td></tr>
+    <tr><td>Ausnahmen</td><td>Datum, Art, Zeiten, Bezeichnung, Ankündigen</td></tr>
+  </tbody></table></div>
+  <div><h4>Schließzeit</h4><table class="compact"><tbody>
+    <tr><td>Bezeichnung DE/EN</td><td>80 Zeichen</td></tr>
+    <tr><td><strong>Zeitraum</strong>, <strong>Standorte</strong></td><td></td></tr>
+    <tr><td>Text DE/EN, Bild</td><td>optional</td></tr>
+    <tr><td>Vorankündigung</td><td>0–90 Tage, Standard 14</td></tr>
+  </tbody></table></div>
+  <div><h4>Display</h4><table class="compact"><tbody>
+    <tr><td>Kennung</td><td>a–z, 0–9, -</td></tr>
+    <tr><td><strong>Kategorie</strong>, Standort, Format</td><td></td></tr>
+    <tr><td>Wegweiser beginnt bei</td><td>nur Empfang</td></tr>
+    <tr><td>eigene Abfolge</td><td>nur Info</td></tr>
+    <tr><td>Abweichungen</td><td>je Einstellung</td></tr>
+  </tbody></table></div>
+</div>
+
+<h2 id="a3">A.3 Häufige Fragen</h2>
+<div class="two">
+  <p><strong>Kann ich einen Gruß für mehrere Tage anlegen?</strong><br>Ja. Beginn und Ende auf verschiedene Tage setzen. Mit „nur täglich von Start- bis Endzeit“ erscheint er jeden Tag nur im Zeitfenster.</p>
+  <p><strong>Wer sieht das Gruß-Passwort?</strong><br>Administratoren und die Display-Redaktion unter <span class="path">Displays → Übersicht</span>. Ändern können es nur Administratoren.</p>
+  <p><strong>Kann ein Display einen anderen Wegweiser zeigen?</strong><br>Ja. Beim Display „Wegweiser beginnt bei“ eine Start-Kachel wählen; dann zeigt es nur deren Unterkacheln.</p>
+  <p><strong>Wie zeige ich etwas nur am Montagmorgen auf einem Info-Display?</strong><br>Als Display-Seite anlegen und in der Abfolge „Nur zu bestimmten Zeiten“ auf Montag, 06:00–09:00 setzen.</p>
+  <p><strong>Warum sehe ich meinen Hinweis am Samstag nicht?</strong><br>Mit „bis Geschäftsschluss“ erscheint ein Hinweis an geschlossenen Tagen nicht. Stattdessen eine feste End-Uhrzeit eintragen.</p>
+  <p><strong>Wie lange dauert es, bis eine Änderung sichtbar ist?</strong><br>Höchstens das Abfrageintervall (Standard 60 Sekunden), am Empfangsdisplay ggf. bis zum nächsten Rücksprung auf die Startseite.</p>
+  <p><strong>Kann ich das Display auf Englisch fixieren?</strong><br>Nein. Die Sprache wählt der Besucher; nach dem Rücksprung gilt wieder Deutsch.</p>
+  <p><strong>Was passiert bei einem Netzwerkausfall?</strong><br>Die letzte Anzeige bleibt stehen, ein kleiner roter Punkt erscheint. Ist das Netz zurück, aktualisiert sich das Display von selbst.</p>
+  <p><strong>Können Besucher am Empfangsdisplay etwas verstellen?</strong><br>Nein. Sie können nur Kacheln, Sprache und die Knöpfe „Besucher? Hier tippen“ bzw. „Wegweiser öffnen“ bedienen.</p>
+  <p><strong>Wie entferne ich einen Hinweis nur vorübergehend?</strong><br>Häkchen „Aktiv“ entfernen. Später wieder setzen.</p>
+</div>
+
+<section class="aushang" id="aushang">
+{{AUSHANG}}
+</section>
+</body>
+</html>

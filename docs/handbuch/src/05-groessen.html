@@ -1,0 +1,175 @@
+<h1 id="k5"><span class="nr">5</span>Texte, Größen und Bildformate</h1>
+<p>Die Displays rechnen intern immer mit einer festen Bildfläche und skalieren sie auf den Bildschirm. Alle Größen in diesem Kapitel beziehen sich auf diese Fläche, angegeben in Bildpunkten (px). Zum Vergleich: Auf dem 43-Zoll-Empfangsdisplay entspricht 1 px etwa 0,5 mm.</p>
+
+<h2 id="k5-1">5.1 Bildschirmflächen</h2>
+<table class="compact">
+  <thead><tr><th style="width:26%">Display</th><th style="width:16%">Fläche</th><th>Aufteilung</th></tr></thead>
+  <tbody>
+    <tr><td>Empfang Hochformat</td><td>1080 × 1920</td><td>Kopf oben 480 px (ca. ein Viertel), darunter Wegweiser bzw. Gruß + Kacheln</td></tr>
+    <tr><td>Empfang Querformat</td><td>1920 × 1080</td><td>Kopf oben 270 px, darunter Wegweiser bzw. Gruß + Kacheln</td></tr>
+    <tr><td>Info Querformat</td><td>1920 × 1080</td><td>Kopfzeile 150 px, Fortschrittsbalken 6 px, Inhaltsfläche ca. 1876 × 790 px, Laufband 90 px</td></tr>
+    <tr><td>Info Hochformat</td><td>1080 × 1920</td><td>Kopfzeile 190 px, Laufband 110 px, dazwischen die Inhaltsfläche</td></tr>
+    <tr><td>Vollbild-, Geschlossen- und Schließzeit-Seite</td><td>ganze Fläche</td><td>Kopf mit Logo, Datum und Uhrzeit; darunter Überschrift und Inhalt</td></tr>
+  </tbody>
+</table>
+<div class="pair dd">
+  <figure class="disp"><img src="img/x-header.png" alt=""><figcaption>Feste Teile des Empfangsdisplays</figcaption></figure>
+  <figure class="disp"><img src="img/x-info-frame.png" alt=""><figcaption>Feste Teile des Info-Displays</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Teil</th><th>Inhalt</th><th>Herkunft</th></tr></thead>
+  <tbody>
+    <tr><td><span class="ltr">A</span></td><td>Logo</td><td>Logo des Standorts (<span class="path">Displays → Standorte</span>); ohne eigenes Logo das Holz-Marberger-Logo</td></tr>
+    <tr><td><span class="ltr">B</span></td><td>Wetter und Uhrzeit</td><td>Wetter aus den Koordinaten des Standorts (alle 30 Minuten aktualisiert); Uhrzeit vom Server</td></tr>
+    <tr><td><span class="ltr">C</span></td><td>„Willkommen bei / Holz Marberger“</td><td>fest, zweizeilig; Englisch „Welcome to / Holz Marberger“ (76 px)</td></tr>
+    <tr><td><span class="ltr">D</span></td><td>Datum</td><td>automatisch, z. B. „Mittwoch, 2. Dezember 2026“ (38 px)</td></tr>
+    <tr><td><span class="ltr">E</span><span class="ltr">F</span></td><td>„Was brauchen Sie?“ und Unterzeile</td><td>fest (84 px bzw. 38 px); die Unterzeile entfällt, sobald ein Balken aktiv ist</td></tr>
+    <tr><td><span class="ltr">G</span></td><td>Sprachwahl</td><td>„Deutsch“ / „English“</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Titel in der Kopfzeile</td><td>„Titel (Kopfzeile)“ des Abfolge-Eintrags; leer = Titel der Display-Seite bzw. Name des Servers (44 px)</td></tr>
+    <tr><td><span class="ltr">P</span><span class="ltr">Q</span></td><td>Punkte und Fortschrittsbalken</td><td>Position in der Abfolge und verbleibende Zeit bis zum nächsten Wechsel</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Inhaltsfläche</td><td>Grafana-Board, Display-Seite oder News-Folie</td></tr>
+    <tr><td><span class="ltr">R</span></td><td>Laufband</td><td>News „im Laufband“ und Vorankündigungen (36 px)</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k5-2">5.2 Gruß: Zeichen, Schriftgröße und Gast-Logo</h2>
+<table class="compact">
+  <thead><tr><th style="width:24%">Feld</th><th style="width:15%">Max. Zeichen</th><th>Darstellung</th></tr></thead>
+  <tbody>
+    <tr><td>Name / Gruppe</td><td>70</td><td>bis 28 Zeichen 82 px, bis 45 Zeichen 64 px, darüber 52 px. Passt der Text dann noch nicht in die Karte, wird er schrittweise bis auf 34 px verkleinert. Höchstens drei Zeilen sind gut lesbar – lieber kürzen.</td></tr>
+    <tr><td>Begrüßungszeile</td><td>60</td><td>44 px über dem Namen; leer = „Herzlich willkommen“</td></tr>
+    <tr><td>Zusatzzeile</td><td>140</td><td>36 px unter dem Namen; ein Satz genügt</td></tr>
+    <tr><td>Gast-Logo</td><td>–</td><td>weißes Feld 270 × 270 px (Querformat 210 × 210 px), das Bild wird mit 16 px Rand eingepasst, ohne Verzerrung. Wird die Karte durch Balken kleiner, schrumpft auch das Logo.</td></tr>
+  </tbody>
+</table>
+<div class="pair dddd">
+  <figure class="disp"><img src="img/s-greet-short-wide.png" alt=""><figcaption>Kurzer Name (22 Zeichen), Logo im Querformat</figcaption></figure>
+  <figure class="disp"><img src="img/s-greet-long-square.png" alt=""><figcaption>Langer Name (46 Zeichen), quadratisches Logo</figcaption></figure>
+  <figure class="disp"><img src="img/s-greet-max.png" alt=""><figcaption>Höchstlänge (70 Zeichen): automatisch verkleinert</figcaption></figure>
+  <figure class="disp"><img src="img/s-greet-nologo.png" alt=""><figcaption>Ohne Logo: neutrales Wappen</figcaption></figure>
+</div>
+<div class="pair" style="grid-template-columns: 52mm 1fr">
+  <figure class="disp"><img src="img/s-greet-with-banners.png" alt=""><figcaption>Mit zwei Balken wird die Karte kleiner</figcaption></figure>
+  <div>
+    <figure><img src="img/s-greet-max-quer.png" alt=""><figcaption>Höchstlänge im Querformat</figcaption></figure>
+    <div class="box"><b class="t">Gast-Logo: Empfehlung</b>
+    <ul>
+      <li>PNG mit <strong>durchsichtigem Hintergrund</strong> oder JPG mit weißem Hintergrund.</li>
+      <li>Mindestens 500 px an der langen Seite; mehr als 1600 px bringt nichts (Uploads vom Handy werden auf 1600 px verkleinert).</li>
+      <li>Quadratische oder hochformatige Logos nutzen das Feld am besten; sehr breite Logos (z. B. 4 : 1) werden entsprechend niedrig.</li>
+      <li>Nur Logos verwenden, die der Gast zur Verfügung gestellt hat oder die er öffentlich verwendet.</li>
+    </ul></div>
+  </div>
+</div>
+
+<h2 id="k5-3">5.3 Kacheln: Titel, Untertitel und Anordnung</h2>
+<table class="compact">
+  <thead><tr><th style="width:24%">Feld</th><th style="width:15%">Max. Zeichen</th><th>Darstellung</th></tr></thead>
+  <tbody>
+    <tr><td>Titel (DE/EN)</td><td>60</td><td>52 px (mit Balken 46 px, Querformat 42 px); lange Wörter werden getrennt, zu lange Titel verkleinert. Bewährt: 1–3 kurze Wörter.</td></tr>
+    <tr><td>Untertitel (DE/EN)</td><td>90</td><td>30 px, grau; nur bei bis zu vier Kacheln und ohne Balken sichtbar</td></tr>
+    <tr><td>Wegschritte</td><td>8 Zeilen</td><td>34 px mit Bewegtbild, 44 px ohne Bewegtbild</td></tr>
+    <tr><td>Ansprechpartner</td><td>90 (+ DW 30)</td><td>30 px unter den Wegschritten</td></tr>
+  </tbody>
+</table>
+<p>Die Anordnung richtet sich nach der Zahl der Kacheln auf der Ebene (höchstens 8):</p>
+<table class="compact">
+  <thead><tr><th>Kacheln</th><th>Hochformat</th><th>Querformat</th><th>Mit Gruß (kompakt)</th></tr></thead>
+  <tbody>
+    <tr><td>1–2</td><td>untereinander, groß</td><td>nebeneinander</td><td>eine Reihe</td></tr>
+    <tr><td>3–4</td><td>2 × 2 (bei 3: letzte Kachel über die ganze Breite)</td><td>eine Reihe</td><td>eine Reihe</td></tr>
+    <tr><td>5–6</td><td>2 × 3, nur Symbol und Titel</td><td>3 × 2</td><td>zwei Reihen</td></tr>
+    <tr><td>7–8</td><td>2 × 4, nur Symbol und Titel</td><td>4 × 2</td><td>zwei Reihen</td></tr>
+  </tbody>
+</table>
+<div class="pair dddd">
+  <figure class="disp"><img src="img/d-rec-start.png" alt=""><figcaption>4 Kacheln ohne Balken: mit Untertitel</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-notice-fr.png" alt=""><figcaption>Mit einem Balken: ohne Untertitel</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-3banners.png" alt=""><figcaption>Mit drei Balken: kompakt</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-sub.png" alt=""><figcaption>3 Kacheln: die dritte über die ganze Breite</figcaption></figure>
+</div>
+
+<h2 id="k5-4">5.4 Bilder und Medien – Übersicht</h2>
+<table class="compact">
+  <thead><tr><th style="width:20%">Wofür</th><th style="width:20%">Fläche am Display</th><th style="width:25%">Empfehlung</th><th>Hinweis</th></tr></thead>
+  <tbody>
+    <tr><td>Logo des Standorts</td><td>ca. 300 × 130 px im Kopf</td><td>PNG, transparent, Querformat</td><td>wird auf die Höhe des Kopfes eingepasst</td></tr>
+    <tr><td>Gast-Logo</td><td>270 × 270 px</td><td>PNG/JPG, ≥ 500 px</td><td>siehe <a href="#k5-2">5.2</a></td></tr>
+    <tr><td>Weg-Bewegtbild</td><td>volle Breite der Detailseite, 16 : 9</td><td>animiertes WebP oder GIF, 1080 × 608 px, 5–8 Bilder/s, ≤ 10 MB</td><td>MP4 möglich, vorher am Gerät testen</td></tr>
+    <tr><td>Foto Ansprechpartner</td><td>Kreis 170 px</td><td>JPG, quadratisch, ≥ 400 px</td><td>nur mit Einwilligung</td></tr>
+    <tr><td>News-Bild</td><td>ca. 780 × 680 px (linke Hälfte der Folie)</td><td>JPG, 1200 × 1000 px, Motiv in der Mitte</td><td>füllt die Fläche, Ränder werden abgeschnitten</td></tr>
+    <tr><td>Schließzeit-Bild</td><td>Restfläche der Schließzeit-Seite</td><td>JPG, Querformat, 1600 × 900 px</td><td>wird ohne Beschnitt eingepasst</td></tr>
+    <tr><td>Bilder in Vollbild-Seiten</td><td>volle Breite (ca. 950 px hoch / 1790 px quer)</td><td>JPG, Querformat, ≤ 1600 px breit</td><td>im Editor „Groß“ oder „Volle Größe“ wählen</td></tr>
+    <tr><td>Bilder in Display-Seiten</td><td>Inhaltsfläche ca. 1750 × 680 px</td><td>JPG, ≤ 1600 px breit</td><td>Spalten-Blöcke werden nebeneinander gezeigt</td></tr>
+    <tr><td>Grafana-Board</td><td>Inhaltsfläche ca. 1876 × 790 px</td><td>„Design-Auflösung“ 1920 × 1080</td><td>wird verkleinert, siehe <a href="#k6-5">6.5</a></td></tr>
+  </tbody>
+</table>
+
+<h2 id="k5-5">5.5 Hinweise, Vollbild-Seiten und News</h2>
+<table class="compact">
+  <thead><tr><th style="width:24%">Feld</th><th style="width:15%">Max. Zeichen</th><th>Darstellung</th></tr></thead>
+  <tbody>
+    <tr><td>Hinweis-Text (DE/EN)</td><td>160</td><td>40 px fett (bei zwei oder mehr Balken 34 px, auf Unterseiten 30 px), zweite Sprache 28 px darunter. Bis ca. 70 Zeichen passt der Text in zwei Zeilen.</td></tr>
+    <tr><td>Vollbild-Seite: Titel</td><td>–</td><td>104 px (Querformat 76 px) – kurz halten, ideal eine Zeile</td></tr>
+    <tr><td>Vollbild-Seite: Inhalt</td><td>–</td><td>Fließtext 40 px (Querformat 32 px); passt etwa 12–15 Zeilen Text oder ein Bild mit 3–4 Zeilen</td></tr>
+    <tr><td>News: Titel</td><td>140</td><td>72 px auf der Folie, 36 px im Laufband</td></tr>
+    <tr><td>News: Text</td><td>600</td><td>38 px; 2–4 Zeilen sind gut lesbar</td></tr>
+    <tr><td>Display-Seite: Text</td><td>–</td><td>36 px Fließtext, „Überschrift 2“ 72 px</td></tr>
+    <tr><td>Schließzeit: Text</td><td>–</td><td>46 px (Querformat 36 px), englischer Text kleiner darunter</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k5-6">5.6 Feste Texte am Display</h2>
+<p>Diese Texte sind im Plugin hinterlegt und lassen sich nicht im Backend ändern.</p>
+<table class="compact">
+  <thead><tr><th style="width:24%">Wo</th><th>Deutsch</th><th>Englisch</th></tr></thead>
+  <tbody>
+    <tr><td>Kopf Empfang</td><td>Willkommen bei / Holz Marberger</td><td>Welcome to / Holz Marberger</td></tr>
+    <tr><td>Startseite</td><td>Was brauchen Sie?</td><td>How can we help you?</td></tr>
+    <tr><td>Startseite, Unterzeile</td><td>Tippen Sie auf Ihr Ziel – wir zeigen Ihnen den Weg.</td><td>Tap your destination – we will show you the way.</td></tr>
+    <tr><td>Startseite unten</td><td>Berühren Sie eine Kachel</td><td>Touch a tile</td></tr>
+    <tr><td>Kachel mit Wegbeschreibung</td><td>Weg anzeigen →</td><td>Show the way →</td></tr>
+    <tr><td>Kachel mit Unterkacheln</td><td>Auswahl →</td><td>Choose →</td></tr>
+    <tr><td>Detail- und Unterseite</td><td>← Zurück</td><td>← Back</td></tr>
+    <tr><td>Ansprechpartner</td><td>Ansprechpartner: … · DW …</td><td>Contact: … · DW …</td></tr>
+    <tr><td>QR-Code</td><td>Weg aufs Handy: QR-Code scannen</td><td>Directions on your phone: scan the QR code</td></tr>
+    <tr><td>Gruß ohne Begrüßungszeile</td><td>Herzlich willkommen</td><td>Herzlich willkommen (bzw. englische Begrüßungszeile)</td></tr>
+    <tr><td>Rücksprung</td><td>Zurück zur Startseite in … s</td><td>Back to start in … s</td></tr>
+    <tr><td>Vollbild-Seite</td><td colspan="2">Besucher? Hier tippen · Visitor? Tap here</td></tr>
+    <tr><td>Geschlossen-Seite</td><td>Wir haben geschlossen. / Öffnungszeiten</td><td>We are closed. / Opening hours</td></tr>
+    <tr><td>Geschlossen-/Schließzeit-Seite</td><td colspan="2">Wegweiser öffnen · Open directory</td></tr>
+    <tr><td>Schließzeit ohne Bezeichnung</td><td>Geschlossen</td><td>Closed</td></tr>
+    <tr><td>Öffnungszeiten-Tafel, geschlossener Tag</td><td colspan="2">geschlossen · closed</td></tr>
+    <tr><td>Info-Display, Laufband</td><td colspan="2">NEWS</td></tr>
+    <tr><td>News-Folie</td><td>NEWS bzw. ANKÜNDIGUNG · gültig bis TT.MM.</td><td>–</td></tr>
+    <tr><td>Verbindung fehlt beim Start</td><td>Verbindung zum Intranet wird aufgebaut …</td><td>–</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k5-7">5.7 Automatisch erzeugte Texte</h2>
+<p>Aus Öffnungszeiten, Ausnahmen und Schließzeiten bildet das System die folgenden Sätze selbst. Die Beispiele gelten für Ötztal Bahnhof (Montag bis Freitag 07:00–16:30) bzw. für Silz (Beispielzeiten 07:00–12:00 und 13:00–17:00).</p>
+<table class="compact">
+  <thead><tr><th style="width:22%">Anlass</th><th>Deutsch (Beispiel)</th><th style="width:32%">Englisch (Beispiel)</th></tr></thead>
+  <tbody>
+    <tr><td>Pause (Balken)</td><td>Mittagspause – heute ab 13:00 Uhr sind wir wieder für Sie da.</td><td>Lunch break – we will be back today from 13:00.</td></tr>
+    <tr><td>Vorwarnung vor einer Pause</td><td>Mittagspause von 12:00 bis 13:00 Uhr.</td><td>Lunch break from 12:00 to 13:00.</td></tr>
+    <tr><td>Vorwarnung vor Tagesschluss</td><td>Wir schließen heute um 16:30 Uhr.</td><td>We close today at 16:30.</td></tr>
+    <tr><td>Geschlossen, wieder offen heute</td><td>Heute ab 07:00 Uhr sind wir wieder für Sie da.</td><td>We will be back today from 07:00.</td></tr>
+    <tr><td>… morgen</td><td>Morgen ab 07:00 Uhr sind wir wieder für Sie da.</td><td>We will be back tomorrow from 07:00.</td></tr>
+    <tr><td>… innerhalb von 6 Tagen</td><td>Am Montag ab 07:00 Uhr sind wir wieder für Sie da.</td><td>We will be back on Monday from 07:00.</td></tr>
+    <tr><td>… später</td><td>Am Donnerstag, 7. Jänner, ab 07:00 Uhr sind wir wieder für Sie da.</td><td>We will be back on Thursday, 7 January, from 07:00.</td></tr>
+    <tr><td>Keine Öffnung in 60 Tagen</td><td>Unsere Öffnungszeiten finden Sie auf holz-marberger.at.</td><td>You can find our opening hours at holz-marberger.at.</td></tr>
+    <tr><td>Grund (Feiertag)</td><td>Mariä Empfängnis</td><td>Immaculate Conception</td></tr>
+    <tr><td>Geschlossen als Balken</td><td>Wir haben geschlossen – morgen ab 07:00 Uhr sind wir wieder für Sie da.</td><td>We are closed – we will be back tomorrow from 07:00.</td></tr>
+    <tr><td>Vorankündigung Schließzeit</td><td>Betriebsurlaub 24.12.–6.1. · am Donnerstag, 7. Jänner, ab 07:00 Uhr wieder für Sie da.</td><td>Company holidays 24 Dec – 6 Jan · back on Thursday, 7 January, from 07:00.</td></tr>
+    <tr><td>Vorankündigung Ausnahme (andere Zeiten)</td><td>Kurzer Arbeitstag vor Weihnachten: am Mittwoch, 23. Dezember geöffnet 07:00–12:00 Uhr.</td><td>… open on Wednesday, 23 December, 07:00–12:00.</td></tr>
+    <tr><td>Vorankündigung Ausnahme (geschlossen)</td><td>Fenstertag: am Freitag, 7. Mai geschlossen. – ohne Bezeichnung: Am Freitag, 7. Mai haben wir geschlossen.</td><td>Bridge day: closed on Friday, 7 May.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k5-8">5.8 Symbole</h2>
+<div class="pair dd">
+  <div><h3 style="margin-top:0">Symbole für Wegweiser-Kacheln</h3>{{ICONS_TILES}}</div>
+  <div><h3 style="margin-top:0">Symbole für Hinweise</h3>{{ICONS_NOTICE}}
+    <p class="small muted" style="margin-top:3mm">Automatische Balken verwenden „Info“ (Pause, Vorankündigung) bzw. „Warnung“ (Vorwarnung vor Schluss).</p></div>
+</div>

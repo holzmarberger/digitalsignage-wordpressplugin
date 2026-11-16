@@ -1,0 +1,225 @@
+<h1 id="k6"><span class="nr">6</span>Administration</h1>
+<p>Dieses Kapitel beschreibt alles, was nur Administratoren sehen: Standorte, Schließzeiten, Display-Kategorien, Displays mit ihren Abfolgen, Einstellungen und Benutzer.</p>
+
+<!-- ============================ STANDORTE -->
+<h2 id="k6-1">6.1 Standorte und Öffnungszeiten</h2>
+<p>Ein Standort liefert allen zugehörigen Displays das Logo, das Wetter und die Öffnungszeiten. Aus den Öffnungszeiten entstehen automatisch Pause, Vorwarnung, Geschlossen-Seite und die Sätze „… sind wir wieder für Sie da“.</p>
+<figure><img src="img/b-loc-list.png" alt=""><figcaption>Liste der Standorte mit zusammengefassten Öffnungszeiten</figcaption></figure>
+<div class="pair" style="grid-template-columns: 1.15fr 1fr">
+  <figure><img src="img/b-loc-edit.png" alt=""><figcaption>Maske „Standort bearbeiten“</figcaption></figure>
+  <div>
+    <table class="legend compact" style="margin-top:0">
+      <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nr">1</span></td><td>Logo</td><td>Logo im Kopf aller Displays dieses Standorts (<span class="ltr">A</span>). Ohne Logo: Holz-Marberger-Logo.</td></tr>
+        <tr><td><span class="nr">2</span></td><td>Koordinaten</td><td>Breite/Länge in Dezimalgrad für das Wetter (<span class="ltr">B</span>), z. B. aus Google Maps (Rechtsklick auf den Ort).</td></tr>
+        <tr><td><span class="nr">3</span></td><td>Feiertagskalender</td><td>Österreich oder Bayern; die Feiertage werden jedes Jahr automatisch berechnet.</td></tr>
+        <tr><td><span class="nr">4</span></td><td>Öffnungszeiten</td><td>je Wochentag ein oder mehrere Blöcke, durch Beistrich getrennt: <code>07:00-12:00, 13:00-17:00</code> (Kurzform <code>7-12, 13-17</code>). Leer = geschlossen.</td></tr>
+        <tr><td><span class="nr">5</span></td><td>Feiertage trotzdem geöffnet</td><td>angehakte Feiertage gelten als normaler Werktag laut Öffnungszeiten (Beispiel: 8. Dezember).</td></tr>
+        <tr><td><span class="nr">6</span></td><td>Ausnahmen</td><td>einzelne Tage: <em>geschlossen</em> oder <em>abweichende Zeiten</em>, mit Bezeichnung und optional „Ankündigen (Tage vorher)“. Mehrere Tage am Stück → Schließzeit.</td></tr>
+        <tr><td><span class="nr">7</span></td><td>Vorschau Feiertage</td><td>alle Feiertage der nächsten zwölf Monate mit „geöffnet“/„geschlossen“ zur Kontrolle (nach dem Speichern aktualisiert).</td></tr>
+      </tbody>
+    </table>
+    <figure style="margin-top:3mm"><img src="img/b-loc-silz-hours.png" alt=""><figcaption>Öffnungszeiten mit Mittagspause (Beispiel Silz)</figcaption></figure>
+  </div>
+</div>
+
+<h3>Regelwerk: Wie aus den Öffnungszeiten die Anzeige entsteht</h3>
+<table class="compact">
+  <thead><tr><th style="width:18%">Fall</th><th style="width:30%">Erkennung</th><th>Anzeige am Empfangsdisplay (Standard)</th></tr></thead>
+  <tbody>
+    <tr><td><strong>geöffnet</strong></td><td>innerhalb eines Blocks</td><td>Wegweiser</td></tr>
+    <tr><td><strong>Pause</strong></td><td>Lücke zwischen zwei Blöcken am selben Tag; Lücken unter 15 Minuten werden ignoriert</td><td>Balken „Mittagspause – heute ab 13:00 Uhr sind wir wieder für Sie da.“, der Wegweiser bleibt bedienbar</td></tr>
+    <tr><td><strong>Vorwarnung</strong></td><td>15 Minuten vor dem Ende eines Blocks</td><td>Balken „Mittagspause von 12:00 bis 13:00 Uhr.“ bzw. vor dem letzten Block „Wir schließen heute um 16:30 Uhr.“</td></tr>
+    <tr><td><strong>Feierabend</strong></td><td>nach dem letzten Block bis zum ersten Block des nächsten Öffnungstags</td><td>Geschlossen-Seite mit nächster Öffnung und Öffnungszeiten-Tafel</td></tr>
+    <tr><td><strong>geschlossener Tag</strong></td><td>Tag ohne Block (Wochenende), Feiertag, Ausnahme „geschlossen“</td><td>Geschlossen-Seite; bei Feiertagen und Ausnahmen mit Grund (z. B. „Mariä Empfängnis“)</td></tr>
+    <tr><td><strong>Schließzeit</strong></td><td>Zeitraum einer Schließzeit</td><td>Schließzeit-Seite (siehe <a href="#k6-2">6.2</a>)</td></tr>
+  </tbody>
+</table>
+<p>Angrenzende Wochenenden, Feiertage und Schließzeiten werden zusammengezählt: Am 24. Dezember steht deshalb schon „Am Donnerstag, 7. Jänner, ab 07:00 Uhr sind wir wieder für Sie da“. Die nächste Öffnung wird bis zu 60 Tage im Voraus gesucht.</p>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-silz-pausewarn.png" alt=""><figcaption>11:50 – Vorwarnung vor der Pause (Silz)</figcaption></figure>
+  <figure class="disp"><img src="img/d-silz-pause.png" alt=""><figcaption>12:15 – Pause als Balken (Silz)</figcaption></figure>
+</div>
+<div class="pair ddd">
+  <figure class="disp"><img src="img/d-rec-warn.png" alt=""><figcaption>16:20 – Vorwarnung vor Tagesschluss</figcaption></figure>
+  <figure class="disp"><img src="img/x-closed.png" alt=""><figcaption>18:00 – Geschlossen-Seite</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-weekend.png" alt=""><figcaption>Samstag – „Am Montag ab 07:00 Uhr …“</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Teil</th><th>Inhalt der Geschlossen-Seite</th><th>Herkunft</th></tr></thead>
+  <tbody>
+    <tr><td><span class="ltr">N</span></td><td>„Wir haben geschlossen.“ / „We are closed.“</td><td>fest</td></tr>
+    <tr><td><span class="ltr">L</span></td><td>„Morgen ab 07:00 Uhr sind wir wieder für Sie da.“ + Englisch</td><td>automatisch aus den Öffnungszeiten (Formulierungen in <a href="#k5-7">5.7</a>); bei Feiertagen und Ausnahmen steht der Grund darüber</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Öffnungszeiten-Tafel</td><td>die Wochenzeiten des Standorts, gleiche Tage zusammengefasst</td></tr>
+    <tr><td><span class="ltr">M</span></td><td>„Wegweiser öffnen · Open directory“</td><td>Einstellung der Display-Kategorie; öffnet den Wegweiser bis zum Rücksprung</td></tr>
+  </tbody>
+</table>
+<figure class="w80"><img src="img/d-silz-holiday.png" alt=""><figcaption>Feiertag (8. Dezember in Silz, nicht als geöffnet markiert): Geschlossen-Seite mit Grund – Querformat</figcaption></figure>
+
+<!-- ============================ SCHLIESSZEITEN -->
+<h2 id="k6-2">6.2 Schließzeiten</h2>
+<p>Eine Schließzeit schließt einen oder mehrere Standorte über mehrere Tage, z. B. den Betriebsurlaub über Weihnachten. Sie überlagert die Öffnungszeiten. Vorher wird sie angekündigt, während der Schließzeit zeigt das Empfangsdisplay die Schließzeit-Seite.</p>
+<div class="pair b-d">
+  <figure><img src="img/b-closure-edit.png" alt=""><figcaption>Maske „Schließzeit bearbeiten“</figcaption></figure>
+  <figure class="disp"><img src="img/x-closure.png" alt=""><figcaption>Schließzeit-Seite am 28.12.</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel</td><td>nur zur Unterscheidung im Backend, z. B. „Betriebsurlaub Weihnachten 2026“; erscheint nicht am Display.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Bezeichnung DE/EN</td><td>große Überschrift der Schließzeit-Seite, englisch darunter; auch Anfang der Vorankündigung.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Zeitraum</td><td>erster und letzter geschlossener Tag. Daraus entstehen „24.12.–6.1.“ und der Tag der Wiedereröffnung (<span class="ltr">L</span>).</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Standorte</td><td>für welche Standorte. Weichen die Tage an einem Standort ab, eine eigene Schließzeit anlegen.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Text DE/EN</td><td>optionaler Text unter der Überschrift, z. B. Weihnachtswünsche.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Bild</td><td>optionales Bild, füllt die freie Fläche.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>Vorankündigung</td><td>so viele Tage vorher erscheint die Ankündigung (Standard 14, 0 = keine).</td></tr>
+    <tr><td><span class="ltr">M</span></td><td>automatisch</td><td>Knopf „Wegweiser öffnen“ (Einstellung der Kategorie).</td></tr>
+  </tbody>
+</table>
+<div class="pair dd">
+  <figure class="disp"><img src="img/x-announce.png" alt=""><figcaption>Vorankündigung <span class="nr">7</span> als Balken am Empfang</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-announce.png" alt=""><figcaption>Vorankündigung auf der News-Folie des Info-Displays</figcaption></figure>
+</div>
+<p>Wie Schließzeit und Vorankündigung erscheinen, legt die Display-Kategorie fest (<a href="#k6-3">6.3</a>): Empfangsdisplays zeigen standardmäßig die Schließzeit-Seite und die Ankündigung als Balken, Info-Displays laufen normal weiter und kündigen im Laufband und auf der News-Folie an.</p>
+
+<!-- ============================ KATEGORIEN -->
+<h2 id="k6-3">6.3 Display-Kategorien</h2>
+<p>Eine Display-Kategorie bündelt die Einstellungen für alle Displays einer Art. Bei der Installation werden „Empfang“ und „Info intern“ angelegt. Eine Änderung in der Kategorie wirkt sofort auf alle zugehörigen Displays – außer ein Display weicht beim jeweiligen Wert ab. Die Maske zeigt nur die Felder, die zum gewählten Typ passen.</p>
+<figure><img src="img/b-cat-list.png" alt=""><figcaption>Liste der Display-Kategorien</figcaption></figure>
+<div class="pair" style="grid-template-columns: 1fr 1fr">
+  <figure><img src="img/b-cat-empfang.png" alt=""><figcaption>Kategorie „Empfang“</figcaption></figure>
+  <div>
+    <table class="legend compact" style="margin-top:0">
+      <thead><tr><th>Nr.</th><th>Einstellung</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nr">1</span></td><td>Typ</td><td>Empfang (Touch) oder Info (ohne Touch). Beim Wechsel bietet die Maske die passenden Standardwerte an.</td></tr>
+        <tr><td><span class="nr">2</span></td><td>Abfrageintervall</td><td>wie oft das Display nachfragt (mind. 15 s).</td></tr>
+        <tr><td><span class="nr">3</span></td><td>Rücksprung</td><td>Sekunden ohne Berührung bis zur Startseite (nur Empfang).</td></tr>
+        <tr><td><span class="nr">4</span></td><td>Anzeige in der Pause</td><td rowspan="3">je „Vollbild-Seite“ (ganzseitig), „Balken“ oder „nichts“.</td></tr>
+        <tr><td><span class="nr">5</span></td><td>Anzeige bei Feierabend</td></tr>
+        <tr><td><span class="nr">6</span></td><td>Anzeige in Schließzeit</td></tr>
+        <tr><td><span class="nr">7</span></td><td>Vorwarnung</td><td>ja/nein und Minuten vorher.</td></tr>
+        <tr><td><span class="nr">8</span></td><td>Vorankündigung</td><td>„Balken“, „Laufband + News-Folie“ oder „nichts“.</td></tr>
+        <tr><td><span class="nr">9</span></td><td>Knopf „Wegweiser öffnen“</td><td>auf Geschlossen- und Schließzeit-Seite (nur Empfang).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3>Standardwerte</h3>
+<table class="compact">
+  <thead><tr><th style="width:38%">Einstellung</th><th>Empfang</th><th>Info intern</th></tr></thead>
+  <tbody>
+    <tr><td>Abfrageintervall</td><td>60 s</td><td>60 s</td></tr>
+    <tr><td>Rücksprung zur Startseite</td><td>45 s</td><td>–</td></tr>
+    <tr><td>Anzeige in der Pause</td><td>Balken</td><td>nichts</td></tr>
+    <tr><td>Anzeige bei Feierabend / geschlossenen Tagen</td><td>Vollbild-Seite</td><td>nichts (Abfolge läuft)</td></tr>
+    <tr><td>Anzeige während einer Schließzeit</td><td>Vollbild-Seite</td><td>nichts (Abfolge läuft)</td></tr>
+    <tr><td>Vorwarnung vor Schluss</td><td>ja, 15 Minuten</td><td>nein</td></tr>
+    <tr><td>Vorankündigung von Schließzeiten</td><td>Balken</td><td>Laufband + News-Folie</td></tr>
+    <tr><td>Knopf „Wegweiser öffnen“</td><td>ja</td><td>–</td></tr>
+    <tr><td>News und Laufband anzeigen</td><td>–</td><td>ja</td></tr>
+    <tr><td>Standard-Dauer pro Abfolge-Eintrag</td><td>–</td><td>30 s</td></tr>
+  </tbody>
+</table>
+<p>Bei Info-Kategorien steht unter den Einstellungen die <strong>Standard-Abfolge</strong> (<a href="#k6-5">6.5</a>). Weitere Kategorien sind sinnvoll, wenn sich Gruppen von Displays dauerhaft unterscheiden, z. B. „Info Halle“ mit anderer Abfolge als „Info Aufenthaltsraum“.</p>
+
+<!-- ============================ DISPLAYS -->
+<h2 id="k6-4">6.4 Displays</h2>
+<figure><img src="img/b-disp-list.png" alt=""><figcaption>Liste der Displays mit Kennung, Kategorie, Standort, Format und letzter Meldung</figcaption></figure>
+<div class="pair" style="grid-template-columns: 1.1fr 1fr">
+  <figure><img src="img/b-disp-edit.png" alt=""><figcaption>Maske „Display bearbeiten“ (Empfangsdisplay)</figcaption></figure>
+  <div>
+    <table class="legend compact" style="margin-top:0">
+      <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nr">1</span></td><td>Kennung</td><td>Teil der Adresse <code>…/?mm_signage=&lt;kennung&gt;</code>. Nur Kleinbuchstaben, Ziffern, Bindestriche; leer = aus dem Titel gebildet. Ist sie schon vergeben, wird „-2“ angehängt.</td></tr>
+        <tr><td><span class="nr">2</span></td><td>Kategorie</td><td>Typ und Standardverhalten. Die Maske blendet danach die passenden Felder ein.</td></tr>
+        <tr><td><span class="nr">3</span></td><td>Standort</td><td>Logo, Wetter, Öffnungszeiten. Ohne Standort gilt das Display als immer geöffnet.</td></tr>
+        <tr><td><span class="nr">4</span></td><td>Format</td><td>Hochformat (1080 × 1920) oder Querformat (1920 × 1080) – so, wie der Bildschirm montiert ist.</td></tr>
+        <tr><td><span class="nr">5</span></td><td>Wegweiser beginnt bei</td><td>nur Empfang: Standard ist die oberste Ebene. Für ein Display, das nur einen Teil des Wegweisers zeigen soll, die Start-Kachel wählen.</td></tr>
+        <tr><td><span class="nr">6</span></td><td>Abweichungen</td><td>jeder Wert der Kategorie einzeln überschreibbar; leer = „von Kategorie“.</td></tr>
+        <tr><td><span class="nr">7</span></td><td>Adresse &amp; Status</td><td>Adresse für Slide Show (anklicken markiert sie zum Kopieren), <span class="ui">Anzeige öffnen</span> und „Zuletzt gemeldet“.</td></tr>
+        <tr><td><span class="nr">8</span></td><td>Zustand testen</td><td>berechnet für einen beliebigen Zeitpunkt, was das Display zeigen würde.</td></tr>
+      </tbody>
+    </table>
+    <figure style="margin-top:3mm"><img src="img/b-disp-preview.png" alt=""><figcaption>„Zustand testen“ für den 28.12., 10:00</figcaption></figure>
+  </div>
+</div>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-silz-start.png" alt=""><figcaption>Empfangsdisplay im Querformat (Empfang Silz)</figcaption></figure>
+  <figure class="disp"><img src="img/d-silz-greeting.png" alt=""><figcaption>Gruß im Querformat</figcaption></figure>
+</div>
+
+<!-- ============================ ABFOLGEN -->
+<h2 id="k6-5">6.5 Abfolgen für Info-Displays</h2>
+<p>Die Abfolge bestimmt, welche Inhalte ein Info-Display nacheinander zeigt. Sie steht bei der Display-Kategorie (<strong>Standard-Abfolge</strong>, gilt für alle Displays der Kategorie) oder beim einzelnen Display (<strong>eigene Abfolge</strong>, Häkchen „eigene Abfolge statt der Standard-Abfolge der Kategorie“).</p>
+<figure><img src="img/b-seq-editor.png" alt=""><figcaption>Abfolge-Editor (Kategorie „Info intern“)</figcaption></figure>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Spalte</th><th>Wirkung</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Typ</td><td><strong>Web-Seite</strong> (URL, z. B. Grafana), <strong>Display-Seite</strong> (Auswahl) oder <strong>News-Folie</strong> (gültige News des Standorts und Vorankündigungen).</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Titel (Kopfzeile)</td><td>steht während des Eintrags oben in der Kopfzeile (<span class="nr">2</span> in Abb. „Feste Teile des Info-Displays“, Kap. <a href="#k5-1">5.1</a>).</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Adresse / Seite</td><td>bei Web-Seite die vollständige Adresse, bei Display-Seite die Auswahl.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Dauer (s)</td><td>Anzeigedauer; leer = Standard-Dauer der Kategorie (30 s), mindestens 5 s.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Nur zu bestimmten Zeiten</td><td>Wochentage und von–bis. Außerhalb fällt der Eintrag aus der Abfolge. Ohne Angabe läuft er immer.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Design-Auflösung</td><td>nur Web-Seiten: in welcher Größe die Seite geladen wird, bevor sie auf die Fläche verkleinert wird (Standard 1920 × 1080).</td></tr>
+    <tr><td><span class="nr">7</span></td><td>▲ ▼ ✕</td><td>Zeile nach oben/unten verschieben oder entfernen. Die Reihenfolge der Zeilen ist die Reihenfolge am Display.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Eintrag hinzufügen</td><td>neue Zeile am Ende. Danach <span class="ui">Aktualisieren</span> nicht vergessen.</td></tr>
+  </tbody>
+</table>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-info-grafana.png" alt=""><figcaption>Eintrag 1: Grafana „Zuschnitt“</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-hobelwerk.png" alt=""><figcaption>Eintrag 2: Grafana „Hobelwerk“</figcaption></figure>
+</div>
+<div class="pair" style="grid-template-columns: 1fr 1fr">
+  <figure><img src="img/b-disp-info-own.png" alt=""><figcaption>Eigene Abfolge beim Display „Info Silz Werkhalle“: „Termine“ nur Mo–Fr 06:00–09:00</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-silz-termine.png" alt=""><figcaption>Um 07:30 läuft die Display-Seite „Termine im Dezember“ mit</figcaption></figure>
+</div>
+<div class="box warn"><b class="t">Grafana: Voraussetzungen und Tipps</b>
+<ul>
+  <li>In der Grafana-Konfiguration muss <code>allow_embedding = true</code> gesetzt sein, sonst bleibt die Fläche leer. Die Boards müssen ohne Anmeldung erreichbar sein.</li>
+  <li>An die Adresse <code>&amp;kiosk</code> anhängen (z. B. <code>…/d/zuschnitt?orgId=1&amp;kiosk</code>), damit Menüs ausgeblendet werden.</li>
+  <li>Das Board wird in der Design-Auflösung geladen und als Ganzes verkleinert – kein Scrollen. Ist die Schrift zu klein, die Design-Auflösung verringern (z. B. 1600 × 900) oder für die Displays eigene Boards mit größerer Schrift anlegen.</li>
+  <li>Damit beim Wechsel kein leerer Rahmen erscheint, wird jeweils das nächste Board unsichtbar vorgeladen.</li>
+</ul></div>
+
+<!-- ============================ EINSTELLUNGEN -->
+<h2 id="k6-6">6.6 Einstellungen</h2>
+<div class="pair" style="grid-template-columns: 1.2fr 1fr">
+  <figure><img src="img/b-settings.png" alt=""><figcaption>Displays → Einstellungen</figcaption></figure>
+  <table class="legend compact" style="margin-top:0">
+    <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nr">1</span></td><td>Kurze Lücken ignorieren</td><td>Lücken zwischen Öffnungsblöcken unter dieser Dauer (Standard 15 min) gelten nicht als Pause.</td></tr>
+      <tr><td><span class="nr">2</span></td><td>Aktuelles Passwort</td><td>das Gruß-Passwort; <span class="ui">anzeigen</span> macht es sichtbar. Es ist verschlüsselt gespeichert.</td></tr>
+      <tr><td><span class="nr">3</span></td><td>Neues Passwort</td><td>leer = unverändert. Beim Ändern werden alle angemeldeten Handys abgemeldet. „Passwort entfernen“ erlaubt die Maske nur noch mit WordPress-Konto.</td></tr>
+      <tr><td><span class="nr">4</span></td><td>Adresse der Maske</td><td>zum Weitergeben bzw. für den QR-Code.</td></tr>
+      <tr><td><span class="nr">5</span></td><td>Schnellvorlagen</td><td>Bezeichnung (Name der Vorlage) und die vorbefüllten Texte. Platzhalter in eckigen Klammern zwingen zum Ersetzen. Mit ▲ ▼ sortieren, ✕ entfernen, <span class="ui">Vorlage hinzufügen</span>. Werden alle Vorlagen entfernt, gelten wieder die vier Standardvorlagen.</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Zum Schluss <span class="ui">Einstellungen speichern</span>.</p>
+
+<!-- ============================ BENUTZER -->
+<h2 id="k6-7">6.7 Benutzer und Display-Redaktion</h2>
+<p>Die Display-Redaktion ist ein <strong>Zusatzrecht</strong> zur bestehenden WordPress-Rolle. Ein Mitarbeiter mit der Rolle „Abonnent“ (oder einer anderen Rolle) bekommt dadurch den Menüpunkt <span class="path">Displays</span> mit den Redaktionsinhalten.</p>
+<ol class="steps">
+  <li>Gibt es noch kein Konto: <span class="path">Benutzer → Neu hinzufügen</span>, Benutzername, E-Mail, Vor- und Nachname, Rolle „Abonnent“, <span class="ui">Neuen Benutzer hinzufügen</span>.</li>
+  <li><span class="path">Benutzer → Alle Benutzer</span>, den Benutzer öffnen.</li>
+  <li>Ganz unten im Abschnitt <strong>Displays</strong> das Häkchen „Display-Redaktion“ setzen und <span class="ui">Benutzer aktualisieren</span>.</li>
+</ol>
+<figure><img src="img/b-user-redaktion.png" alt=""><figcaption>Häkchen „Display-Redaktion“ im Benutzerprofil (nur für Administratoren sichtbar)</figcaption></figure>
+<p>Administratoren haben das Recht immer. Die Redaktion darf zusätzlich Bilder in die Mediathek hochladen. Zum Entziehen das Häkchen wieder entfernen.</p>
+
+<!-- ============================ ÜBERSICHT -->
+<h2 id="k6-8">6.8 Übersicht und Status</h2>
+<figure><img src="img/b-overview.png" alt=""><figcaption>Displays → Übersicht (Administrator)</figcaption></figure>
+<table class="legend compact">
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Schnellzugriff</td><td>direkt zu „Gruß anlegen“, „Hinweis anlegen“, „News anlegen“.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Handy-Pflegemaske</td><td>Adresse zum Kopieren und Link zum Öffnen.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Gruß-Passwort</td><td><span class="ui">anzeigen</span>; für Administratoren zusätzlich <span class="ui">ändern</span>.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Displays</td><td>alle Displays; grüner Punkt = das Gerät hat sich in den letzten 5 Minuten gemeldet. „Anzeige öffnen“ zeigt die aktuelle Anzeige im Browser.</td></tr>
+  </tbody>
+</table>

@@ -3,7 +3,8 @@
 Stand: Version 1.0.1 · 16.11.2026
 
 Diese Dokumentation richtet sich an Entwickler, die das Plugin warten oder erweitern. Die Bedienung beschreibt
-das Anwenderhandbuch (PDF, separat); das Fachkonzept liegt in `docs/spec/konzept-marberger-signage.md`.
+das Anwenderhandbuch (PDF; Quellen und Erzeugung in `docs/handbuch/`); das Fachkonzept liegt in
+`docs/spec/konzept-marberger-signage.md`.
 
 ---
 
@@ -70,6 +71,7 @@ assets/vendor/qrcode.js      qrcode-generator 2.0.4 (MIT)
 assets/fonts/                Poppins (SIL OFL)
 tests/Core/                  PHPUnit-Tests der Core-Schicht
 bin/build-zip.sh             Release-ZIP
+docs/handbuch/               Anwenderhandbuch: HTML-Quellen, Screenshots, Werkzeuge zum Neu-Erzeugen
 ```
 
 Namensraum `Marberger\Signage`, Präfix `mms_` für Typen, Optionen, Hooks und Metas. Ziel: PHP 8.1,
@@ -307,7 +309,9 @@ phpunit                                  # Core-Tests (Holidays, OpeningCalendar
 find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 ```
 
-Die WP-Schicht hat keine automatisierten Tests. Manuelle Prüfung vor einem Release:
+Die WP-Schicht hat keine automatisierten Unit-Tests. Einen durchgehenden Oberflächen-Durchlauf liefert die
+Handbuch-Erzeugung (`docs/handbuch/werkzeuge/erzeugen.sh alles`): Sie legt alle Inhaltstypen über das Backend an,
+öffnet Player und Handy-Maske zu vielen Zeitpunkten und meldet JavaScript-Fehler. Zusätzlich manuell:
 
 1. Testinstanz (z. B. WordPress + SQLite-Integration, `php -S`), Plugin aktivieren, `WP_DEBUG_LOG` an.
 2. Je ein Empfangs- und Info-Display anlegen; über *Zustand testen* bzw. `&at=` prüfen: Werktag, Pause,
@@ -324,6 +328,8 @@ Die WP-Schicht hat keine automatisierten Tests. Manuelle Prüfung vor einem Rele
    Player- und Masken-Assets werden mit `?v=<version>` ausgeliefert – ohne Versionssprung behalten die
    WebViews alte Dateien im Cache.
 2. `README.md` (Abschnitt Änderungen) nachführen; bei fachlichen Änderungen auch das Konzept.
+   Handbuch: Texte in `docs/handbuch/src/` anpassen; bei sichtbaren Änderungen Screenshots neu erzeugen
+   (`docs/handbuch/werkzeuge/erzeugen.sh alles`, siehe `docs/handbuch/README.md`).
 3. Tests und Lint (Abschnitt 9).
 4. `bin/build-zip.sh` → `dist/marberger-signage-<version>.zip` (ohne `tests/`, `docs/`, `bin/`).
 5. Einspielen über *Plugins → Plugin hochladen*; WordPress ersetzt die vorhandene Version, Inhalte bleiben.

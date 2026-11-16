@@ -1,0 +1,244 @@
+<h1 id="k4"><span class="nr">4</span>Redaktion im Backend</h1>
+<p>Dieses Kapitel richtet sich an die Display-Redaktion und an die Administration. Alle Inhaltstypen liegen im WordPress-Backend im Menü <span class="path">Displays</span>. Jede Maske wird mit nummerierten Feldern gezeigt; dieselben Nummern auf dem Display-Bild zeigen, wo der Text erscheint.</p>
+
+<h2 id="k4-1">4.1 Anmelden, Menü und Übersicht</h2>
+<div class="pair" style="grid-template-columns: 34mm 1fr">
+  <figure style="margin:0"><img src="img/b-menu-redaktion.png" alt=""><figcaption>Menü der Redaktion</figcaption></figure>
+  <figure style="margin:0"><img src="img/b-overview-redaktion.png" alt=""><figcaption>Übersicht für die Redaktion</figcaption></figure>
+</div>
+<p>Melden Sie sich wie gewohnt im Intranet an (<code>…/wp-admin</code>). Mit dem Häkchen „Display-Redaktion“ im Benutzerprofil erscheint links der Menüpunkt <span class="path">Displays</span>. Die <strong>Übersicht</strong> zeigt den Schnellzugriff (<span class="ui">Gruß anlegen</span>, <span class="ui">Hinweis anlegen</span>, <span class="ui">News anlegen</span>), die Adresse der Handy-Pflegemaske, das Gruß-Passwort (mit <span class="ui">anzeigen</span> sichtbar machen) und alle Displays mit dem Link „Anzeige öffnen“.</p>
+<h3>So arbeiten alle Listen und Masken</h3>
+<ul>
+  <li><strong>Liste:</strong> Klick auf den Menüpunkt, z. B. <span class="path">Displays → Hinweise</span>. Über der Liste steht der Erklärkasten, darüber der Knopf zum Anlegen. Die Spalte <strong>Status</strong> zeigt auf einen Blick, was gerade läuft (grün), geplant ist (blau), unvollständig ist (orange) oder abgelaufen bzw. pausiert ist (grau).</li>
+  <li><strong>Anlegen / Bearbeiten:</strong> Titel oben eintragen, Felder ausfüllen, rechts <span class="ui">Veröffentlichen</span> bzw. <span class="ui">Aktualisieren</span> klicken.</li>
+  <li><strong>Fehlende Angaben:</strong> Fehlt etwas, erscheint oben ein roter Kasten „Bitte prüfen – nicht alles wurde übernommen“. Der Eintrag ist trotzdem gespeichert, wird aber <strong>nicht angezeigt</strong>, bis die Punkte erledigt sind (Status „unvollständig“).</li>
+  <li><strong>Vorschau:</strong> Nach dem Speichern zeigt die Zeile „Vorschau“ je Display einen Knopf. Er öffnet das Display, wie es zum Beginn des Eintrags aussieht.</li>
+  <li><strong>Löschen:</strong> rechts <span class="ui">In den Papierkorb legen</span>. Aus dem Papierkorb lässt sich ein Eintrag 30 Tage lang wiederherstellen.</li>
+</ul>
+<figure class="w80"><img src="img/b-help-compact.png" alt=""><figcaption>Erklärkasten über einer Maske – „mehr“ klappt die Regeln auf</figcaption></figure>
+
+<!-- ============================ GRÜSSE -->
+<h2 id="k4-2">4.2 Grüße</h2>
+<p>Ein Gruß erscheint im Zeitraum „Von – Bis“ auf den gewählten Empfangsdisplays als grüne Karte in der unteren Bildschirmhälfte. Er hat Vorrang vor der Geschlossen- und der Schließzeit-Seite. Laufen zwei Grüße gleichzeitig, wird der zuletzt geänderte gezeigt.</p>
+<figure><img src="img/b-greet-list.png" alt=""><figcaption>Liste der Grüße mit Zeitraum, Displays und Status</figcaption></figure>
+<table class="legend compact">
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Gruß anlegen</td><td>öffnet eine leere Maske.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Status</td><td>läuft jetzt / geplant / heute später / unvollständig / abgelaufen.</td></tr>
+  </tbody>
+</table>
+<h3>Mit Schnellvorlage beginnen</h3>
+<div class="pair dd">
+  <figure><img src="img/b-greet-template.png" alt=""><figcaption>Vorlage „Schulklasse“ gewählt – Platzhalter markiert</figcaption></figure>
+  <figure><img src="img/b-greet-error.png" alt=""><figcaption>Gespeichert mit Platzhalter: Hinweis, Gruß wird nicht angezeigt</figcaption></figure>
+</div>
+<p>Im Feld <span class="nr">2</span> <strong>Schnellvorlage</strong> eine Vorlage wählen. Sie trägt den Namen mit Platzhaltern ins Titelfeld <span class="nr">1</span> ein, füllt Begrüßungs- und Zusatzzeile (deutsch und englisch) und markiert den ersten Platzhalter. Steht beim Speichern noch ein Platzhalter in eckigen Klammern im Text, erscheint der rote Kasten und der Gruß wird nicht angezeigt. Die Vorlagen pflegt die Administration unter <span class="path">Displays → Einstellungen</span>.</p>
+<h3>Die Maske und was am Display erscheint</h3>
+<div class="pair b-d">
+  <figure><img src="img/b-greet-edit.png" alt=""><figcaption>Maske „Gruß bearbeiten“</figcaption></figure>
+  <figure class="disp"><img src="img/x-greeting.png" alt=""><figcaption>Ergebnis am Empfangsdisplay</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel = Name / Gruppe (Pflicht)</td><td>Große Schrift in der grünen Karte, max. 70 Zeichen, wird bei Bedarf kleiner gesetzt.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Schnellvorlage</td><td>füllt nur vor, erscheint nicht.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Gast-Logo</td><td>weißes Feld oben in der Karte; <span class="ui">Logo wählen</span> öffnet die Mediathek. Ohne Logo: neutrales Wappen.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Begrüßungszeile (+ Englisch)</td><td>kleine Zeile über dem Namen; leer = „Herzlich willkommen“. Max. 60 Zeichen.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Zusatzzeile (+ Englisch)</td><td>kleine Zeile unter dem Namen; optional, max. 140 Zeichen.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Von / Bis (Pflicht)</td><td>Beginn und Ende mit Tag und Uhrzeit. Das Ende muss nach dem Beginn liegen.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>Mehrere Tage</td><td>„nur täglich von Start- bis Endzeit“: Bei z. B. 20.–22.11., 09:00–16:00 erscheint der Gruß an allen drei Tagen jeweils nur von 09:00 bis 16:00. Ohne Häkchen läuft er durchgehend vom 20.11. 09:00 bis 22.11. 16:00.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Anzeigen auf (Pflicht)</td><td>nur Empfangsdisplays wählbar; neu angelegte Grüße haben alle angehakt.</td></tr>
+    <tr><td><span class="nr">9</span></td><td>Vorschau</td><td>öffnet das Display zum Beginn des Grußes (nach dem Speichern).</td></tr>
+  </tbody>
+</table>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-rec-greeting-evening.png" alt=""><figcaption>Gruß um 19:00 – nach Geschäftsschluss trotzdem sichtbar</figcaption></figure>
+  <figure class="disp"><img src="img/d-silz-greeting.png" alt=""><figcaption>Derselbe Gruß im Querformat (Empfang Silz)</figcaption></figure>
+</div>
+
+<!-- ============================ HINWEISE -->
+<h2 id="k4-3">4.3 Hinweise</h2>
+<p>Ein Hinweis ist ein orangefarbener Balken mit Symbol. Am Empfangsdisplay steht er über den Kacheln, auf Info-Displays über der Abfolge. Er eignet sich für alles, was während des normalen Betriebs auffallen soll: „Eingang rechts über die Haupteinfahrt“, „Hofeinfahrt wegen Kranarbeiten gesperrt“.</p>
+<figure><img src="img/b-notice-list.png" alt=""><figcaption>Liste der Hinweise: „Wann“ zeigt Wochentage, Uhrzeit und Gültigkeit</figcaption></figure>
+<div class="pair b-d">
+  <figure><img src="img/b-notice-edit.png" alt=""><figcaption>Maske „Hinweis bearbeiten“</figcaption></figure>
+  <div>
+    <figure class="disp"><img src="img/x-notice.png" alt=""><figcaption>Der Hinweis am Freitag um 13:00</figcaption></figure>
+  </div>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel = Text Deutsch (Pflicht)</td><td>fette Zeile im Balken, max. 160 Zeichen (empfohlen: bis ca. 70, damit er in zwei Zeilen passt).</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Text (Englisch)</td><td>kleine Zeile darunter. Tippt der Besucher „English“, wird sie zur fetten Zeile und der deutsche Text steht klein darunter.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Symbol</td><td>runder Kreis links: Pfeil rechts, Pfeil links, Pfeil geradeaus, Info oder Warnung (Übersicht in <a href="#k5-8">5.8</a>).</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Wochentage (Pflicht)</td><td>an welchen Tagen der Hinweis gilt.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Von</td><td>ab welcher Uhrzeit.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Bis / bis Geschäftsschluss</td><td>bis zu einer Uhrzeit – oder bis zum Ende der Öffnungszeit des Standorts an diesem Tag. Ist der Standort an einem Tag geschlossen, erscheint ein Hinweis „bis Geschäftsschluss“ an diesem Tag nicht.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>Gültig (optional)</td><td>begrenzt den Hinweis auf einen Datumsbereich, z. B. die Dauer einer Baustelle.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Anzeigen auf (Pflicht)</td><td>Empfangs- und Info-Displays.</td></tr>
+    <tr><td><span class="nr">9</span></td><td>Priorität</td><td>0–99; höhere Priorität steht weiter oben.</td></tr>
+    <tr><td><span class="nr">10</span></td><td>Aktiv</td><td>Häkchen entfernen = Hinweis pausiert, ohne ihn zu löschen.</td></tr>
+  </tbody>
+</table>
+<h3>Mehrere Balken</h3>
+<div class="pair ddd">
+  <figure class="disp"><img src="img/d-rec-kran.png" alt=""><figcaption>Hinweis (Priorität 5) und Vorankündigung</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-3banners.png" alt=""><figcaption>Drei Balken: Mehr passen nicht</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-notice.png" alt=""><figcaption>Hinweis auf dem Info-Display</figcaption></figure>
+</div>
+<p>Es werden höchstens <strong>drei Balken</strong> gleichzeitig gezeigt – zuerst die automatischen (Pause, Vorwarnung), dann die Hinweise nach Priorität, zuletzt Vorankündigungen. Am Freitag, 18.12., um 13:00 gelten im Beispiel vier Balken: Der Kranarbeiten-Hinweis (Priorität 5), der Freitags-Hinweis (0), die Vorankündigung des kurzen Arbeitstags und die Vorankündigung des Betriebsurlaubs. Die letzte entfällt. Je mehr Balken, desto kleiner werden die Kacheln; bei drei Balken zeigen sie nur noch Symbol und Titel.</p>
+
+<!-- ============================ WEGWEISER -->
+<h2 id="k4-4">4.4 Wegweiser-Kacheln</h2>
+<p>Jede Schaltfläche des Wegweisers ist ein eigener Eintrag unter <span class="path">Displays → Wegweiser-Kacheln</span>. Kacheln ohne übergeordnete Kachel bilden die Startseite „Was brauchen Sie?“. Eine Kachel öffnet entweder eine <strong>Unterauswahl</strong> (wenn sie Unterkacheln hat) oder ihre <strong>Detailseite</strong> mit der Wegbeschreibung.</p>
+<figure><img src="img/b-node-list.png" alt=""><figcaption>Liste der Wegweiser-Kacheln – Unterkacheln sind mit „—“ eingerückt</figcaption></figure>
+<table class="legend compact">
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Wegweiser-Kachel anlegen</td><td>neue Kachel.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Unterkachel</td><td>„— Buchhaltung“ gehört zu „Verwaltung“. Die Spalte „Inhalt“ zeigt, ob eine Kachel Unterkacheln oder eine Wegbeschreibung hat; „noch ohne Wegbeschreibung“ weist auf eine leere Detailseite hin.</td></tr>
+  </tbody>
+</table>
+<h3>Kachel anlegen – Schritt für Schritt</h3>
+<ol class="steps">
+  <li><span class="path">Displays → Wegweiser-Kacheln</span> → oben <span class="ui">Wegweiser-Kachel anlegen</span>.</li>
+  <li>Ins Titelfeld den <strong>deutschen Titel</strong> der Kachel schreiben, z. B. „Verkauf konstruktiv“.</li>
+  <li>Englischen Titel, Untertitel und Symbol ausfüllen.</li>
+  <li>Für eine Wegbeschreibung: Weg-Bewegtbild (optional), Wegschritte, Ansprechpartner mit Durchwahl, optional Foto und QR-Code-Ziel.</li>
+  <li>Rechts im Kasten <strong>Einordnung</strong>: bei „Übergeordnete Kachel“ <em>keine</em> für die Startseite – oder die Kachel wählen, unter der sie erscheinen soll. „Reihenfolge“ in Zehnerschritten (10, 20, 30 …).</li>
+  <li><span class="ui">Veröffentlichen</span>.</li>
+</ol>
+<div class="pair b-d">
+  <figure><img src="img/b-node-edit.png" alt=""><figcaption>Maske „Wegweiser-Kachel bearbeiten“</figcaption></figure>
+  <div>
+    <figure class="disp"><img src="img/x-tile.png" alt=""><figcaption>Kachel auf der Startseite</figcaption></figure>
+  </div>
+</div>
+<div class="pair dd">
+  <figure class="disp"><img src="img/x-detail.png" alt=""><figcaption>Detailseite nach dem Antippen</figcaption></figure>
+  <figure class="disp"><img src="img/x-detail-en.png" alt=""><figcaption>Dieselbe Seite auf Englisch</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel (Deutsch, Pflicht)</td><td>fette Schrift auf der Kachel und Überschrift der Detailseite. Max. 60 Zeichen; lange Wörter werden getrennt, zu lange Titel verkleinert.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Titel (Englisch)</td><td>ersetzt Titel 1, wenn der Besucher „English“ gewählt hat. Leer = deutscher Titel.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Untertitel (+ Englisch)</td><td>graue Zeile unter dem Titel der Kachel, max. 90 Zeichen. Wird ausgeblendet, sobald ein Balken aktiv ist oder mehr als vier Kacheln auf einer Ebene liegen.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Symbol</td><td>Kreis oben auf der Kachel (Übersicht in <a href="#k5-8">5.8</a>).</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Weg-Bewegtbild</td><td>großes Bild oben auf der Detailseite; startet sofort, stumm, in Schleife. Ohne Bewegtbild werden die Wegschritte größer dargestellt.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Wegschritte (+ Englisch)</td><td>nummerierte Liste, ein Schritt pro Zeile, höchstens 8.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>Ansprechpartner, DW</td><td>Zeile „Ansprechpartner: … · DW …“ unter den Wegschritten.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Foto Ansprechpartner</td><td>rundes Foto rechts neben den Wegschritten – nur mit Einwilligung der abgebildeten Person.</td></tr>
+    <tr><td><span class="nr">9</span></td><td>QR-Code-Ziel</td><td>QR-Code „Weg aufs Handy“ rechts; nur Seiten der öffentlichen Website, da Handys das Intranet nicht erreichen.</td></tr>
+    <tr><td><span class="nr">10</span></td><td>Einordnung</td><td>Übergeordnete Kachel (Untermenü) und Reihenfolge.</td></tr>
+    <tr><td><span class="ltr">H</span><span class="ltr">I</span><span class="ltr">J</span></td><td>automatisch</td><td>„Weg anzeigen →“ (Kachel mit Wegbeschreibung), „Auswahl →“ (Kachel mit Unterkacheln), „← Zurück“.</td></tr>
+  </tbody>
+</table>
+<h3>Untermenü</h3>
+<div class="pair" style="grid-template-columns: 1fr 52mm">
+  <div>
+    <figure class="w70"><img src="img/b-node-child.png" alt=""><figcaption>Kasten „Einordnung“ einer Unterkachel</figcaption></figure>
+    <p>Bei der Unterkachel (hier „Buchhaltung“) unter <span class="nr">1</span> <strong>Übergeordnete Kachel</strong> „Verwaltung“ wählen, unter <span class="nr">2</span> die Reihenfolge innerhalb des Untermenüs. Die übergeordnete Kachel zeigt dann „Auswahl →“ und öffnet eine eigene Seite mit „← Zurück“. Ihre Detailfelder werden ignoriert – die Maske weist darauf hin.</p>
+    <p>Untermenüs sind bis zu vier Ebenen tief möglich; zwei Ebenen reichen fast immer.</p>
+  </div>
+  <figure class="disp"><img src="img/d-rec-sub.png" alt=""><figcaption>Untermenü „Verwaltung“</figcaption></figure>
+</div>
+<h3>Varianten der Detailseite</h3>
+<div class="pair ddd">
+  <figure class="disp"><img src="img/d-rec-detail-novid.png" alt=""><figcaption>Ohne Weg-Bewegtbild</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-en-detail.png" alt=""><figcaption>Englisch, nur Wegschritte</figcaption></figure>
+  <figure class="disp"><img src="img/d-rec-en.png" alt=""><figcaption>Startseite auf Englisch</figcaption></figure>
+</div>
+<figure class="w80"><img src="img/d-silz-detail.png" alt=""><figcaption>Detailseite im Querformat: Bewegtbild links, Wegschritte rechts</figcaption></figure>
+<div class="box info"><b class="t">Weg-Bewegtbild erstellen</b>
+<p>Eine schematische Darstellung genügt, z. B. ein Grundriss mit einem wandernden Punkt vom Eingang zum Ziel. Bewährt: Seitenverhältnis 16 : 9 (z. B. 1080 × 608 Bildpunkte), 5–8 Bilder pro Sekunde, 3–6 Sekunden Länge, als <strong>animiertes WebP</strong> (beste Qualität bei kleiner Datei) oder GIF, höchstens 10 MB. MP4 ist ebenfalls möglich, sollte aber vorher am Gerät getestet werden. Hochladen über <span class="ui">Datei wählen</span> in der Mediathek.</p></div>
+
+<!-- ============================ VOLLBILD -->
+<h2 id="k4-5">4.5 Vollbild-Seiten</h2>
+<p>Eine Vollbild-Seite übernimmt im eingestellten Zeitfenster den <strong>ganzen Bildschirm</strong> der gewählten Displays – vor allem anderen: vor Gruß, Geschlossen-Seite, Wegweiser und Abfolge. Typisch ist „Guten Morgen, liebes Team!“ von Montag bis Freitag, 06:55–07:10, mit den Themen des Tages.</p>
+<figure><img src="img/b-fp-list.png" alt=""><figcaption>Liste der Vollbild-Seiten mit Zeitregel</figcaption></figure>
+<div class="pair b-d">
+  <figure><img src="img/b-fp-edit.png" alt=""><figcaption>Maske „Vollbild-Seite bearbeiten“</figcaption></figure>
+  <figure class="disp"><img src="img/x-fullpage.png" alt=""><figcaption>Ergebnis am Empfangsdisplay um 06:58</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel</td><td>große Überschrift unter dem Kopf.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Inhalt (Editor)</td><td>Text mit Absätzen, Fett, Listen und Bildern füllt den Rest der Seite. Bilder über <span class="ui">Dateien hinzufügen</span> einfügen. Was nicht auf den Bildschirm passt, wird abgeschnitten – kurz halten.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Zeitregel</td><td>„wiederkehrend (Wochentage)“ oder „einmalig (von – bis)“.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Wochentage</td><td>bei wiederkehrend.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Uhrzeit</td><td>von – bis, bei wiederkehrend. Zeitfenster über Mitternacht sind möglich (z. B. 22:00–02:00).</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Nur an Öffnungstagen</td><td>nicht an Feiertagen, an Tagen ohne Öffnungszeit und in Schließzeiten – damit die Team-Info nicht im Betriebsurlaub erscheint.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>Anzeigen auf (Pflicht)</td><td>Empfangs- und Info-Displays.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Besucher-Knopf</td><td>Knopf „Besucher? Hier tippen · Visitor? Tap here“ unten (nur am Empfang).</td></tr>
+    <tr><td><span class="nr">9</span></td><td>Priorität</td><td>bei Überschneidung zweier Vollbild-Seiten gewinnt die höhere, bei Gleichstand die zuletzt geänderte.</td></tr>
+    <tr><td><span class="nr">10</span></td><td>Vorschau</td><td>öffnet die Displays zum nächsten Beginn.</td></tr>
+    <tr><td><span class="ltr">A</span><span class="ltr">B</span></td><td>automatisch</td><td>Logo des Standorts, Datum und Uhrzeit.</td></tr>
+  </tbody>
+</table>
+<div class="pair" style="grid-template-columns: 1fr 52mm">
+  <div>
+    <figure><img src="img/b-fp-once.png" alt=""><figcaption>Zeitregel „einmalig“: am 23.12. von 11:00 bis 12:00 auf den Info-Displays</figcaption></figure>
+    <h3>Was der Besucher-Knopf macht</h3>
+    <p>Tippt ein Besucher um 06:58 auf „Besucher? Hier tippen“, sieht er, was ohne die Vollbild-Seite angezeigt würde – hier die Geschlossen-Seite „Heute ab 07:00 Uhr sind wir wieder für Sie da“ mit dem Knopf „Wegweiser öffnen“. Nach dem Rücksprung (Standard 45 Sekunden ohne Berührung) erscheint wieder die Vollbild-Seite.</p>
+  </div>
+  <figure class="disp"><img src="img/d-rec-team-visitor.png" alt=""><figcaption>Nach „Besucher? Hier tippen“</figcaption></figure>
+</div>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-info-team.png" alt=""><figcaption>Team-Info auf dem Info-Display (ohne Knopf)</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-once.png" alt=""><figcaption>Einmalige Vollbild-Seite am 23.12.</figcaption></figure>
+</div>
+
+<!-- ============================ NEWS -->
+<h2 id="k4-6">4.6 News</h2>
+<p>News sind Meldungen für die Mitarbeiter. Sie erscheinen nur auf <strong>Info-Displays</strong> der gewählten Standorte und nur im Gültigkeitszeitraum – als eigene Folie in der Abfolge und/oder als Lauftext unten.</p>
+<figure><img src="img/b-news-list.png" alt=""><figcaption>Liste der News mit Gültigkeit, Standorten und Anzeigeart</figcaption></figure>
+<div class="pair b-q">
+  <figure><img src="img/b-news-edit.png" alt=""><figcaption>Maske „News bearbeiten“</figcaption></figure>
+  <figure class="disp"><img src="img/x-news.png" alt=""><figcaption>News-Folie und Laufband</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Wirkung / Ort am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Titel (Pflicht)</td><td>große grüne Überschrift der News-Folie und Text im Laufband. Max. 140 Zeichen.</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Text</td><td>Absatz unter der Überschrift (nur auf der Folie), max. 600 Zeichen.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Bild</td><td>links auf der Folie, füllt die Fläche (Ränder werden bei Bedarf abgeschnitten). Ohne Bild steht der Text über die ganze Breite.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Gültig (Pflicht)</td><td>von – bis (Datum); „gültig bis …“ steht klein unter dem Text.</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Standorte (Pflicht)</td><td>auf den Info-Displays welcher Standorte.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Anzeige</td><td>„als eigene Folie“ und/oder „im Laufband“ (grüner Streifen unten mit „NEWS“).</td></tr>
+  </tbody>
+</table>
+<div class="pair dd">
+  <figure class="disp"><img src="img/d-info-news.png" alt=""><figcaption>News-Folie ohne Bild</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-announce.png" alt=""><figcaption>Vorankündigung des Betriebsurlaubs auf der News-Folie</figcaption></figure>
+</div>
+<p>Mehrere gültige News wechseln sich auf der News-Folie ab: Bei jedem Durchlauf der Abfolge kommt die nächste. Die News-Folie erscheint nur, wenn die Administration sie in die Abfolge des Displays aufgenommen hat. Ohne gültige News wird sie übersprungen. Vorankündigungen von Schließzeiten erscheinen dort automatisch mit der Kennzeichnung „ANKÜNDIGUNG“.</p>
+
+<!-- ============================ DISPLAY-SEITEN -->
+<h2 id="k4-7">4.7 Display-Seiten</h2>
+<p>Display-Seiten sind Inhaltsseiten nur für Info-Displays, z. B. „Unfallfreie Tage“ oder „Termine im Dezember“. Sie erscheinen nicht im Intranet und auch nicht von selbst am Display: Erst die Administration nimmt sie in eine Abfolge auf und legt dort Dauer und Zeitfenster fest.</p>
+<figure><img src="img/b-page-list.png" alt=""><figcaption>Liste der Display-Seiten – Spalte <span class="nr">1</span> zeigt, in welcher Abfolge eine Seite verwendet wird</figcaption></figure>
+<div class="pair b-q">
+  <figure><img src="img/b-page-edit.png" alt=""><figcaption>Maske „Display-Seite bearbeiten“</figcaption></figure>
+  <figure class="disp"><img src="img/d-info-page.png" alt=""><figcaption>Die Seite auf dem Info-Display</figcaption></figure>
+</div>
+<p><strong>Titel</strong> steht als Überschrift in der Kopfzeile des Info-Displays (sofern beim Abfolge-Eintrag kein eigener Titel steht). Der <strong>Inhalt</strong> aus dem Editor füllt die weiße Fläche. „Format“ (Quer/Hoch) dient nur der Orientierung beim Gestalten. Steht in der Spalte „Verwendet in Abfolge“ der orange Text „in keiner Abfolge – wird nicht angezeigt“, fehlt noch der Abfolge-Eintrag.</p>
+<div class="box"><b class="t">Gestaltungstipps für Display-Seiten</b>
+<ul>
+  <li>Wenige Wörter, große Zahlen: Ein Info-Display wird aus mehreren Metern gelesen und jede Seite ist nur 15–30 Sekunden zu sehen.</li>
+  <li>Überschriften mit „Überschrift 2“ setzen; normaler Text erscheint bereits groß (ca. 36 Bildpunkte auf 1920 × 1080).</li>
+  <li>Für sehr große Zahlen im Editor auf „Code“ umschalten und z. B. <code>&lt;p style="font-size:140px;font-weight:700"&gt;128&lt;/p&gt;</code> verwenden.</li>
+  <li>Inhalt, der nicht auf die Fläche passt, wird abgeschnitten – lieber zwei Seiten anlegen.</li>
+</ul></div>
+
+<!-- ============================ MASKE REDAKTION -->
+<h2 id="k4-8">4.8 Hinweise und News vom Handy</h2>
+<div class="pair dddd">
+  <figure><img src="img/m-red-greetings.png" alt=""><figcaption>Anmeldung mit WP-Konto: drei Reiter</figcaption></figure>
+  <figure><img src="img/m-red-notices.png" alt=""><figcaption>Reiter „Hinweise“</figcaption></figure>
+  <figure><img src="img/m-red-notice-form.png" alt=""><figcaption>Neuer Hinweis</figcaption></figure>
+  <figure><img src="img/m-red-news.png" alt=""><figcaption>Reiter „News“</figcaption></figure>
+</div>
+<p>Wer in der Handy-Pflegemaske auf „Mit WordPress-Konto anmelden“ tippt und sich mit seinem persönlichen Konto (mit Display-Redaktion) anmeldet, sieht zusätzlich die Reiter <strong>Hinweise</strong> und <strong>News</strong>. Die Felder entsprechen den Backend-Masken aus <a href="#k4-3">4.3</a> und <a href="#k4-6">4.6</a>; Wochentage werden durch Antippen der Kürzel gewählt.</p>

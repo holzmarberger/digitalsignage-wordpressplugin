@@ -2,7 +2,8 @@
 
 WordPress-Plugin für die Empfangs- und Info-Displays von Holz Marberger (Intranet).
 Fachkonzept: `docs/spec/konzept-marberger-signage.md`, Optik: `docs/spec/klickdummy-empfangsdisplay.html`,
-Entwicklerdokumentation: `docs/entwicklung.md`. Die Bedienung beschreibt das Anwenderhandbuch (PDF, separat).
+Entwicklerdokumentation: `docs/entwicklung.md`. Die Bedienung beschreibt das Anwenderhandbuch (PDF); Quellen,
+Screenshots und Werkzeuge zum Neu-Erzeugen liegen in `docs/handbuch/`.
 
 ## Änderungen
 

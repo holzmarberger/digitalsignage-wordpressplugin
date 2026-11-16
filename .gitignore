@@ -2,3 +2,6 @@
 /dist/
 /.phpunit.cache/
 .DS_Store
+/docs/handbuch/build/
+/docs/handbuch/arbeit/
+/docs/handbuch/werkzeuge/node_modules/

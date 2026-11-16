@@ -1,0 +1,10 @@
+{
+  "name": "marberger-signage-handbuch",
+  "version": "1.0.1",
+  "description": "Beispieldaten und Screenshots für das Anwenderhandbuch (Puppeteer)",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  },
+  "private": true
+}

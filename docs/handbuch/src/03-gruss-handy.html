@@ -1,0 +1,78 @@
+<h1 id="k3"><span class="nr">3</span>Gruß vom Handy (für den Empfang)</h1>
+<p>Mit der <strong>Handy-Pflegemaske</strong> legen Sie in unter einer Minute einen Gruß an, z. B. für eine Schulklasse oder einen Kundenbesuch. Sie brauchen dafür kein WordPress-Konto, nur das gemeinsame <strong>Gruß-Passwort</strong>. Die Maske funktioniert nur im Firmen-WLAN bzw. internen Netz.</p>
+
+<div class="box"><b class="t">Adresse der Handy-Pflegemaske</b>
+<p><code>http://intranet-marberger.oetztal.holz-marberger.at/?mm_pflege=1</code><br>
+Tipp: Die Seite am Handy als Lesezeichen auf den Startbildschirm legen (iPhone: Teilen → „Zum Home-Bildschirm“; Android: Menü → „Zum Startbildschirm hinzufügen“). Die Kurzanleitung zum Aushängen am Ende dieses Handbuchs hat einen QR-Code dafür.</p></div>
+
+<h2 id="k3-1">3.1 Anmelden</h2>
+<div class="pair m3">
+  <figure><img src="img/m-login.png" alt=""><figcaption>Anmeldung</figcaption></figure>
+  <figure><img src="img/m-login-error.png" alt=""><figcaption>Falsches Passwort</figcaption></figure>
+  <figure><img src="img/m-list.png" alt=""><figcaption>Liste der Grüße</figcaption></figure>
+</div>
+<ol class="steps">
+  <li>Adresse öffnen, im Feld <strong>Gruß-Passwort</strong> das Passwort eingeben, <span class="ui">Anmelden</span> tippen. Das Passwort erhalten Sie von der Administration; die Display-Redaktion kann es unter <span class="path">Displays → Übersicht</span> nachsehen.</li>
+  <li>Sie bleiben 30 Tage angemeldet. Wird das Passwort geändert, sind alle Handys abgemeldet; dann einfach neu anmelden.</li>
+  <li>Nach zehn falschen Versuchen ist die Anmeldung für zehn Minuten gesperrt.</li>
+</ol>
+<p>Die <strong>Liste</strong> zeigt alle Grüße mit Gast-Logo, Zeitraum und Status. Die Statusfarben bedeuten:</p>
+<table class="compact" style="width:85%">
+  <thead><tr><th style="width:30%">Status</th><th>Bedeutung</th></tr></thead>
+  <tbody>
+    <tr><td><strong style="color:#006729">läuft jetzt</strong></td><td>Der Gruß ist gerade am Display zu sehen.</td></tr>
+    <tr><td><strong style="color:#1f5fa8">geplant</strong> / <strong style="color:#1f5fa8">heute später</strong></td><td>Der Gruß erscheint zum eingestellten Beginn.</td></tr>
+    <tr><td><strong style="color:#b86e00">unvollständig</strong></td><td>Es fehlt etwas, z. B. ein Display oder ein ersetzter Platzhalter. Der Gruß wird nicht angezeigt.</td></tr>
+    <tr><td><strong style="color:#646970">abgelaufen</strong></td><td>Der Zeitraum ist vorbei. Nach 30 Tagen wird der Gruß samt Logo automatisch gelöscht.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k3-2">3.2 Einen Gruß anlegen</h2>
+<div class="pair" style="grid-template-columns: 1fr 1fr 1.05fr">
+  <figure><img src="img/m-new.png" alt=""><figcaption>Neuer Gruß: Schnellvorlagen</figcaption></figure>
+  <figure><img src="img/m-placeholder.png" alt=""><figcaption>Platzhalter noch nicht ersetzt</figcaption></figure>
+  <figure><img src="img/m-saved.png" alt=""><figcaption>Gespeichert</figcaption></figure>
+</div>
+<ol class="steps">
+  <li><span class="ui">+ Neuer Gruß</span> tippen.</li>
+  <li>Eine <strong>Schnellvorlage</strong> wählen, z. B. „Schulklasse“. Sie füllt Begrüßungszeile, Name und Zusatzzeile (auch auf Englisch) vor. Teile in eckigen Klammern wie <code>[Schule]</code> oder <code>[x]</code> sind Platzhalter, der erste ist schon markiert.</li>
+  <li>Platzhalter durch den echten Text ersetzen, z. B. „HTL Imst – Klasse 3B“. Solange noch eckige Klammern im Text stehen, lässt sich der Gruß nicht speichern.</li>
+  <li><strong>Gast-Logo</strong> (optional): <span class="ui">Foto wählen</span> tippen und ein Bild aus der Galerie wählen oder mit der Kamera fotografieren. iPhone-Fotos (HEIC) werden automatisch umgewandelt und verkleinert.</li>
+  <li><strong>Zeitraum</strong>: Tag und Uhrzeit für Beginn und Ende. Bei mehrtägigen Besuchen „nur täglich von Start- bis Endzeit“ anhaken – dann erscheint der Gruß an jedem Tag nur im Zeitfenster.</li>
+  <li><strong>Anzeigen auf</strong>: Standardmäßig sind alle Empfangsdisplays angehakt. Nicht benötigte abwählen.</li>
+  <li><span class="ui">Speichern</span>. Die Meldung „Gespeichert.“ erscheint, der Gruß steht in der Liste. Am Display ist er spätestens nach einer Minute zu sehen, sobald der Zeitraum begonnen hat.</li>
+</ol>
+
+<h2 id="k3-3">3.3 Was wo am Display erscheint</h2>
+<div class="pair" style="grid-template-columns: 1fr 1fr">
+  <figure class="tall"><img src="img/m-form-marked.png" alt=""><figcaption>Felder der Handy-Maske</figcaption></figure>
+  <figure class="disp"><img src="img/x-greeting.png" alt=""><figcaption>Dieselben Nummern am Empfangsdisplay</figcaption></figure>
+</div>
+<table class="legend compact">
+  <thead><tr><th>Nr.</th><th>Feld</th><th>Am Display</th></tr></thead>
+  <tbody>
+    <tr><td><span class="nr">1</span></td><td>Name / Gruppe</td><td>Große Schrift in der Mitte der grünen Karte. Bis 70 Zeichen; lange Namen werden automatisch kleiner gesetzt (siehe <a href="#k5-2">5.2</a>).</td></tr>
+    <tr><td><span class="nr">2</span></td><td>Schnellvorlage</td><td>erscheint nicht – füllt nur die Felder vor.</td></tr>
+    <tr><td><span class="nr">3</span></td><td>Gast-Logo</td><td>Weißes Feld über dem Text. Ohne Logo erscheint ein neutrales Wappen.</td></tr>
+    <tr><td><span class="nr">4</span></td><td>Begrüßungszeile</td><td>Kleine Zeile über dem Namen, z. B. „Herzlich willkommen“ (Standard, wenn leer).</td></tr>
+    <tr><td><span class="nr">5</span></td><td>Zusatzzeile</td><td>Kleine Zeile unter dem Namen (optional), z. B. „Schön, dass ihr uns besucht!“</td></tr>
+    <tr><td>–</td><td>Englisch (optional)</td><td>Erscheint, wenn ein Besucher auf „English“ tippt. Ohne englischen Text bleibt der deutsche stehen.</td></tr>
+    <tr><td><span class="nr">6</span></td><td>Zeitraum</td><td>bestimmt, wann die Karte erscheint.</td></tr>
+    <tr><td><span class="nr">7</span></td><td>nur täglich …</td><td>bei mehrtägigen Grüßen: nur im täglichen Zeitfenster.</td></tr>
+    <tr><td><span class="nr">8</span></td><td>Anzeigen auf</td><td>auf welchen Empfangsdisplays.</td></tr>
+    <tr><td><span class="ltr">K</span></td><td>automatisch</td><td>Die Kacheln des Wegweisers rücken klein darunter und bleiben bedienbar.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="k3-4">3.4 Gruß ändern oder löschen</h2>
+<div class="pair ml">
+  <figure><img src="img/m-edit-bottom.png" alt=""><figcaption>Ende der Maske „Gruß bearbeiten“</figcaption></figure>
+  <div>
+    <p>In der Liste beim Gruß auf <span class="ui">Bearbeiten</span> tippen, Felder ändern und <span class="ui">Speichern</span>. Ganz unten löscht <span class="ui">Löschen</span> den Gruß nach einer Rückfrage. <span class="ui">Abbrechen</span> oben rechts verwirft die Änderungen.</p>
+    <p><span class="ui">Abmelden</span> in der Liste beendet die Anmeldung auf diesem Handy, z. B. bevor Sie es weitergeben.</p>
+    <h3>Häufige Fragen</h3>
+    <p><strong>Der Gruß erscheint nicht.</strong> Prüfen Sie den Status in der Liste: „geplant“ heißt, der Beginn liegt noch in der Zukunft; „unvollständig“ heißt, es fehlt etwas. Läuft gerade eine Vollbild-Seite (z. B. Team-Info am Morgen), erscheint der Gruß erst danach. Wird das Display gerade bedient, übernimmt es den Gruß, sobald es wieder auf der Startseite steht.</p>
+    <p><strong>„Die Anmeldung ist abgelaufen oder das Passwort wurde geändert.“</strong> Neu anmelden; bei Bedarf das aktuelle Passwort bei der Display-Redaktion erfragen.</p>
+    <p><strong>Das Logo wird nicht angenommen.</strong> Erlaubt sind JPG, PNG, WebP, GIF und iPhone-HEIC bis 25 MB. Klappt HEIC nicht, am iPhone unter Einstellungen → Kamera → Formate „Maximale Kompatibilität“ wählen oder einen Screenshot des Logos verwenden.</p>
+  </div>
+</div>
