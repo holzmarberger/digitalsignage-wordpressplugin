@@ -63,7 +63,7 @@
 
   // ------------------------------------------------------------ Anmeldung
   function renderLogin(msg) {
-    app.innerHTML = '<div class="login"><img src="' + esc(cfg.logo) + '" alt="Holz Marberger"><h2>Displays pflegen</h2><div style="color:var(--muted)">Begrüßung am Empfangsdisplay</div>' +
+    app.innerHTML = '<div class="login"><img src="' + esc(cfg.logo) + '" alt="Holz Marberger"><h2>Handy-Pflegemaske</h2><div style="color:var(--muted)">Grüße am Empfangsdisplay</div>' +
       '<form id="lf">' + (msg ? '<div class="err">' + esc(msg) + '</div>' : '') +
       '<label class="l" for="pw">Gruß-Passwort</label><input type="password" id="pw" autocomplete="current-password" required>' +
       '<button class="btn" type="submit">Anmelden</button></form>' +
@@ -97,10 +97,10 @@
 
   // ------------------------------------------------------------ Liste
   function shell(inner) {
-    var tabs = S.boot.editor ? '<nav class="tabs">' + [['greetings', 'Begrüßungen'], ['notices', 'Hinweise'], ['news', 'News']].map(function (t) {
+    var tabs = S.boot.editor ? '<nav class="tabs">' + [['greetings', 'Grüße'], ['notices', 'Hinweise'], ['news', 'News']].map(function (t) {
       return '<button data-tab="' + t[0] + '" class="' + (S.tab === t[0] ? 'on' : '') + '">' + t[1] + '</button>';
     }).join('') + '</nav>' : '';
-    app.innerHTML = '<header class="top"><h1>' + (cfg.user ? esc(cfg.user) : 'Begrüßungen') + '</h1><button id="lo">Abmelden</button></header>' + tabs + '<div class="body">' + inner + '</div>';
+    app.innerHTML = '<header class="top"><h1>' + (cfg.user ? esc(cfg.user) : 'Grüße') + '</h1><button id="lo">Abmelden</button></header>' + tabs + '<div class="body">' + inner + '</div>';
     $('#lo').addEventListener('click', logout);
     $all('[data-tab]').forEach(function (b) {
       b.addEventListener('click', function () { S.tab = b.getAttribute('data-tab'); loadList(); });
@@ -119,7 +119,7 @@
   }
 
   function renderList() {
-    var label = { greetings: '+ Neue Begrüßung', notices: '+ Neuer Hinweis', news: '+ Neue News' }[S.tab];
+    var label = { greetings: '+ Neuer Gruß', notices: '+ Neuer Hinweis', news: '+ Neue News' }[S.tab];
     var rows = S.items.map(function (it, i) {
       var th, nm, zt;
       if (S.tab === 'greetings') {
@@ -222,7 +222,7 @@
   function val(id) { var el = $('#' + id); return el ? el.value.trim() : ''; }
   function split(dt) { return dt ? dt.split(' ') : ['', '']; }
 
-  // ------------------------------------------------------------ Begrüßung
+  // ------------------------------------------------------------ Gruß
   function greetingForm() {
     var g = S.edit || { name: '', kicker_de: 'Herzlich willkommen', sub_de: '', kicker_en: '', sub_en: '', logo: 0, logo_url: '', from: today() + ' ' + nowTime(), to: today() + ' 17:00', daily: false,
       displays: S.boot.displays_reception.map(function (d) { return d.id; }) };
@@ -230,15 +230,15 @@
     var tpl = S.edit ? '' : '<label class="l">Schnellvorlage</label><div class="chips">' + S.boot.templates.map(function (x, i) {
       return '<button type="button" class="chip tpl" data-t="' + i + '">' + esc(x.label) + '</button>';
     }).join('') + '</div>';
-    formShell(S.edit ? 'Begrüßung bearbeiten' : 'Neue Begrüßung', tpl +
+    formShell(S.edit ? 'Gruß bearbeiten' : 'Neuer Gruß', tpl +
       '<label class="l" for="name">Name / Gruppe <span class="counter" id="cnt"></span></label><input type="text" id="name" maxlength="' + S.boot.name_max + '" value="' + esc(g.name) + '">' +
-      field('kicker_de', 'Überschrift', g.kicker_de) + field('sub_de', 'Zusatzzeile (optional)', g.sub_de) +
-      '<details class="box"' + (g.kicker_en || g.sub_en ? ' open' : '') + '><summary>Englisch (optional)</summary>' + field('kicker_en', 'Überschrift EN', g.kicker_en) + field('sub_en', 'Zusatzzeile EN', g.sub_en) + '</details>' +
-      uploadBox('logo', g.logo_url, 'Logo des Gastes (optional)') +
-      '<div class="box"><b>Zeitraum</b><div class="row2">' + field('from_date', 'von (Tag)', f[0], 'date') + field('from_time', 'Uhrzeit', f[1], 'time') + '</div>' +
-      '<div class="row2">' + field('to_date', 'bis (Tag)', t[0], 'date') + field('to_time', 'Uhrzeit', t[1], 'time') + '</div>' +
-      '<label class="cbx"><input type="checkbox" id="daily"' + (g.daily ? ' checked' : '') + '> nur zwischen den Uhrzeiten, an jedem Tag des Zeitraums</label></div>' +
-      '<div class="box"><b>Auf welchen Displays?</b>' + checks('displays', S.boot.displays_reception, g.displays || []) + '</div>');
+      field('kicker_de', 'Begrüßungszeile', g.kicker_de) + field('sub_de', 'Zusatzzeile (optional)', g.sub_de) +
+      '<details class="box"' + (g.kicker_en || g.sub_en ? ' open' : '') + '><summary>Englisch (optional)</summary>' + field('kicker_en', 'Begrüßungszeile (Englisch)', g.kicker_en) + field('sub_en', 'Zusatzzeile (Englisch)', g.sub_en) + '</details>' +
+      uploadBox('logo', g.logo_url, 'Gast-Logo (optional)') +
+      '<div class="box"><b>Zeitraum</b><div class="row2">' + field('from_date', 'Von (Tag)', f[0], 'date') + field('from_time', 'Uhrzeit', f[1], 'time') + '</div>' +
+      '<div class="row2">' + field('to_date', 'Bis (Tag)', t[0], 'date') + field('to_time', 'Uhrzeit', t[1], 'time') + '</div>' +
+      '<label class="cbx"><input type="checkbox" id="daily"' + (g.daily ? ' checked' : '') + '> nur täglich von Start- bis Endzeit (bei mehreren Tagen)</label></div>' +
+      '<div class="box"><b>Anzeigen auf</b>' + checks('displays', S.boot.displays_reception, g.displays || []) + '</div>');
     bindUpload('logo', g.logo);
     var cnt = function () { $('#cnt').textContent = $('#name').value.length + ' / ' + S.boot.name_max; };
     $('#name').addEventListener('input', cnt);
@@ -274,14 +274,14 @@
       return '<option value="' + k + '"' + (n.icon === k ? ' selected' : '') + '>' + esc(S.boot.notice_icons[k]) + '</option>';
     }).join('');
     formShell(S.edit ? 'Hinweis bearbeiten' : 'Neuer Hinweis',
-      field('text_de', 'Text', n.text_de, 'text', ' maxlength="160"') + field('text_en', 'Text Englisch (optional)', n.text_en, 'text', ' maxlength="160"') +
+      field('text_de', 'Text (Deutsch)', n.text_de, 'text', ' maxlength="160"') + field('text_en', 'Text (Englisch, optional)', n.text_en, 'text', ' maxlength="160"') +
       '<label class="l" for="icon">Symbol</label><select id="icon">' + icons + '</select>' +
       '<div class="box"><b>Wann?</b><label class="l">Wochentage</label>' + dayChips(n.days || []) +
-      '<div class="row2">' + field('from', 'ab', n.from, 'time') + field('to', 'bis', n.to === 'close' ? '' : n.to, 'time') + '</div>' +
+      '<div class="row2">' + field('from', 'Von', n.from, 'time') + field('to', 'Bis', n.to === 'close' ? '' : n.to, 'time') + '</div>' +
       '<label class="cbx"><input type="checkbox" id="until_close"' + (n.to === 'close' ? ' checked' : '') + '> bis Geschäftsschluss</label>' +
-      '<div class="row2">' + field('valid_from', 'gültig ab (optional)', n.valid_from, 'date') + field('valid_to', 'gültig bis (optional)', n.valid_to, 'date') + '</div></div>' +
-      '<div class="box"><b>Auf welchen Displays?</b>' + checks('displays', S.boot.displays_all, n.displays || []) + '</div>' +
-      '<label class="cbx"><input type="checkbox" id="active"' + (n.active ? ' checked' : '') + '> aktiv</label>' +
+      '<div class="row2">' + field('valid_from', 'Gültig von (optional)', n.valid_from, 'date') + field('valid_to', 'Gültig bis (optional)', n.valid_to, 'date') + '</div></div>' +
+      '<div class="box"><b>Anzeigen auf</b>' + checks('displays', S.boot.displays_all, n.displays || []) + '</div>' +
+      '<label class="cbx"><input type="checkbox" id="active"' + (n.active ? ' checked' : '') + '> Hinweis ist aktiv</label>' +
       field('priority', 'Priorität (0–99, höher = weiter oben)', n.priority, 'number', ' min="0" max="99" inputmode="numeric"'));
     var sync = function () { $('#to').disabled = $('#until_close').checked; };
     $('#until_close').addEventListener('change', sync);
@@ -306,8 +306,8 @@
       field('title', 'Titel', n.title, 'text', ' maxlength="140"') +
       '<label class="l" for="text">Text (optional)</label><textarea id="text" rows="4" maxlength="600">' + esc(n.text) + '</textarea>' +
       uploadBox('image', n.image_url, 'Bild (optional)') +
-      '<div class="row2">' + field('from', 'gültig von', n.from, 'date') + field('to', 'gültig bis', n.to, 'date') + '</div>' +
-      '<div class="box"><b>Für welche Standorte?</b>' + checks('sites', S.boot.sites, n.sites || []) + '</div>' +
+      '<div class="row2">' + field('from', 'Gültig von', n.from, 'date') + field('to', 'Gültig bis', n.to, 'date') + '</div>' +
+      '<div class="box"><b>Standorte</b>' + checks('sites', S.boot.sites, n.sites || []) + '</div>' +
       '<div class="box"><b>Anzeige</b><label class="cbx"><input type="checkbox" id="slide"' + (n.slide ? ' checked' : '') + '> als eigene Folie</label>' +
       '<label class="cbx"><input type="checkbox" id="ticker"' + (n.ticker ? ' checked' : '') + '> im Laufband</label></div>');
     bindUpload('image', n.image);

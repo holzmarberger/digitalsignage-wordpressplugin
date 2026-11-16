@@ -46,7 +46,7 @@ final class Rest
         $now = new \DateTimeImmutable('now', $tz);
         $simulated = false;
         $at = (string) $req->get_param('at');
-        if ($at !== '' && current_user_can(PostTypes::ADMIN_CAP)) {
+        if ($at !== '' && current_user_can(PostTypes::EDIT_CAP)) {
             try {
                 $now = new \DateTimeImmutable($at, $tz);
                 $simulated = true;
@@ -75,7 +75,10 @@ final class Rest
             $body['directory'] = Store::directory($ctx);
         } else {
             $news = !empty($ctx['settings']['news']) ? Store::news($loc['id'] ?? null, $now) : [];
-            $body['sequence'] = Sequence::resolve(Store::sequenceEntries($ctx), $ctx, $now, $news);
+            // Vorankündigungen (Modus „Laufband + News-Folie“) erscheinen zusätzlich auf der News-Folie
+            $announce = array_map(static fn ($a) => ['title' => $a['text_de'], 'text' => '', 'image' => '', 'from' => '', 'to' => '',
+                'slide' => true, 'ticker' => false, 'kicker' => 'Ankündigung'], $state['ticker'] ?? []);
+            $body['sequence'] = Sequence::resolve(Store::sequenceEntries($ctx), $ctx, $now, array_merge($announce, $news));
             $body['news_ticker'] = array_values(array_map(static fn ($n) => $n['title'], array_filter($news, static fn ($n) => $n['ticker'])));
         }
         $body = self::serialize($body);

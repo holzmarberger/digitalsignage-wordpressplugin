@@ -33,6 +33,9 @@ final class Menu
         add_action('admin_enqueue_scripts', [self::class, 'assets']);
         add_action('admin_notices', [Box::class, 'notices']);
         add_filter('enter_title_here', [self::class, 'titlePlaceholder'], 10, 2);
+        Help::init();
+        Columns::init();
+        add_action('current_screen', [self::class, 'nodeLabels']);
         foreach ([new LocationBox(), new ClosureBox(), new CategoryBox(), new DisplayBox(), new GreetingBox(), new NoticeBox(), new FullpageBox(), new NewsBox(), new NodeBox(), new PageBox()] as $box) {
             $box->register();
         }
@@ -49,6 +52,21 @@ final class Menu
                 add_submenu_page('mms', $def[1] . ' anlegen', $def[1] . ' anlegen', PostTypes::EDIT_CAP, 'post-new.php?post_type=' . $type);
             }
         }
+    }
+
+    /** Klare Beschriftung im Kasten „Einordnung“ der Wegweiser-Kacheln. */
+    public static function nodeLabels(\WP_Screen $screen): void
+    {
+        if ($screen->post_type !== PostTypes::NODE || $screen->base !== 'post') {
+            return;
+        }
+        add_filter('gettext', static function ($t, $text, $domain) {
+            return $domain === 'default' && $text === 'Parent' ? 'Übergeordnete Kachel' : $t;
+        }, 10, 3);
+        add_filter('page_attributes_dropdown_pages_args', static function (array $args): array {
+            $args['show_option_none'] = '– keine (Kachel auf der Startseite) –';
+            return $args;
+        });
     }
 
     public static function hideNewEntries(): void
@@ -75,6 +93,7 @@ final class Menu
         if (isset($_GET['updated'])) {
             echo '<div class="notice notice-success is-dismissible"><p>Einstellungen gespeichert.' . (!empty($_GET['pw']) ? ' Das Gruß-Passwort wurde geändert – alle Handys sind abgemeldet.' : '') . '</p></div>';
         }
+        echo '<div class="mms-help"><h2>Einstellungen für alle Displays</h2><p>Hier legen Sie fest, ab welcher Länge eine Lücke in den Öffnungszeiten als Pause gilt, setzen das gemeinsame Gruß-Passwort für die Handy-Pflegemaske und pflegen die Schnellvorlagen für Grüße.</p></div>';
         echo '<form method="post" class="mms-settings" action="' . esc_url(admin_url('admin-post.php')) . '">';
         echo '<input type="hidden" name="action" value="mms_settings">';
         wp_nonce_field('mms_settings', '_mms_settings_nonce');

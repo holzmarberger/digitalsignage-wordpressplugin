@@ -18,6 +18,10 @@ final class Overview
             echo '<a class="page-title-action" href="' . esc_url(admin_url('post-new.php?post_type=' . PostTypes::DISPLAY)) . '">Display anlegen</a>';
         }
         echo '<hr class="wp-header-end">';
+        echo '<div class="mms-help"><h2>Displays – Übersicht</h2><p>Alle Bildschirme auf einen Blick. Der Punkt in der Spalte „Status“ ist grün, wenn sich das Gerät in den letzten 5 Minuten gemeldet hat. „Anzeige öffnen“ zeigt die Seite so, wie sie gerade am Display läuft.</p><ul>'
+            . '<li>Grüße, Hinweise und News legen Sie über den Schnellzugriff oder das Menü links an; Grüße gehen auch vom Handy (Pflegemaske).</li>'
+            . ($admin ? '<li>Neu einrichten in dieser Reihenfolge: Standort → (Schließzeiten) → Display-Kategorie prüfen → Display → Wegweiser → Gerät mit der Display-Adresse verbinden.</li>' : '')
+            . '</ul></div>';
         self::quickBox($admin);
         $displays = get_posts(['post_type' => PostTypes::DISPLAY, 'post_status' => 'publish', 'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC']);
         if (!$displays) {

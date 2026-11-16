@@ -23,6 +23,43 @@ abstract class EditorialBox extends Box
     {
         return $dt !== '' ? explode(' ', $dt) + ['', ''] : ['', ''];
     }
+
+    /** Nächster Tag ab heute (frühestens $minDate), dessen Wochentag (1 = Mo) in $days liegt, als 'Y-m-d'. */
+    protected static function nextDay(array $days, string $minDate = ''): string
+    {
+        $d = new \DateTimeImmutable('today', \Marberger\Signage\WP\Store::timezone());
+        if ($minDate !== '' && $minDate > $d->format('Y-m-d')) {
+            $d = new \DateTimeImmutable($minDate, \Marberger\Signage\WP\Store::timezone());
+        }
+        for ($i = 0; $i < 7; $i++) {
+            if (!$days || in_array((int) $d->format('N'), array_map('intval', $days), true)) {
+                return $d->format('Y-m-d');
+            }
+            $d = $d->modify('+1 day');
+        }
+        return $d->format('Y-m-d');
+    }
+
+    /** Zeile mit Links „So sieht es am Display aus“ zum Zeitpunkt $at (Y-m-d H:i). */
+    protected static function previewRow(\WP_Post $post, array $data, string $at): string
+    {
+        if ($post->post_status === 'auto-draft' || empty($data['valid']) || $at === '' || empty($data['displays'])) {
+            return '';
+        }
+        $links = [];
+        foreach ($data['displays'] as $id) {
+            $key = (string) get_post_meta((int) $id, \Marberger\Signage\WP\Store::KEY_META, true);
+            if ($key !== '') {
+                $url = add_query_arg('at', str_replace(' ', 'T', $at), \Marberger\Signage\WP\Player::url($key));
+                $links[] = '<a class="button" target="_blank" href="' . esc_url($url) . '">' . esc_html(get_the_title((int) $id)) . '</a>';
+            }
+        }
+        if (!$links) {
+            return '';
+        }
+        $label = wp_date('D, d.m.Y H:i', (new \DateTimeImmutable($at, \Marberger\Signage\WP\Store::timezone()))->getTimestamp());
+        return Fields::row('Vorschau', implode(' ', $links), 'Öffnet das Display, wie es am ' . $label . ' Uhr aussieht (nach dem Speichern).');
+    }
 }
 
 final class GreetingBox extends EditorialBox
@@ -56,6 +93,7 @@ final class GreetingBox extends EditorialBox
         echo Fields::row('Bis', Fields::date('mms[to_date]', $td) . ' ' . '<input type="time" name="mms[to_time]" value="' . esc_attr($tt) . '">');
         echo Fields::row('Mehrere Tage', Fields::checkbox('mms[daily]', !empty($d['daily']), 'nur täglich von Start- bis Endzeit'));
         echo Fields::row('Anzeigen auf', self::displayChecks('mms[displays]', $d['displays'] ?? array_keys(PostTypes::displays('reception')), 'reception'));
+        echo self::previewRow($post, $d, $d['from'] ?? '');
         echo '</table>';
     }
 
@@ -84,6 +122,9 @@ final class NoticeBox extends EditorialBox
         echo Fields::row('Anzeigen auf', self::displayChecks('mms[displays]', $d['displays'] ?? []));
         echo Fields::row('Priorität', Fields::number('mms[priority]', $d['priority'], ['min' => 0, 'max' => 99]), 'Höher = weiter oben. Es werden höchstens 3 Balken gleichzeitig gezeigt.');
         echo Fields::row('Aktiv', Fields::checkbox('mms[active]', !empty($d['active']), 'Hinweis ist aktiv'));
+        if (($d['from'] ?? '') !== '' && !empty($d['active'])) {
+            echo self::previewRow($post, $d, self::nextDay($d['days'], $d['valid_from'] ?? '') . ' ' . $d['from']);
+        }
         echo '</table>';
     }
 
@@ -117,6 +158,8 @@ final class FullpageBox extends EditorialBox
         echo Fields::row('Anzeigen auf', self::displayChecks('mms[displays]', $d['displays'] ?? []));
         echo Fields::row('Besucher-Knopf', Fields::checkbox('mms[visitor_button]', !empty($d['visitor_button']), '„Besucher? Hier tippen“ zeigen (nur Empfangsdisplays)'));
         echo Fields::row('Priorität', Fields::number('mms[priority]', $d['priority'], ['min' => 0, 'max' => 99]), 'Bei Überschneidung gewinnt die höhere Priorität.');
+        $at = $d['rule_type'] === 'once' ? ($d['once_from'] ?? '') : self::nextDay($d['days']) . ' ' . $d['from'];
+        echo self::previewRow($post, $d, $at);
         echo '</tbody></table>';
     }
 
@@ -165,7 +208,7 @@ final class NodeBox extends EditorialBox
         $d = PostTypes::data($post->ID);
         $children = get_posts(['post_type' => PostTypes::NODE, 'post_parent' => $post->ID, 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids']);
         $siblings = $post->ID ? count(get_posts(['post_type' => PostTypes::NODE, 'post_parent' => $post->post_parent, 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids'])) : 0;
-        echo '<p class="description">Oben im Titelfeld: <strong>Titel der Kachel (Deutsch)</strong>. Reihenfolge und übergeordnete Kachel rechts unter „Attribute“.</p>';
+        echo '<p class="description">Oben im Titelfeld: <strong>Titel der Kachel (Deutsch)</strong>. Übergeordnete Kachel (für Untermenüs) und Reihenfolge rechts im Kasten „Einordnung“.</p>';
         if ($children) {
             echo '<div class="notice notice-info inline"><p>Diese Kachel hat ' . count($children) . ' Unterkacheln – sie öffnet daher eine Unterseite mit Kacheln. Die Felder der Detailseite werden nicht angezeigt.</p></div>';
         }

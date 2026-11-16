@@ -1,7 +1,6 @@
 <?php
 namespace Marberger\Signage\WP;
 
-use Marberger\Signage\Core\TimeRule;
 
 /**
  * REST-Schnittstelle der Handy-Pflegemaske (mms/v1/manage/…).
@@ -130,34 +129,7 @@ final class ManageRest
 
     private static function status(string $route, array $d): string
     {
-        if (empty($d['valid'])) {
-            return 'unvollständig';
-        }
-        $tz = Store::timezone();
-        $now = new \DateTimeImmutable('now', $tz);
-        if ($route === 'greetings') {
-            if (($d['to'] ?? '') !== '' && $now->format('Y-m-d H:i') >= $d['to']) {
-                return 'abgelaufen';
-            }
-            if (TimeRule::isActive(Editorial::greetingRule($d), $now)) {
-                return 'läuft jetzt';
-            }
-            return ($d['from'] ?? '') <= $now->format('Y-m-d H:i') ? 'heute später' : 'geplant';
-        }
-        if ($route === 'notices') {
-            if (empty($d['active'])) {
-                return 'pausiert';
-            }
-            if (($d['valid_to'] ?? '') !== '' && $d['valid_to'] < $now->format('Y-m-d')) {
-                return 'abgelaufen';
-            }
-            return ($d['valid_from'] ?? '') > $now->format('Y-m-d') ? 'geplant' : 'aktiv';
-        }
-        $today = $now->format('Y-m-d');
-        if (($d['to'] ?? '') < $today) {
-            return 'abgelaufen';
-        }
-        return ($d['from'] ?? '') > $today ? 'geplant' : 'läuft';
+        return Status::of(self::TYPES[$route][0], $d);
     }
 
     private static function saveItem(string $route, \WP_REST_Request $req, int $id)

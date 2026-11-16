@@ -30,7 +30,7 @@ final class PostTypes
         return [
             self::GREETING => ['Grüße', 'Gruß', self::EDIT_CAP, ['title']],
             self::NOTICE   => ['Hinweise', 'Hinweis', self::EDIT_CAP, ['title']],
-            self::NODE     => ['Wegweiser', 'Wegweiser-Kachel', self::EDIT_CAP, ['title', 'page-attributes'], true],
+            self::NODE     => ['Wegweiser-Kacheln', 'Wegweiser-Kachel', self::EDIT_CAP, ['title', 'page-attributes'], true],
             self::FULLPAGE => ['Vollbild-Seiten', 'Vollbild-Seite', self::EDIT_CAP, ['title', 'editor']],
             self::NEWS     => ['News', 'News', self::EDIT_CAP, ['title']],
             self::PAGE     => ['Display-Seiten', 'Display-Seite', self::EDIT_CAP, ['title', 'editor']],
@@ -60,6 +60,7 @@ final class PostTypes
                     'all_items' => $plural,
                     'menu_name' => $plural,
                     'parent_item_colon' => 'Übergeordnete Kachel:',
+                    'attributes' => 'Einordnung',
                 ],
                 'public' => false,
                 'show_ui' => true,

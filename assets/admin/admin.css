@@ -4,11 +4,13 @@
 .mms-inline{display:inline-block;margin:0 18px 6px 0}
 .mms-media-preview img{max-width:220px;max-height:120px;display:block;margin-bottom:6px;border:1px solid #d6d9d7;background:#fff;padding:4px}
 .mms-repeater td,.mms-repeater th{vertical-align:middle}
-.mms-repeater{max-width:900px}
-.mms-repeater input[type=text]{width:100%;min-width:120px}
-.mms-repeater td:nth-child(3){width:150px}
-.mms-repeater td:nth-child(4){width:200px}
-.mms-repeater input[type=number]{width:70px}
+.mms-repeater{width:100%;max-width:900px;table-layout:auto}
+.mms-repeater input[type=text]{width:100%;min-width:80px}
+.mms-repeater input[type=date]{width:100%;min-width:130px}
+.mms-repeater select{max-width:100%}
+.mms-repeater input[type=number]{width:64px}
+.mms-form td{overflow-wrap:anywhere}
+.mms-form .description code{white-space:nowrap}
 .mms-coord{width:110px}
 .mms-remove-row{color:#922224;font-size:16px;text-decoration:none}
 .mms-list{margin:0}
@@ -41,3 +43,27 @@
 .mms-pwbox code { font-size: 14px; }
 .mms-secret { width: 220px; }
 .mms-redaktion-list li { margin: 2px 0; }
+
+/* Erklärtexte */
+.mms-help { background: #fff; border: 1px solid #c3c4c7; border-left: 4px solid #006729; padding: 10px 18px 6px; margin: 14px 0 10px; max-width: 1100px; }
+.mms-help h2 { margin: 6px 0 6px; font-size: 15px; color: #006729; }
+.mms-help p { margin: 0 0 6px; font-size: 13px; }
+.mms-help ul { list-style: disc; margin: 0 0 8px 20px; }
+.mms-help li { margin: 2px 0; font-size: 13px; }
+.mms-help-compact { margin: 12px 0 4px; padding: 8px 14px; }
+.mms-help-compact summary { cursor: pointer; font-size: 13px; line-height: 1.5; list-style: none; }
+.mms-help-compact summary::-webkit-details-marker { display: none; }
+.mms-help-more { color: #2271b1; text-decoration: underline; margin-left: 4px; }
+.mms-help-compact[open] .mms-help-more { display: none; }
+.mms-help-compact ul { margin-top: 6px; }
+.mms-rep-wrap { overflow-x: auto; }
+.mms-seq { max-width: none; }
+
+/* Listen */
+.mms-chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 10px; background: #f0f0f1; color: #646970; }
+.mms-chip-run { background: #e3f0e7; color: #006729; }
+.mms-chip-plan { background: #e8f0fa; color: #1f5fa8; }
+.mms-chip-bad { background: #fff3df; color: #b86e00; }
+.mms-muted { color: #646970; font-size: 12px; }
+.mms-warn-text { color: #b86e00; }
+.wp-list-table .column-mms_status, .wp-list-table .column-mms_prio, .wp-list-table .column-mms_order, .wp-list-table .column-mms_count, .wp-list-table .column-mms_format { width: 110px; }

@@ -360,7 +360,7 @@
       S.newsIdx++;
       var to = n.to ? n.to.split('-') : null;
       slide.innerHTML = '<div class="islide news' + (n.image ? '' : ' noimg') + '">' + (n.image ? '<div class="nimg"><img src="' + esc(n.image) + '" alt=""></div>' : '') +
-        '<div class="ntx"><div class="nk">NEWS</div><h2>' + esc(n.title) + '</h2>' + (n.text ? '<p>' + esc(n.text).replace(/\n/g, '<br>') + '</p>' : '') +
+        '<div class="ntx"><div class="nk">' + esc(n.kicker || 'NEWS') + '</div><h2>' + esc(n.title) + '</h2>' + (n.text ? '<p>' + esc(n.text).replace(/\n/g, '<br>') + '</p>' : '') +
         (to ? '<div class="nd">gültig bis ' + to[2] + '.' + to[1] + '.</div>' : '') + '</div></div>';
     }
     var nb = bar.cloneNode(false);

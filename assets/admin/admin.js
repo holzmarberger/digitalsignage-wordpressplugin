@@ -85,6 +85,18 @@
     });
   });
 
+  // Display: nur die Felder zeigen, die zum Typ der gewählten Kategorie passen
+  function displayScope() {
+    var sel = $('select[name="mms[category]"][data-types]'), typeSel = $('#mms-box select[name="mms[type]"]'), t;
+    if (sel.length) t = JSON.parse(sel.attr('data-types') || '{}')[sel.val()] || 'reception';
+    else if (typeSel.length) t = typeSel.val();
+    else return;
+    $('.mms-scope').each(function () { $(this).closest('tr').toggle($(this).data('scope') === t); });
+    $('.mms-scope-block').each(function () { $(this).toggle($(this).data('scope') === t); });
+  }
+  $(document).on('change', 'select[name="mms[category]"][data-types], #mms-box select[name="mms[type]"]', displayScope);
+  $(displayScope);
+
   // Display: eigene Abfolge ein-/ausblenden
   function ownSeq() { $('.mms-own-seq').toggle($('input[name="mms[sequence_own]"]').is(':checked')); }
   $(document).on('change', 'input[name="mms[sequence_own]"]', ownSeq);

@@ -35,25 +35,32 @@ final class DisplayBox extends Box
         $key = (string) get_post_meta($post->ID, Store::KEY_META, true);
         $cats = PostTypes::choices(PostTypes::CATEGORY);
         $locs = PostTypes::choices(PostTypes::LOCATION);
+        $types = [];
+        foreach (array_keys($cats) as $cid) {
+            $types[$cid] = ((PostTypes::data((int) $cid)['type'] ?? 'reception') === 'info') ? 'info' : 'reception';
+        }
+        $scope = static fn (string $s) => '<span class="mms-scope" data-scope="' . $s . '" hidden></span>';
         echo '<table class="form-table mms-form">';
         echo Fields::row('Kennung', Fields::text('mms[key]', $key, ['placeholder' => 'z. B. empfang-oetztal', 'pattern' => '[a-z0-9_\\-]*']),
             'Teil der Adresse, die in Slide Show eingetragen wird. Nur Kleinbuchstaben, Ziffern und Bindestriche. Leer = aus dem Titel gebildet.');
-        echo Fields::row('Kategorie', Fields::select('mms[category]', $d['category'] ?? '', ['' => '– bitte wählen –'] + $cats));
+        echo Fields::row('Kategorie', Fields::select('mms[category]', $d['category'] ?? '', ['' => '– bitte wählen –'] + $cats, ['data-types' => wp_json_encode($types)]),
+            'Bestimmt, ob es ein Empfangsdisplay (Touch) oder ein Info-Display ist, und das Standardverhalten.');
         echo Fields::row('Standort', Fields::select('mms[location]', $d['location'] ?? '', ['' => '– ohne (immer geöffnet) –'] + $locs),
             'Bestimmt Logo, Wetter und Öffnungszeiten.');
         echo Fields::row('Format', Fields::select('mms[format]', $d['format'] ?? 'hoch', ['hoch' => 'Hochformat', 'quer' => 'Querformat']));
         $nodes = ['' => '– oberste Ebene –'] + PostTypes::choices(PostTypes::NODE, ['post_parent' => 0]);
-        echo Fields::row('Wegweiser beginnt bei', Fields::select('mms[start_node]', $d['start_node'] ?? '', $nodes), 'Nur Empfangsdisplays. Standard: alle Kacheln der obersten Ebene.');
+        echo Fields::row('Wegweiser beginnt bei', Fields::select('mms[start_node]', $d['start_node'] ?? '', $nodes) . $scope('reception'),
+            'Standard: alle Wegweiser-Kacheln der obersten Ebene. Für ein Display, das nur einen Teil des Wegweisers zeigen soll, hier die Start-Kachel wählen.');
         echo '</table>';
-        echo '<h3 class="mms-sub">Abfolge (nur Info-Displays)</h3>';
+        echo '<div class="mms-scope-block" data-scope="info"><h3 class="mms-sub">Abfolge</h3>';
         echo '<p>' . Fields::checkbox('mms[sequence_own]', !empty($d['sequence_own']), 'eigene Abfolge statt der Standard-Abfolge der Kategorie') . '</p>';
-        echo '<div class="mms-own-seq">' . SequenceEditor::render('mms[sequence]', $d['sequence'] ?? []) . '</div>';
+        echo '<div class="mms-own-seq">' . SequenceEditor::render('mms[sequence]', $d['sequence'] ?? []) . '</div></div>';
 
         echo '<h3 class="mms-sub">Abweichungen von der Kategorie</h3><p class="description">Nur ausfüllen, wenn dieses Display anders arbeiten soll als seine Kategorie.</p>';
         echo '<table class="form-table mms-form">';
         $ov = $d['overrides'] ?? [];
         foreach (Settings::fields() as $k => $f) {
-            echo Fields::row($f['label'], CategoryBox::control("mms[overrides][$k]", $f, $ov[$k] ?? null, true));
+            echo Fields::row($f['label'], CategoryBox::control("mms[overrides][$k]", $f, $ov[$k] ?? null, true) . ($f['scope'] !== 'both' ? $scope($f['scope']) : ''));
         }
         echo '</table>';
     }

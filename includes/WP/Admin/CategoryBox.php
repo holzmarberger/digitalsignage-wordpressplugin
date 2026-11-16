@@ -7,7 +7,6 @@ use Marberger\Signage\WP\Sequence;
 
 final class CategoryBox extends Box
 {
-    private const SCOPES = ['both' => '', 'reception' => ' (nur Empfang)', 'info' => ' (nur Info)'];
 
     protected function postType(): string
     {
@@ -26,11 +25,12 @@ final class CategoryBox extends Box
         echo Fields::row('Typ', Fields::select('mms[type]', $d['type'], ['reception' => 'Empfang (Touch)', 'info' => 'Info (ohne Touch)']),
             'Beim Wechsel des Typs bitte die Werte prüfen; neue Kategorien starten mit passenden Standardwerten.');
         foreach (Settings::fields() as $key => $f) {
-            echo Fields::row($f['label'] . self::SCOPES[$f['scope']], self::control("mms[$key]", $f, $d[$key]));
+            $marker = $f['scope'] !== 'both' ? '<span class="mms-scope" data-scope="' . $f['scope'] . '" hidden></span>' : '';
+            echo Fields::row($f['label'], self::control("mms[$key]", $f, $d[$key]) . $marker);
         }
         echo '</table>';
-        echo '<h3 class="mms-sub">Standard-Abfolge (nur Info-Displays)</h3><p class="description">Displays dieser Kategorie zeigen diese Abfolge, sofern sie keine eigene haben. Ohne Zeitangabe läuft ein Eintrag immer.</p>';
-        echo SequenceEditor::render('mms[sequence]', PostTypes::data($post->ID)['sequence'] ?? []);
+        echo '<div class="mms-scope-block" data-scope="info"><h3 class="mms-sub">Standard-Abfolge</h3><p class="description">Info-Displays dieser Kategorie zeigen diese Abfolge, sofern sie keine eigene haben. Ohne Zeitangabe läuft ein Eintrag immer.</p>';
+        echo SequenceEditor::render('mms[sequence]', PostTypes::data($post->ID)['sequence'] ?? []) . '</div>';
     }
 
     public static function control(string $name, array $f, $value, bool $inherit = false): string
