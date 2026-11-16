@@ -61,16 +61,29 @@ final class Rest
         $resolver = new StateResolver($ctx['calendar'], $ctx['settings']);
         $state = $resolver->resolve($now, Store::content($ctx));
 
-        $resp = rest_ensure_response(self::serialize([
-            'version' => MMS_VERSION,
-            'server_time' => $now,
-            'simulated' => $simulated,
-            'display' => ['key' => $ctx['key'], 'name' => $ctx['name'], 'format' => $ctx['format'], 'type' => $ctx['settings']['type']],
+        $type = $ctx['settings']['type'];
+        $loc = $ctx['location'];
+        $body = [
+            'display' => ['key' => $ctx['key'], 'name' => $ctx['name'], 'format' => $ctx['format'], 'type' => $type],
             'settings' => $ctx['settings'],
-            'location' => $ctx['location'],
-            'opening' => ['week' => $ctx['location'] ? $ctx['calendar']->weekTable() : []],
+            'location' => $loc,
+            'weather' => $loc ? Weather::current($loc['lat'], $loc['lon']) : null,
+            'opening' => ['week' => $loc ? $ctx['calendar']->weekTable() : []],
             'state' => $state,
-        ]));
+        ];
+        if ($type === 'reception') {
+            $body['directory'] = Store::directory($ctx);
+        } else {
+            $news = !empty($ctx['settings']['news']) ? Store::news($loc['id'] ?? null, $now) : [];
+            $body['sequence'] = Sequence::resolve(Store::sequenceEntries($ctx), $ctx, $now, $news);
+            $body['news_ticker'] = array_values(array_map(static fn ($n) => $n['title'], array_filter($news, static fn ($n) => $n['ticker'])));
+        }
+        $body = self::serialize($body);
+        $body['hash'] = md5((string) wp_json_encode($body));
+        $body['version'] = MMS_VERSION;
+        $body['server_time'] = $now->format('c');
+        $body['simulated'] = $simulated;
+        $resp = rest_ensure_response($body);
         $resp->header('Cache-Control', 'no-store, max-age=0');
         return $resp;
     }

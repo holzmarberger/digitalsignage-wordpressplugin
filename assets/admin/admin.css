@@ -20,3 +20,24 @@
 .mms-preview-out table th{width:150px}
 #adminmenu .toplevel_page_mms .wp-menu-image:before{color:#7fbf8f}
 .mms-num{width:140px}
+
+/* Abfolge-Editor */
+.mms-seq td { vertical-align: top; }
+.mms-seq input[type=text] { width: 100%; min-width: 150px; }
+.mms-seq .mms-seq-url { min-width: 260px; }
+.mms-seq select.mms-seq-page { max-width: 260px; }
+.mms-seq input[type=number] { width: 80px; }
+.mms-seq input[type=time] { width: 108px; display: inline-block; }
+.mms-seq td:nth-child(5) { min-width: 270px; }
+.mms-seq td:nth-child(5) .mms-days { white-space: nowrap; display: block; margin-bottom: 4px; }
+.mms-day-mini { display: inline-flex; align-items: center; gap: 1px; margin-right: 5px; font-size: 12px; }
+.mms-day-mini input { margin: 0 1px 0 0 !important; }
+.mms-row-tools { white-space: nowrap; text-align: right; }
+.mms-row-tools .button-link { font-size: 15px; padding: 2px 5px; text-decoration: none; }
+.mms-row-tools .mms-remove-row { color: #b32d2e; }
+.mms-own-seq { margin-top: 10px; }
+.mms-tpl-table input[type=text] { width: 100%; }
+.mms-pwbox { background: #fff; border: 1px solid #c3c4c7; border-left: 4px solid #006729; padding: 12px 16px; margin: 16px 0; max-width: 900px; }
+.mms-pwbox code { font-size: 14px; }
+.mms-secret { width: 220px; }
+.mms-redaktion-list li { margin: 2px 0; }

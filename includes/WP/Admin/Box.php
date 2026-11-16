@@ -36,7 +36,7 @@ abstract class Box
         if (!isset($_POST['_mms_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_mms_nonce'])), 'mms_save_' . $postId)) {
             return;
         }
-        if (!current_user_can(PostTypes::ADMIN_CAP)) {
+        if (!current_user_can(PostTypes::capFor($this->postType()))) {
             return;
         }
         $input = isset($_POST['mms']) && is_array($_POST['mms']) ? wp_unslash($_POST['mms']) : [];
@@ -59,6 +59,31 @@ abstract class Box
             echo '<li>' . esc_html($e) . '</li>';
         }
         echo '</ul></div>';
+    }
+
+    /** Titel aus dem WP-Titelfeld (für Typen, deren Titel ein Inhaltsfeld ist). */
+    protected static function postTitle(): string
+    {
+        return isset($_POST['post_title']) ? sanitize_text_field(wp_unslash($_POST['post_title'])) : '';
+    }
+
+    /** Checkboxen für Displays (Typ 'reception' | 'info' | '' = alle). */
+    protected static function displayChecks(string $name, array $selected, string $type = ''): string
+    {
+        $h = '';
+        foreach (PostTypes::displays($type) as $id => $title) {
+            $h .= '<span class="mms-inline">' . Fields::checkbox($name . '[]', in_array($id, array_map('intval', $selected), true), $title, (string) $id) . '</span>';
+        }
+        return $h !== '' ? $h : '<em>Noch keine passenden Displays angelegt.</em>';
+    }
+
+    protected static function dayChecks(string $name, array $selected): string
+    {
+        $h = '';
+        foreach (\Marberger\Signage\Core\Texts::WEEKDAYS_DE as $i => $d) {
+            $h .= '<span class="mms-inline">' . Fields::checkbox($name . '[]', in_array($i, array_map('intval', $selected), true), mb_substr($d, 0, 2), (string) $i) . '</span>';
+        }
+        return $h;
     }
 
     protected static function str(array $in, string $key, int $max = 500): string

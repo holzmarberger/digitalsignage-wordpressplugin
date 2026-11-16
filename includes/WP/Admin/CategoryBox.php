@@ -3,6 +3,7 @@ namespace Marberger\Signage\WP\Admin;
 
 use Marberger\Signage\Core\Settings;
 use Marberger\Signage\WP\PostTypes;
+use Marberger\Signage\WP\Sequence;
 
 final class CategoryBox extends Box
 {
@@ -28,6 +29,8 @@ final class CategoryBox extends Box
             echo Fields::row($f['label'] . self::SCOPES[$f['scope']], self::control("mms[$key]", $f, $d[$key]));
         }
         echo '</table>';
+        echo '<h3 class="mms-sub">Standard-Abfolge (nur Info-Displays)</h3><p class="description">Displays dieser Kategorie zeigen diese Abfolge, sofern sie keine eigene haben. Ohne Zeitangabe läuft ein Eintrag immer.</p>';
+        echo SequenceEditor::render('mms[sequence]', PostTypes::data($post->ID)['sequence'] ?? []);
     }
 
     public static function control(string $name, array $f, $value, bool $inherit = false): string
@@ -58,7 +61,7 @@ final class CategoryBox extends Box
         // Neue Kategorie oder Typwechsel ohne Eingaben: Standardwerte des Typs verwenden
         $values = ($isNew && empty($in['poll'])) ? Settings::defaults($type) : $in;
         $values['type'] = $type;
-        PostTypes::save($postId, Settings::sanitize($values));
+        PostTypes::save($postId, Settings::sanitize($values) + ['sequence' => Sequence::sanitize($in['sequence'] ?? [])]);
         return [];
     }
 }

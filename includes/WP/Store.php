@@ -114,10 +114,147 @@ final class Store
         ];
     }
 
-    /** Inhalte für die Zustandsauflösung (Grüße, Hinweise, Vollbild-Seiten folgen in Paket 2). */
+    /** 'reception' | 'info' eines Displays (aus seiner Kategorie). */
+    public static function displayType(int $displayId): string
+    {
+        $cat = (int) (PostTypes::data($displayId)['category'] ?? 0);
+        return $cat && (PostTypes::data($cat)['type'] ?? '') === 'info' ? 'info' : 'reception';
+    }
+
+    /** Gültige, veröffentlichte Einträge eines Typs, die diesem Display zugeordnet sind. */
+    private static function forDisplay(string $type, int $displayId): array
+    {
+        $out = [];
+        foreach (get_posts(['post_type' => $type, 'post_status' => 'publish', 'numberposts' => -1]) as $p) {
+            $d = PostTypes::data($p->ID);
+            if (empty($d['valid']) || !in_array($displayId, array_map('intval', $d['displays'] ?? []), true)) {
+                continue;
+            }
+            $out[] = [$p, $d];
+        }
+        return $out;
+    }
+
+    /** Inhalte für die Zustandsauflösung: Grüße, Hinweise, Vollbild-Seiten dieses Displays. */
     public static function content(array $ctx): array
     {
-        return apply_filters('mms_state_content', ['fullpages' => [], 'greetings' => [], 'notices' => []], $ctx);
+        $id = $ctx['post']->ID;
+        $content = ['fullpages' => [], 'greetings' => [], 'notices' => []];
+        foreach (self::forDisplay(PostTypes::GREETING, $id) as [$p, $d]) {
+            $content['greetings'][] = [
+                'id' => $p->ID, 'rule' => Editorial::greetingRule($d), 'modified' => strtotime($p->post_modified_gmt),
+                'name' => $p->post_title, 'kicker_de' => $d['kicker_de'] ?? '', 'kicker_en' => $d['kicker_en'] ?? '',
+                'sub_de' => $d['sub_de'] ?? '', 'sub_en' => $d['sub_en'] ?? '',
+                'logo' => !empty($d['logo']) ? (string) wp_get_attachment_image_url((int) $d['logo'], 'large') : '',
+            ];
+        }
+        foreach (self::forDisplay(PostTypes::NOTICE, $id) as [$p, $d]) {
+            if (empty($d['active'])) {
+                continue;
+            }
+            $content['notices'][] = [
+                'id' => $p->ID, 'rule' => Editorial::noticeRule($d), 'priority' => (int) ($d['priority'] ?? 0),
+                'modified' => strtotime($p->post_modified_gmt), 'text_de' => $p->post_title, 'text_en' => $d['text_en'] ?? '', 'icon' => $d['icon'] ?? 'info',
+            ];
+        }
+        foreach (self::forDisplay(PostTypes::FULLPAGE, $id) as [$p, $d]) {
+            $content['fullpages'][] = [
+                'id' => $p->ID, 'rule' => Editorial::fullpageRule($d), 'priority' => (int) ($d['priority'] ?? 0),
+                'modified' => strtotime($p->post_modified_gmt), 'title' => $p->post_title,
+                'html' => self::renderContent($p->post_content), 'visitor_button' => !empty($d['visitor_button']),
+            ];
+        }
+        return apply_filters('mms_state_content', $content, $ctx);
+    }
+
+    /** Editor-Inhalt für die Anzeige (ohne Theme-Filter). */
+    public static function renderContent(string $content): string
+    {
+        $html = function_exists('do_blocks') ? do_blocks($content) : $content;
+        return wp_kses_post(wpautop(wptexturize($html)));
+    }
+
+    /** @return array{url:string,type:string}|null */
+    public static function media(int $attachmentId): ?array
+    {
+        if (!$attachmentId) {
+            return null;
+        }
+        $url = wp_get_attachment_url($attachmentId);
+        if (!$url) {
+            return null;
+        }
+        $mime = (string) get_post_mime_type($attachmentId);
+        return ['url' => $url, 'type' => strpos($mime, 'video/') === 0 ? 'video' : 'image'];
+    }
+
+    /** Wegweiser-Baum eines Displays (Kinder des Startknotens bzw. oberste Ebene), max. 8 je Ebene. */
+    public static function directory(array $ctx): array
+    {
+        $all = get_posts(['post_type' => PostTypes::NODE, 'post_status' => 'publish', 'numberposts' => -1, 'orderby' => ['menu_order' => 'ASC', 'title' => 'ASC']]);
+        $byParent = [];
+        foreach ($all as $p) {
+            $byParent[(int) $p->post_parent][] = $p;
+        }
+        $start = (int) (PostTypes::data($ctx['post']->ID)['start_node'] ?? 0);
+        $build = static function (int $parent, int $depth) use (&$build, $byParent): array {
+            $out = [];
+            foreach (array_slice($byParent[$parent] ?? [], 0, 8) as $p) {
+                $d = PostTypes::data($p->ID);
+                $children = $depth < 4 ? $build($p->ID, $depth + 1) : [];
+                $node = [
+                    'id' => $p->ID, 'title_de' => $p->post_title, 'title_en' => ($d['title_en'] ?? '') ?: $p->post_title,
+                    'sub_de' => $d['sub_de'] ?? '', 'sub_en' => ($d['sub_en'] ?? '') ?: ($d['sub_de'] ?? ''), 'icon' => $d['icon'] ?? 'info',
+                    'children' => $children,
+                ];
+                if (!$children) {
+                    $node += [
+                        'media' => self::media((int) ($d['media'] ?? 0)),
+                        'steps_de' => $d['steps_de'] ?? [], 'steps_en' => ($d['steps_en'] ?? []) ?: ($d['steps_de'] ?? []),
+                        'contact' => $d['contact'] ?? '', 'ext' => $d['ext'] ?? '',
+                        'photo' => !empty($d['photo']) ? (string) wp_get_attachment_image_url((int) $d['photo'], 'medium') : '',
+                        'qr_url' => $d['qr_url'] ?? '',
+                    ];
+                }
+                $out[] = $node;
+            }
+            return $out;
+        };
+        return $build($start, 0);
+    }
+
+    /** Gültige News eines Standorts am Tag von $now. */
+    public static function news(?int $locationId, \DateTimeImmutable $now): array
+    {
+        if (!$locationId) {
+            return [];
+        }
+        $today = $now->format('Y-m-d');
+        $out = [];
+        foreach (get_posts(['post_type' => PostTypes::NEWS, 'post_status' => 'publish', 'numberposts' => -1, 'orderby' => 'date', 'order' => 'DESC']) as $p) {
+            $d = PostTypes::data($p->ID);
+            if (empty($d['valid']) || ($d['from'] ?? '') > $today || ($d['to'] ?? '') < $today
+                || !in_array($locationId, array_map('intval', $d['sites'] ?? []), true)) {
+                continue;
+            }
+            $out[] = [
+                'id' => $p->ID, 'title' => $p->post_title, 'text' => $d['text'] ?? '',
+                'image' => !empty($d['image']) ? (string) wp_get_attachment_image_url((int) $d['image'], 'large') : '',
+                'to' => $d['to'], 'slide' => !empty($d['slide']), 'ticker' => !empty($d['ticker']),
+            ];
+        }
+        return $out;
+    }
+
+    /** Abfolge eines Info-Displays: eigene oder die der Kategorie. */
+    public static function sequenceEntries(array $ctx): array
+    {
+        $d = PostTypes::data($ctx['post']->ID);
+        if (!empty($d['sequence_own'])) {
+            return $d['sequence'] ?? [];
+        }
+        $cat = (int) ($d['category'] ?? 0);
+        return $cat ? (PostTypes::data($cat)['sequence'] ?? []) : [];
     }
 
     public static function touch(int $displayId): void

@@ -5,6 +5,7 @@ use Marberger\Signage\Core\Settings;
 use Marberger\Signage\WP\Player;
 use Marberger\Signage\WP\PostTypes;
 use Marberger\Signage\WP\Rest;
+use Marberger\Signage\WP\Sequence;
 use Marberger\Signage\WP\Store;
 
 final class DisplayBox extends Box
@@ -41,7 +42,12 @@ final class DisplayBox extends Box
         echo Fields::row('Standort', Fields::select('mms[location]', $d['location'] ?? '', ['' => '– ohne (immer geöffnet) –'] + $locs),
             'Bestimmt Logo, Wetter und Öffnungszeiten.');
         echo Fields::row('Format', Fields::select('mms[format]', $d['format'] ?? 'hoch', ['hoch' => 'Hochformat', 'quer' => 'Querformat']));
+        $nodes = ['' => '– oberste Ebene –'] + PostTypes::choices(PostTypes::NODE, ['post_parent' => 0]);
+        echo Fields::row('Wegweiser beginnt bei', Fields::select('mms[start_node]', $d['start_node'] ?? '', $nodes), 'Nur Empfangsdisplays. Standard: alle Kacheln der obersten Ebene.');
         echo '</table>';
+        echo '<h3 class="mms-sub">Abfolge (nur Info-Displays)</h3>';
+        echo '<p>' . Fields::checkbox('mms[sequence_own]', !empty($d['sequence_own']), 'eigene Abfolge statt der Standard-Abfolge der Kategorie') . '</p>';
+        echo '<div class="mms-own-seq">' . SequenceEditor::render('mms[sequence]', $d['sequence'] ?? []) . '</div>';
 
         echo '<h3 class="mms-sub">Abweichungen von der Kategorie</h3><p class="description">Nur ausfüllen, wenn dieses Display anders arbeiten soll als seine Kategorie.</p>';
         echo '<table class="form-table mms-form">';
@@ -105,6 +111,9 @@ final class DisplayBox extends Box
             'location' => absint($in['location'] ?? 0),
             'format' => ($in['format'] ?? '') === 'quer' ? 'quer' : 'hoch',
             'overrides' => Settings::sanitizeOverrides((array) ($in['overrides'] ?? [])),
+            'start_node' => absint($in['start_node'] ?? 0),
+            'sequence_own' => !empty($in['sequence_own']),
+            'sequence' => Sequence::sanitize($in['sequence'] ?? []),
         ];
         if (!$data['category']) {
             $errors[] = 'Bitte eine Kategorie wählen – bis dahin gelten die Standardwerte für Empfangsdisplays.';

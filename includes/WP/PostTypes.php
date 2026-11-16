@@ -3,27 +3,49 @@ namespace Marberger\Signage\WP;
 
 /**
  * Inhaltstypen des Plugins. Alle Daten eines Eintrags liegen als Array im Meta-Feld '_mms'.
+ * Redaktionelle Inhalte (Grüße, Hinweise, Wegweiser, Vollbild-Seiten, News, Display-Seiten) brauchen das Recht
+ * 'mms_edit' (Display-Redaktion), Struktur (Displays, Kategorien, Standorte, Schließzeiten) 'manage_options'.
  */
 final class PostTypes
 {
     public const META = '_mms';
+
+    public const GREETING = 'mms_greeting';
+    public const NOTICE = 'mms_notice';
+    public const NODE = 'mms_node';
+    public const FULLPAGE = 'mms_fullpage';
+    public const NEWS = 'mms_news';
+    public const PAGE = 'mms_page';
+    public const DISPLAY = 'mms_display';
+    public const CATEGORY = 'mms_category';
     public const LOCATION = 'mms_location';
     public const CLOSURE = 'mms_closure';
-    public const CATEGORY = 'mms_category';
-    public const DISPLAY = 'mms_display';
 
-    /** Paket 1: nur Administratoren. Paket 3 ergänzt eigene Rechte für die Display-Redaktion. */
     public const ADMIN_CAP = 'manage_options';
+    public const EDIT_CAP = 'mms_edit';
+
+    /** Reihenfolge = Reihenfolge im Menü „Displays“. */
+    public static function definitions(): array
+    {
+        return [
+            self::GREETING => ['Grüße', 'Gruß', self::EDIT_CAP, ['title']],
+            self::NOTICE   => ['Hinweise', 'Hinweis', self::EDIT_CAP, ['title']],
+            self::NODE     => ['Wegweiser', 'Wegweiser-Kachel', self::EDIT_CAP, ['title', 'page-attributes'], true],
+            self::FULLPAGE => ['Vollbild-Seiten', 'Vollbild-Seite', self::EDIT_CAP, ['title', 'editor']],
+            self::NEWS     => ['News', 'News', self::EDIT_CAP, ['title']],
+            self::PAGE     => ['Display-Seiten', 'Display-Seite', self::EDIT_CAP, ['title', 'editor']],
+            self::DISPLAY  => ['Displays', 'Display', self::ADMIN_CAP, ['title']],
+            self::CATEGORY => ['Display-Kategorien', 'Display-Kategorie', self::ADMIN_CAP, ['title']],
+            self::LOCATION => ['Standorte', 'Standort', self::ADMIN_CAP, ['title']],
+            self::CLOSURE  => ['Schließzeiten', 'Schließzeit', self::ADMIN_CAP, ['title']],
+        ];
+    }
 
     public static function register(): void
     {
-        $types = [
-            self::DISPLAY  => ['Displays', 'Display'],
-            self::CATEGORY => ['Display-Kategorien', 'Display-Kategorie'],
-            self::LOCATION => ['Standorte', 'Standort'],
-            self::CLOSURE  => ['Schließzeiten', 'Schließzeit'],
-        ];
-        foreach ($types as $type => [$plural, $singular]) {
+        foreach (self::definitions() as $type => $def) {
+            [$plural, $singular, $cap, $supports] = $def;
+            $hierarchical = !empty($def[4]);
             register_post_type($type, [
                 'labels' => [
                     'name' => $plural,
@@ -37,14 +59,16 @@ final class PostTypes
                     'not_found_in_trash' => 'Keine Einträge im Papierkorb.',
                     'all_items' => $plural,
                     'menu_name' => $plural,
+                    'parent_item_colon' => 'Übergeordnete Kachel:',
                 ],
                 'public' => false,
                 'show_ui' => true,
                 'show_in_menu' => 'mms',
                 'show_in_rest' => false,
-                'supports' => ['title'],
+                'hierarchical' => $hierarchical,
+                'supports' => $supports,
                 'map_meta_cap' => false,
-                'capabilities' => self::caps(self::ADMIN_CAP),
+                'capabilities' => self::caps($cap),
                 'rewrite' => false,
                 'query_var' => false,
             ]);
@@ -59,6 +83,11 @@ final class PostTypes
         return array_fill_keys($keys, $cap);
     }
 
+    public static function capFor(string $type): string
+    {
+        return self::definitions()[$type][2] ?? self::ADMIN_CAP;
+    }
+
     public static function data(int $postId): array
     {
         $d = get_post_meta($postId, self::META, true);
@@ -71,11 +100,24 @@ final class PostTypes
     }
 
     /** @return array<int, string> id => Titel */
-    public static function choices(string $type): array
+    public static function choices(string $type, array $args = []): array
     {
         $out = [];
-        foreach (get_posts(['post_type' => $type, 'post_status' => 'publish', 'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC']) as $p) {
+        foreach (get_posts($args + ['post_type' => $type, 'post_status' => 'publish', 'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC']) as $p) {
             $out[$p->ID] = $p->post_title !== '' ? $p->post_title : ('#' . $p->ID);
+        }
+        return $out;
+    }
+
+    /** Displays eines Typs ('reception' | 'info' | '' = alle): id => Titel */
+    public static function displays(string $type = ''): array
+    {
+        $out = [];
+        foreach (self::choices(self::DISPLAY) as $id => $title) {
+            if ($type !== '' && Store::displayType($id) !== $type) {
+                continue;
+            }
+            $out[$id] = $title;
         }
         return $out;
     }

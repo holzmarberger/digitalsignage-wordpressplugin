@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Marberger Signage
  * Description:       Empfangs- und Info-Displays für Holz Marberger: Begrüßung, Wegweiser, Hinweise, Öffnungszeiten, Abfolgen und News.
- * Version:           0.1.0
+ * Version:           1.0.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Holz Marberger GmbH
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('MMS_VERSION', '0.1.0');
+define('MMS_VERSION', '1.0.0');
 define('MMS_FILE', __FILE__);
 define('MMS_DIR', plugin_dir_path(__FILE__));
 define('MMS_URL', plugin_dir_url(__FILE__));

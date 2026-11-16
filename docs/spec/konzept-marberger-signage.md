@@ -4,7 +4,7 @@
 |---|---|
 | **Unternehmen** | Holz Marberger GmbH |
 | **Dokument** | Fachkonzept Display-System (WordPress-Plugin) |
-| **Version / Stand** | 0.3 / 16.11.2026 |
+| **Version / Stand** | 0.4 / 16.11.2026 (Plugin 1.0.0 umgesetzt) |
 | **Status** | Entwurf zur Freigabe |
 | **Klickdummy** | `klickdummy-empfangsdisplay.html` (Parameter siehe Anhang A) |
 
@@ -197,7 +197,7 @@ Hochformat 1080×1920                    Querformat 1920×1080
 
 ### 7.5a Schließzeit (Betriebsurlaub)
 
-- **Vorankündigung** ab X Tagen vorher (Standard 14, je Schließzeit änderbar): Balken „Betriebsurlaub 24.12.–6.1. · ab Mittwoch, 7. Jänner, wieder für Sie da.“
+- **Vorankündigung** ab X Tagen vorher (Standard 14, je Schließzeit änderbar): Balken „Betriebsurlaub 24.12.–6.1. · ab Donnerstag, 7. Jänner, wieder für Sie da.“
 - **Während der Schließzeit:** Vollbild-Seite mit Bezeichnung DE/EN (z. B. „Betriebsurlaub / Company holidays“), optionalem Text (z. B. Weihnachtswünsche) und optionalem Bild, nächster Öffnung und Wegweiser-Knopf (Einstellung der Kategorie).
 
 ### 7.6 Anruf über 3CX (Stufe 2)
@@ -464,7 +464,7 @@ Alle zeitgesteuerten Inhalte verwenden dieselbe Logik:
 - Inhaltstypen und Felder (Abschnitt 9), Backend-Menü „Displays“, Berechtigung „Display-Redaktion“ (Häkchen im Benutzerprofil, eigene Capabilities).
 - Player-Seite `?mm_signage=<kennung>` ohne Theme; eine gemeinsame JS-Anwendung für beide Display-Typen und Formate.
 - REST-Endpunkte (über `?rest_route=`):
-  - `GET /mm-signage/v1/state/<kennung>` – öffentlich im Intranet, liefert den aufgelösten Zustand (Rang, Inhalte, Hinweise, Abfolge, Wetter, Öffnungszeiten, nächste Öffnung, Server-Uhrzeit).
+  - `GET /mms/v1/state/<kennung>` – öffentlich im Intranet, liefert den aufgelösten Zustand (Rang, Inhalte, Hinweise, Abfolge, Wetter, Öffnungszeiten, nächste Öffnung, Server-Uhrzeit).
   - Schreibende Endpunkte der Pflegemaske mit Authentifizierung (WP-Cookie + Nonce bzw. Gruß-Passwort-Token).
 - Wetter: serverseitiger Abruf bei Open-Meteo je Standort, Zwischenspeicher 30 min; Displays brauchen keinen Internetzugang.
 - Der Zustands-Endpunkt wird ausdrücklich von Seiten-/Server-Caches ausgenommen (Prüfpunkt bei Inbetriebnahme).

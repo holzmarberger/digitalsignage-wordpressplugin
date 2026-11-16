@@ -467,7 +467,7 @@ function sysNotices(){
   if(S.display==='info') return [];
   if(S.scenario==='pause') return [{icon:'info',text:'Mittagspause – heute ab 13:00 Uhr sind wir wieder für Sie da.',text_en:'Lunch break – we will be back today from 1:00 p.m.'}];
   if(S.scenario==='vorwarnung') return [{icon:'warn',text:'Wir schließen heute um 12:00 Uhr.',text_en:'We close today at 12:00 noon.'}];
-  if(S.scenario==='vorank') return [{icon:'info',text:'Betriebsurlaub 24.12.–6.1. · ab Mittwoch, 7. Jänner, wieder für Sie da.',text_en:'Company holidays 24 Dec – 6 Jan · back on Wednesday, 7 January.'}];
+  if(S.scenario==='vorank') return [{icon:'info',text:'Betriebsurlaub 24.12.–6.1. · ab Donnerstag, 7. Jänner, wieder für Sie da.',text_en:'Company holidays 24 Dec – 6 Jan · back on Thursday, 7 January.'}];
   return [];
 }
 function banner(sm){
@@ -533,7 +533,7 @@ function holidayPage(){
    '<h1>Betriebsurlaub</h1><div class="en">Company holidays</div>'+
    '<div class="hmsg">Wir wünschen frohe Weihnachten und einen guten Rutsch ins neue Jahr!<span>Merry Christmas and a happy New Year!</span></div>'+
    '<div class="himg">Bild zur Schließzeit (optional)</div>'+
-   '<div class="next">Ab <b>Mittwoch, 7. Jänner, 07:00 Uhr</b> sind wir wieder für Sie da.<br><span>We will be back on Wednesday, 7 January, from 7:00 a.m.</span></div>'+
+   '<div class="next">Ab <b>Donnerstag, 7. Jänner, 07:00 Uhr</b> sind wir wieder für Sie da.<br><span>We will be back on Thursday, 7 January, from 7:00 a.m.</span></div>'+
    (S.teamInteractive?'<button class="visitor" data-act="visitor">Wegweiser öffnen · Open directory</button>':'')+'</div>';
 }
 function closedPage(){
@@ -578,7 +578,7 @@ function infoHead(){
   return '<div class="ititle"><b>'+esc(sl.name)+'</b><div class="dots">'+S.seq.map(function(x,i){return '<i class="'+(i===S.infoIdx?'on':'')+'"></i>'}).join('')+'</div></div>';
 }
 function infoScreen(){
-  var tk=(S.scenario==='vorank'?['Betriebsurlaub 24.12.–6.1. – ab Mittwoch, 7. Jänner, sind wir wieder für Sie da']:[]).concat(siteNews().filter(function(n){return n.ticker}).map(function(n){return esc(n.title)})).join('<em>◆</em>');
+  var tk=(S.scenario==='vorank'?['Betriebsurlaub 24.12.–6.1. – ab Donnerstag, 7. Jänner, sind wir wieder für Sie da']:[]).concat(siteNews().filter(function(n){return n.ticker}).map(function(n){return esc(n.title)})).join('<em>◆</em>');
   return '<div class="iv"><header class="ih"><div class="logo-card">'+logoImg()+'</div><div id="ihead">'+infoHead()+'</div>'+weather()+'</header>'+
     '<div class="ibar"><i id="ibar" style="animation-duration:'+S.seq[S.infoIdx].dur+'s"></i></div>'+
     '<main class="iz" id="iz">'+slideHTML()+'</main>'+

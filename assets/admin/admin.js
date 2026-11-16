@@ -27,12 +27,14 @@
   // Wiederholgruppen (Ausnahmen)
   $(document).on('click', '.mms-add-row', function (e) {
     e.preventDefault();
-    var wrap = $(this).closest('td');
+    var wrap = $(this).closest('.mms-rep-wrap, .mms-own-seq, td');
     var table = wrap.find('.mms-repeater');
     var i = parseInt(table.attr('data-next'), 10) || 0;
     var tpl = wrap.find('template.mms-row-template').html().replace(/__i__/g, i);
-    table.find('tbody').append(tpl);
+    var row = $(tpl);
+    table.find('tbody').first().append(row);
     table.attr('data-next', i + 1);
+    row.find('.mms-seq-type').trigger('change');
   });
   $(document).on('click', '.mms-remove-row', function (e) {
     e.preventDefault();
@@ -49,6 +51,78 @@
       if (!el.length) return;
       el.val(typeof d[k] === 'boolean' ? (d[k] ? '1' : '0') : d[k]);
     });
+  });
+
+
+  // Abfolge: Felder je Typ, Zeilen verschieben
+  function seqType(sel) {
+    var tr = $(sel).closest('tr'), t = $(sel).val();
+    tr.find('.mms-seq-url').toggle(t === 'url');
+    tr.find('.mms-seq-page').toggle(t === 'page');
+    tr.find('.mms-seq-news').toggle(t === 'news');
+    tr.find('.mms-seq-res').css('visibility', t === 'url' ? 'visible' : 'hidden');
+  }
+  $(document).on('change', '.mms-seq-type', function () { seqType(this); });
+  $(function () { $('.mms-seq-type').each(function () { seqType(this); }); });
+  $(document).on('click', '.mms-up', function (e) {
+    e.preventDefault();
+    var tr = $(this).closest('tr');
+    tr.prev('tr').before(tr);
+  });
+  $(document).on('click', '.mms-down', function (e) {
+    e.preventDefault();
+    var tr = $(this).closest('tr');
+    tr.next('tr').after(tr);
+  });
+  // Namen nach dem Verschieben neu durchnummerieren, damit die Reihenfolge gespeichert wird
+  $(document).on('submit', 'form#post, form.mms-settings', function () {
+    $(this).find('.mms-repeater').each(function () {
+      $(this).children('tbody').children('tr').each(function (idx) {
+        $(this).find('[name]').each(function () {
+          this.name = this.name.replace(/\[(\d+|__i__)\]/, function (m, g, off, str) { return '[' + idx + ']'; });
+        });
+      });
+    });
+  });
+
+  // Display: eigene Abfolge ein-/ausblenden
+  function ownSeq() { $('.mms-own-seq').toggle($('input[name="mms[sequence_own]"]').is(':checked')); }
+  $(document).on('change', 'input[name="mms[sequence_own]"]', ownSeq);
+  $(ownSeq);
+
+  // Vollbild-Seite: Zeitregel umschalten
+  function ruleType() {
+    var t = $('.mms-ruletype').val();
+    if (!t) return;
+    $('.mms-rule').hide();
+    $('.mms-rule-' + t).show();
+  }
+  $(document).on('change', '.mms-ruletype', ruleType);
+  $(ruleType);
+
+  // Gruß: Schnellvorlage
+  $(document).on('change', '.mms-template', function () {
+    if (this.value === '') return;
+    var t = JSON.parse(this.getAttribute('data-templates') || '[]')[parseInt(this.value, 10)];
+    if (!t) return;
+    var title = $('#title');
+    if (title.val() && !window.confirm('Die bisherigen Texte durch die Vorlage ersetzen?')) { this.value = ''; return; }
+    title.val(t.name || '').trigger('input');
+    $('#title-prompt-text').addClass('screen-reader-text');
+    ['kicker_de', 'sub_de', 'kicker_en', 'sub_en'].forEach(function (k) { $('[name="mms[' + k + ']"]').val(t[k] || ''); });
+    var el = title.get(0), m = /\[[^\]]+\]/.exec(el.value);
+    el.focus();
+    if (m) el.setSelectionRange(m.index, m.index + m[0].length);
+    this.value = '';
+  });
+
+  // Passwort anzeigen
+  $(document).on('click', '.mms-reveal', function (e) {
+    e.preventDefault();
+    var f = $(this).siblings('.mms-secret');
+    var show = f.attr('type') === 'password';
+    f.attr('type', show ? 'text' : 'password');
+    $(this).text(show ? 'verbergen' : 'anzeigen');
   });
 
   // Adresse markieren

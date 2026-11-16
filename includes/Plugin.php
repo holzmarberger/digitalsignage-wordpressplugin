@@ -2,6 +2,10 @@
 namespace Marberger\Signage;
 
 use Marberger\Signage\WP\Admin\Menu;
+use Marberger\Signage\WP\Caps;
+use Marberger\Signage\WP\Cleanup;
+use Marberger\Signage\WP\ManageRest;
+use Marberger\Signage\WP\Mask;
 use Marberger\Signage\WP\Player;
 use Marberger\Signage\WP\PostTypes;
 use Marberger\Signage\WP\Rest;
@@ -13,8 +17,12 @@ final class Plugin
     public static function boot(): void
     {
         add_action('init', [PostTypes::class, 'register']);
+        Caps::init();
         Rest::init();
+        ManageRest::init();
         Player::init();
+        Mask::init();
+        Cleanup::init();
         if (is_admin()) {
             Menu::init();
         }
@@ -27,11 +35,15 @@ final class Plugin
             add_option(self::OPTION, self::defaultOptions());
         }
         self::createDefaultCategories();
+        if (!wp_next_scheduled(Cleanup::HOOK)) {
+            wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Cleanup::HOOK);
+        }
         flush_rewrite_rules();
     }
 
     public static function deactivate(): void
     {
+        Cleanup::unschedule();
         flush_rewrite_rules();
     }
 
